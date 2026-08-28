@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+/*
+ * PXTO Design System tokens.
+ * Source of truth: docs/design-system/DESIGN_SYSTEM.md
+ *
+ * Every colour value here is CANDIDATE (DESIGN_SYSTEM.md Part I.3.2).
+ * Replacing the brand palette is an edit to this block only. No component
+ * reads a raw value, so a palette swap does not touch the component tree.
+ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------- Light theme (default) ---------- */
+:root {
+  --pxto-ground: #fcfcfc;
+  --pxto-ground-subtle: #f4f5f6;
+  --pxto-surface: #ffffff;
+  --pxto-ink: #111214;
+  --pxto-ink-secondary: #5c6066;
+  --pxto-ink-disabled: #9aa0a6;
+  --pxto-rule: #e3e5e8;
+  --pxto-rule-strong: #c7cbd1;
+  --pxto-accent: #1b4de4;
+  --pxto-accent-hover: #1740be;
+  --pxto-accent-contrast: #ffffff;
+  --pxto-success: #1a7f4b;
+  --pxto-danger: #b42318;
+}
+
+/* ---------- Dark theme ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --pxto-ground: #0e0f11;
+    --pxto-ground-subtle: #141619;
+    --pxto-surface: #1a1d21;
+    --pxto-ink: #e9ebed;
+    --pxto-ink-secondary: #8e949b;
+    --pxto-ink-disabled: #5f666d;
+    --pxto-rule: #242830;
+    --pxto-rule-strong: #343a43;
+    --pxto-accent: #5b86ff;
+    --pxto-accent-hover: #7c9eff;
+    --pxto-accent-contrast: #0e0f11;
+    --pxto-success: #4ade80;
+    --pxto-danger: #ff6b5e;
+  }
+}
+
+[data-theme="dark"] {
+  --pxto-ground: #0e0f11;
+  --pxto-ground-subtle: #141619;
+  --pxto-surface: #1a1d21;
+  --pxto-ink: #e9ebed;
+  --pxto-ink-secondary: #8e949b;
+  --pxto-ink-disabled: #5f666d;
+  --pxto-rule: #242830;
+  --pxto-rule-strong: #343a43;
+  --pxto-accent: #5b86ff;
+  --pxto-accent-hover: #7c9eff;
+  --pxto-accent-contrast: #0e0f11;
+  --pxto-success: #4ade80;
+  --pxto-danger: #ff6b5e;
+}
+
+@theme inline {
+  /* Colour. Semantic names only. No component references a raw value. */
+  --color-ground: var(--pxto-ground);
+  --color-ground-subtle: var(--pxto-ground-subtle);
+  --color-surface: var(--pxto-surface);
+  --color-ink: var(--pxto-ink);
+  --color-ink-secondary: var(--pxto-ink-secondary);
+  --color-ink-disabled: var(--pxto-ink-disabled);
+  --color-rule: var(--pxto-rule);
+  --color-rule-strong: var(--pxto-rule-strong);
+  --color-accent: var(--pxto-accent);
+  --color-accent-hover: var(--pxto-accent-hover);
+  --color-accent-contrast: var(--pxto-accent-contrast);
+  --color-success: var(--pxto-success);
+  --color-danger: var(--pxto-danger);
+
+  /* Type families. CANDIDATE: Geist pairing (DESIGN_SYSTEM.md Part I.4.2). */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* Type scale. DESIGN_SYSTEM.md Part I.5. Max heading 3.5x body. */
+  --text-2xs: 0.6875rem;          /* 11px */
+  --text-2xs--line-height: 1.45;
+  --text-2xs--letter-spacing: 0.02em;
+  --text-xs: 0.75rem;             /* 12px */
+  --text-xs--line-height: 1.5;
+  --text-xs--letter-spacing: 0.01em;
+  --text-sm: 0.875rem;            /* 14px */
+  --text-sm--line-height: 1.55;
+  --text-base: 1rem;              /* 16px */
+  --text-base--line-height: 1.6;
+  --text-lg: 1.125rem;            /* 18px */
+  --text-lg--line-height: 1.6;
+  --text-xl: 1.25rem;             /* 20px */
+  --text-xl--line-height: 1.45;
+  --text-xl--letter-spacing: -0.005em;
+  --text-2xl: 1.5rem;             /* 24px */
+  --text-2xl--line-height: 1.35;
+  --text-2xl--letter-spacing: -0.01em;
+  --text-3xl: 1.875rem;           /* 30px */
+  --text-3xl--line-height: 1.25;
+  --text-3xl--letter-spacing: -0.015em;
+  --text-4xl: 2.375rem;           /* 38px */
+  --text-4xl--line-height: 1.15;
+  --text-4xl--letter-spacing: -0.02em;
+  --text-5xl: 3rem;               /* 48px */
+  --text-5xl--line-height: 1.1;
+  --text-5xl--letter-spacing: -0.025em;
+  --text-6xl: 3.5rem;             /* 56px */
+  --text-6xl--line-height: 1.05;
+  --text-6xl--letter-spacing: -0.03em;
+
+  /* Spacing. 4px base, which is the Tailwind v4 default step. */
+  --spacing: 0.25rem;
+
+  /* Radius. Structure is sharp, interaction is softened, nothing is round. */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* Containers. DESIGN_SYSTEM.md Part I.8. */
+  --container-prose: 68ch;
+  --container-content: 70rem;     /* 1120px */
+  --container-wide: 85rem;        /* 1360px */
+
+  /* Motion. MOTION_INTENSITY 3: state feedback only. */
+  --duration-fast: 120ms;
+  --duration-base: 160ms;
+  --duration-slow: 180ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Exactly one shadow token exists, and only the overlay tier uses it. */
+@theme {
+  --shadow-overlay: 0 8px 24px rgb(17 18 20 / 0.1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Focus is visible on everything interactive. WCAG 2.2 2.4.13. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* A focused element is never obscured by the sticky header. WCAG 2.2 2.4.11. */
+  :target,
+  [id] {
+    scroll-margin-top: calc(var(--spacing) * 24);
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-contrast);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* The interval: one oversized vertical gap between major argument movements.
+     DESIGN_SYSTEM.md Part I.6. Used at most three times per page. */
+  .pxto-interval {
+    padding-block-start: calc(var(--spacing) * 16);
+  }
+  @media (width >= 64rem) {
+    .pxto-interval {
+      padding-block-start: calc(var(--spacing) * 28);
+    }
+  }
+
+  /* Optical hanging rule used by the process sequence and the record list. */
+  .pxto-rule-top {
+    border-block-start: 1px solid var(--color-rule);
+  }
+}

@@ -1,0 +1,45 @@
+import type { Project } from "../schemas";
+
+/**
+ * Disclosure Level B, Described (PROJECT_FRAMEWORK 15.2).
+ * Delivered to a company in the United States. The client is NOT identified.
+ *
+ * published: false. No route, no card, no sitemap entry until the
+ * PROJECT_FRAMEWORK section 20 checklist is signed by a human.
+ *
+ * Blocks omitted on purpose:
+ *   results  - no result is documented or cleared (PRD 20)
+ *   gallery  - no cleared assets exist
+ */
+export const furnitureVisualization: Project = {
+  slug: "furniture-visualization",
+  title: "Furniture Visualization",
+  category: "AI / Web App / Image Generation",
+  solutions: ["software"],
+  summary:
+    "Aplicação web que combina a foto de um móvel e a foto de um ambiente para gerar uma visualização realista do móvel naquele espaço.",
+
+  problem:
+    "Permitir que usuários visualizem de maneira mais concreta como determinado móvel pode se encaixar em um ambiente. Ver o produto isolado e imaginar o produto no lugar são coisas diferentes.",
+  solution:
+    "Uma aplicação que combina entrada visual, processamento por inteligência artificial e geração de imagens.",
+
+  technologies: [
+    "Inteligência artificial",
+    "Processamento de imagens",
+    "Geração de imagens",
+    "Desenvolvimento de aplicações web",
+    "Integração de diferentes tecnologias",
+  ],
+
+  coverImage: {
+    src: "/images/projects/furniture-visualization/cover.avif",
+    alt: "Visualização de um móvel inserido na fotografia de um ambiente.",
+    width: 1600,
+    height: 1200,
+  },
+
+  published: false,
+  featured: true,
+  order: 1,
+};
