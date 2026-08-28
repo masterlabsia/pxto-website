@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 import { navigation, cta } from "@/content/site";
 import { cn } from "@/lib/cn";
 
@@ -40,11 +41,9 @@ export function Navbar() {
           <Link
             href="/"
             aria-label="PXTO, página inicial"
-            className="font-mono text-base font-medium tracking-tight text-ink"
+            className="inline-flex items-center transition-opacity duration-fast hover:opacity-80"
           >
-            {/* BLOCKED: no logo exists. A wordmark in the utility face is the
-                honest stand-in and is replaced when the mark is supplied. */}
-            PXTO
+            <Logo decorative className="h-10 w-10" />
           </Link>
 
           <nav aria-label="Navegação principal" className="hidden md:block">
@@ -57,7 +56,8 @@ export function Navbar() {
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "text-sm transition-colors duration-fast",
+                        // py-2 lifts the target past the 24px minimum (WCAG 2.5.8).
+                        "inline-block py-2 text-sm transition-colors duration-fast",
                         active ? "text-ink" : "text-ink-secondary hover:text-ink",
                       )}
                     >
@@ -70,8 +70,10 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <div className="hidden sm:block">
-              <ButtonLink href={cta.primary.href} size="md">
+            {/* Visible at every width: the primary CTA must never require
+                opening the menu (DESIGN_SYSTEM Part II, Navbar). */}
+            <div>
+              <ButtonLink href={cta.primary.href} size="md" analyticsLocation="navbar">
                 {cta.primary.label}
               </ButtonLink>
             </div>
@@ -108,7 +110,7 @@ export function Navbar() {
                 </li>
               ))}
               <li className="py-3 sm:hidden">
-                <ButtonLink href={cta.primary.href} size="md">
+                <ButtonLink href={cta.primary.href} size="md" analyticsLocation="navbar-mobile">
                   {cta.primary.label}
                 </ButtonLink>
               </li>

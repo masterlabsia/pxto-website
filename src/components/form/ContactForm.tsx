@@ -7,6 +7,7 @@ import { FormStatus } from "@/components/form/FormStatus";
 import { Button } from "@/components/ui/Button";
 import { submitContact, type ContactState } from "@/lib/actions/contact";
 import { contactCopy, needOptions } from "@/content/contact";
+import { track } from "@/lib/analytics";
 
 /**
  * Client leaf. Owns form state and nothing else.
@@ -22,10 +23,15 @@ export function ContactForm() {
   const interactedAt = useRef<number>(0);
   const statusRef = useRef<HTMLDivElement>(null);
   const interactedRef = useRef<HTMLInputElement>(null);
+  const needRef = useRef<string>("");
 
   // Focus moves to the status message on completion so the outcome is announced.
   useEffect(() => {
     if (state.status !== "idle") statusRef.current?.focus();
+    if (state.status === "success") {
+      // Category only. Never the name, the email or the message (PRD 44).
+      track("contact_form_submit", { need: needRef.current || "nao_informado" });
+    }
   }, [state.status]);
 
   const errors = state.status === "error" ? (state.fieldErrors ?? {}) : {};
@@ -46,10 +52,15 @@ export function ContactForm() {
       action={action}
       noValidate
       className="flex flex-col gap-6"
-      onInput={() => {
+      onInput={(e) => {
         if (interactedAt.current === 0) {
           interactedAt.current = Date.now();
           if (interactedRef.current) interactedRef.current.value = String(interactedAt.current);
+          track("contact_form_start", {});
+        }
+        const t = e.target;
+        if (t instanceof HTMLSelectElement && t.name === "necessidade") {
+          needRef.current = t.value;
         }
       }}
     >

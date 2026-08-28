@@ -36,10 +36,10 @@ export function Hero() {
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <ButtonLink href={cta.primary.href} size="lg">
+              <ButtonLink href={cta.primary.href} size="lg" analyticsLocation="home-hero">
                 {cta.primary.label}
               </ButtonLink>
-              <ButtonLink href={cta.projects.href} size="lg" variant="secondary">
+              <ButtonLink href={cta.projects.href} size="lg" variant="secondary" analyticsLocation="home-hero-secondary">
                 {cta.projects.label}
               </ButtonLink>
             </div>

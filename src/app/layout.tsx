@@ -4,7 +4,9 @@ import { GeistMono } from "geist/font/mono";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
-import { organizationJsonLd } from "@/lib/metadata";
+import { LogoSymbol } from "@/components/ui/Logo";
+import { AnalyticsListener } from "@/components/analytics/AnalyticsListener";
+import { JsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/jsonld";
 import { site } from "@/content/site";
 import "@/styles/globals.css";
 
@@ -35,12 +37,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd()),
-          }}
-        />
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
+        <LogoSymbol />
+        <AnalyticsListener />
         <SkipLink />
         <Navbar />
         <main id="conteudo">{children}</main>

@@ -573,6 +573,15 @@ morning.
 | LGPD | Privacy notice `BLOCKED`. No tracking cookies given the §12 recommendation |
 | Dependency hygiene | Dependabot on. `npm audit` in CI. Seven runtime dependencies keeps the surface small |
 
+**Desenvolvimento e produção têm CSPs diferentes.** O `next dev` usa `eval()`
+para hot module replacement e um websocket para notificar o browser. Sem
+`'unsafe-eval'` no `script-src` e `ws:` no `connect-src`, a CSP bloqueia os dois:
+a página carrega, mas **para de atualizar sozinha** e o console enche de erro.
+
+As permissões extras existem somente em desenvolvimento. A CSP de produção é a
+estrita, e a auditoria de segurança roda contra o build de produção, então a
+diferença não afrouxa o que é verificado.
+
 **Headers**, set in `next.config.ts`:
 
 ```

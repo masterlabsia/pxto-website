@@ -32,9 +32,10 @@ export const aiInteriorDesigner: Project = {
     alt: "Interface do assistente analisando a fotografia de um ambiente.",
     width: 1600,
     height: 1200,
+    pending: true,
   },
 
-  published: false,
+  published: true,
   featured: true,
-  order: 2,
+  order: 3,
 };

@@ -37,9 +37,12 @@ export const furnitureVisualization: Project = {
     alt: "Visualização de um móvel inserido na fotografia de um ambiente.",
     width: 1600,
     height: 1200,
+    pending: true,
   },
 
-  published: false,
+  published: true,
   featured: true,
-  order: 1,
+  // Ordered after the integration case, so the portfolio does not open with two
+  // AI projects (POSITIONING 15.1).
+  order: 2,
 };

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { Logo } from "@/components/ui/Logo";
 import { navigation, site, contactChannels } from "@/content/site";
 import { solutions } from "@/content/solutions";
 
@@ -16,8 +17,8 @@ export function Footer() {
       <Container width="wide">
         <div className="grid grid-cols-1 gap-10 py-12 md:grid-cols-12 md:py-16">
           <div className="md:col-span-5">
-            <p className="font-mono text-base font-medium text-ink">{site.name}</p>
-            <p className="mt-3 max-w-prose text-sm text-ink-secondary">
+            <Logo label={site.name} className="h-14 w-14" />
+            <p className="mt-4 max-w-prose text-sm text-ink-secondary">
               {site.descriptor}
             </p>
           </div>
@@ -29,7 +30,7 @@ export function Footer() {
                 <li key={s.slug}>
                   <Link
                     href={`/solucoes/${s.slug}`}
-                    className="text-sm text-ink transition-colors duration-fast hover:text-accent"
+                    className="inline-block py-1 text-sm text-ink transition-colors duration-fast hover:text-accent"
                   >
                     {s.name}
                   </Link>
@@ -45,7 +46,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-ink transition-colors duration-fast hover:text-accent"
+                    className="inline-block py-1 text-sm text-ink transition-colors duration-fast hover:text-accent"
                   >
                     {item.label}
                   </Link>

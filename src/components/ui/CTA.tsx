@@ -38,7 +38,7 @@ export function CTA({
           <div className="lg:col-span-5">
             <p className="max-w-prose text-base text-ink-secondary">{body}</p>
             <div className="mt-8">
-              <ButtonLink href={href} size="lg">
+              <ButtonLink href={href} size="lg" analyticsLocation="cta-block">
                 {label}
               </ButtonLink>
             </div>

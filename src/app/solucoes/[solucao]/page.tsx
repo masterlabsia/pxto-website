@@ -6,6 +6,8 @@ import { Heading } from "@/components/ui/Heading";
 import { Badge } from "@/components/ui/Badge";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { CTA } from "@/components/ui/CTA";
+import { PageEvent } from "@/components/analytics/PageEvent";
+import { JsonLd, serviceJsonLd, breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/metadata";
 import { solutions, getSolution } from "@/content/solutions";
 import { solutionPages, esteSite } from "@/content/pages/solution-detail";
@@ -48,6 +50,14 @@ export default async function SolutionPage({ params }: Params) {
 
   return (
     <>
+      <PageEvent name="service_view" props={{ solution: parsed.data }} />
+      <JsonLd data={serviceJsonLd(solution)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Soluções", path: "/solucoes" },
+          { name: solution.name, path: `/solucoes/${solution.slug}` },
+        ])}
+      />
       <section className="border-b border-rule pb-12 pt-10 md:pb-16 md:pt-14 lg:pb-20 lg:pt-16">
         <Container width="wide">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">

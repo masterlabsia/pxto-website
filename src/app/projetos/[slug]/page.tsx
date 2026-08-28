@@ -4,9 +4,12 @@ import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { Badge } from "@/components/ui/Badge";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 import { ProjectBlocks } from "@/components/content/ProjectBlocks";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { CTA } from "@/components/ui/CTA";
+import { PageEvent } from "@/components/analytics/PageEvent";
+import { JsonLd, creativeWorkJsonLd, breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/metadata";
 import { getProject, getPublishedProjects } from "@/content/projects";
 import { getSolution } from "@/content/solutions";
@@ -16,8 +19,8 @@ import { getSolution } from "@/content/solutions";
  * PRD 20 enforced by the router rather than by a conditional someone might
  * forget (TECHNICAL_ARCHITECTURE 6).
  *
- * Both current projects are published: false, so this currently generates zero
- * pages. That is correct, not a bug.
+ * The set of generated pages follows the content: publishing a project creates
+ * its route, unpublishing removes it. No route file changes either way.
  */
 export function generateStaticParams() {
   return getPublishedProjects().map((p) => ({ slug: p.slug }));
@@ -47,6 +50,14 @@ export default async function ProjectPage({ params }: Params) {
 
   return (
     <>
+      <PageEvent name="project_view" props={{ slug: project.slug }} />
+      <JsonLd data={creativeWorkJsonLd(project)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Projetos", path: "/projetos" },
+          { name: project.title, path: `/projetos/${project.slug}` },
+        ])}
+      />
       {/* The page opens with the project and its problem, never with the stack. */}
       <section className="border-b border-rule pb-12 pt-10 md:pb-16 md:pt-14 lg:pb-20 lg:pt-16">
         <Container width="wide">
@@ -65,15 +76,21 @@ export default async function ProjectPage({ params }: Params) {
             </div>
           </div>
 
-          <div className="relative mt-10 aspect-[16/9] w-full border border-rule bg-ground-subtle lg:mt-12">
-            <Image
-              src={project.coverImage.src}
-              alt={project.coverImage.alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 85vw, 100vw"
-              className="object-cover"
-            />
+          <div className="mt-10 lg:mt-12">
+            {project.coverImage.pending ? (
+              <ImageSlot ratio="16 / 9" label={project.coverImage.alt} />
+            ) : (
+              <div className="relative aspect-[16/9] w-full border border-rule bg-ground-subtle">
+                <Image
+                  src={project.coverImage.src}
+                  alt={project.coverImage.alt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 85vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            )}
           </div>
         </Container>
       </section>

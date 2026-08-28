@@ -22,6 +22,18 @@ export const ImageSchema = z.object({
   alt: z.string().min(1),
   width: z.number().int().positive(),
   height: z.number().int().positive(),
+  /**
+   * The asset is declared but not yet delivered.
+   *
+   * PRD 43 requires every project to have a cover image, so the field stays
+   * required and the project still declares what the asset will be. This flag
+   * only records that the file has not landed, and the UI renders the honest
+   * labelled slot instead of a broken image.
+   *
+   * It is not a licence to publish without imagery: check-assets lists every
+   * pending asset as an outstanding deliverable.
+   */
+  pending: z.boolean().optional(),
 });
 export type PxtoImage = z.infer<typeof ImageSchema>;
 

@@ -32,17 +32,22 @@ export function TextLink({
 export function ArrowLink({
   href,
   className,
+  analyticsLocation,
   children,
 }: {
   href: string;
   className?: string;
+  analyticsLocation?: string;
   children: React.ReactNode;
 }) {
   return (
     <Link
       href={href}
+      {...(analyticsLocation
+        ? { "data-analytics": "cta", "data-analytics-location": analyticsLocation }
+        : {})}
       className={cn(
-        "group inline-flex items-baseline gap-2 text-sm font-medium text-ink",
+        "group inline-flex items-baseline gap-2 py-1 text-sm font-medium text-ink",
         "transition-colors duration-fast hover:text-accent",
         className,
       )}

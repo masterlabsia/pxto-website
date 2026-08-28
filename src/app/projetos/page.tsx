@@ -48,9 +48,14 @@ export default function ProjetosPage() {
       {projects.length > 0 ? (
         <section aria-label="Lista de projetos" className="pxto-interval pb-14 md:pb-16 lg:pb-20">
           <Container width="wide">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2">
+            {/*
+              Three columns at lg. The card format is identical to Home and to
+              the solution pages: only the column count differs, which is a
+              page-level layout decision, not a second card format.
+            */}
+            <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
+                <ProjectCard key={project.slug} project={project} headingLevel={2} />
               ))}
             </div>
           </Container>

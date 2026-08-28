@@ -20,7 +20,7 @@ export function ServiceCard({ solution }: { solution: Solution }) {
         {solution.description}
       </p>
       <div className="mt-6">
-        <ArrowLink href={`/solucoes/${solution.slug}`}>
+        <ArrowLink href={`/solucoes/${solution.slug}`} analyticsLocation="service-card">
           {solution.ctaLabel}
         </ArrowLink>
       </div>

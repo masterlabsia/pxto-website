@@ -30,18 +30,3 @@ export function buildMetadata({
     twitter: { card: "summary_large_image", title, description },
   };
 }
-
-/**
- * Organization JSON-LD. No foundingDate, no numberOfEmployees, no
- * aggregateRating: structured data is a factual claim and is bound by PRD 53
- * exactly as visible copy is.
- */
-export function organizationJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: site.name,
-    url: site.url,
-    description: site.descriptor,
-  };
-}

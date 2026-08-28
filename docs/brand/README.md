@@ -10,7 +10,7 @@ principles), §33 (visual direction), §55 Phase 2.
 | Document | Content |
 | --- | --- |
 | `BRAND_FOUNDATION.md` | **Exists.** Essence, purpose, mission, vision, values, personality, perception, is/is-not, tone of voice, communication principles, vocabulary, positioning implications |
-| `logo.md` | Logo files, variants, clear space, minimum size, misuse rules |
+| `LOGO_SPEC.md` | **Exists.** Briefing técnico para recriar as logos: o que foi medido nos arquivos entregues, os dois problemas encontrados, requisitos de arquivo, cor, validação e checklist de entrega |
 | `colors.md` | Palette with roles (primary, surface, text, accent, state) and contrast validation |
 | `typography.md` | Typeface selection, weights, licensing, loading strategy |
 | `voice-and-tone.md` | Verbal identity, vocabulary allowed and forbidden |
@@ -62,7 +62,10 @@ Visual:
 
 - [ ] **Approve or reject a visual direction** (`VISUAL_DIRECTION.md` Part IV;
       A — Especificação is recommended)
-- [ ] Logo — does one exist? Files, formats, variants.
+- [ ] **Variante compacta da marca** para 24 a 48px. O wordmark entregue lê
+      "p to" abaixo de 64px. Ver `LOGO_SPEC.md` §2.1
+- [ ] **Cor da marca: turquesa `#009D88` ou azul `#1B4DE4`?** O ícone entregue e
+      o accent do site usam cores diferentes. Ver `LOGO_SPEC.md` §4.2
 - [ ] Colour palette — no colours are specified anywhere in the PRD.
 - [ ] Typography — no typefaces are specified anywhere in the PRD.
 - [ ] Whether a formal brand guideline exists outside this repository.

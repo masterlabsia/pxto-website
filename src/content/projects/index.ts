@@ -1,6 +1,7 @@
 import { ProjectSchema, type Project, type SolutionSlug } from "../schemas";
 import { furnitureVisualization } from "./furniture-visualization";
 import { aiInteriorDesigner } from "./ai-interior-designer";
+import { gestaoDeContratos } from "./gestao-de-contratos";
 
 /**
  * The content access layer. This is the CMS migration seam
@@ -10,7 +11,11 @@ import { aiInteriorDesigner } from "./ai-interior-designer";
  * moves to a CMS, only these function bodies change.
  */
 
-const all: Project[] = [furnitureVisualization, aiInteriorDesigner].map((p) =>
+const all: Project[] = [
+  furnitureVisualization,
+  aiInteriorDesigner,
+  gestaoDeContratos,
+].map((p) =>
   ProjectSchema.parse(p),
 );
 
