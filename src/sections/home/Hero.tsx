@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
-import { ImageSlot } from "@/components/ui/ImageSlot";
+import { Media } from "@/components/ui/Media";
 import { hero } from "@/content/home";
 import { cta } from "@/content/site";
 
@@ -45,15 +45,13 @@ export function Hero() {
             </div>
           </div>
 
-          <figure className="lg:col-span-5">
-            <ImageSlot
-              ratio="16 / 11"
-              label="Imagem principal. Captura real de projeto liberado ou fotografia própria. 1600x1200."
-            />
-            <figcaption className="mt-3 font-mono text-2xs uppercase text-ink-secondary">
-              Ativo pendente de liberação
-            </figcaption>
-          </figure>
+          <Media
+            image={hero.media}
+            ratio="16 / 11"
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            priority
+            className="lg:col-span-5"
+          />
         </div>
       </Container>
     </section>

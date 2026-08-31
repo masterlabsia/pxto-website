@@ -36,7 +36,7 @@ export function ComoTrabalhamos() {
             </div>
           </div>
 
-          <ol className="lg:col-span-8">
+          <ol className="pxto-reveal-stagger lg:col-span-8">
             {comoTrabalhamos.steps.map((step, index) => (
               <li
                 key={step.name}
@@ -51,11 +51,6 @@ export function ComoTrabalhamos() {
                 <div className="col-span-10 md:col-span-11">
                   <h3 className="text-xl font-semibold text-ink">{step.name}</h3>
                   <p className="mt-2 max-w-prose text-base text-ink">{step.lead}</p>
-                  {step.detail ? (
-                    <p className="mt-2 max-w-prose text-sm text-ink-secondary">
-                      {step.detail}
-                    </p>
-                  ) : null}
                 </div>
               </li>
             ))}

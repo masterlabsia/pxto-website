@@ -12,7 +12,7 @@ export const aiInteriorDesigner: Project = {
   category: "AI / Computer Vision / Conversational Assistant",
   solutions: ["software"],
   summary:
-    "Assistente que analisa imagens de ambientes e apoia a criação de propostas de design de interiores.",
+    "A foto de um ambiente vira ponto de partida para decisões de design.",
 
   problem:
     "Transformar uma fotografia de um ambiente em um ponto de partida para decisões de design.",

@@ -4,17 +4,15 @@ import { DefinitionList } from "@/components/content/DefinitionList";
 import { problema } from "@/content/home";
 
 /**
- * The single point of failure of the page (NARRATIVE 7.4). If recognition does
- * not land here, everything below reads as generic vendor material.
+ * O ponto único de falha da página (NARRATIVE 7.4). Se o reconhecimento não
+ * acontece aqui, tudo abaixo lê como material genérico de fornecedor.
  *
- * Three moves, in order: recognition, naming, reframe. The reframe paragraph is
- * load-bearing and must not be cut. It sits directly under the heading rather
- * than trailing the section, so the left column carries weight instead of
- * leaving a void.
+ * Os 3 parágrafos de corpo saíram na deduplicação: já existiam em
+ * sobrePage.porQue. O reconhecimento agora é trabalho exclusivo das 6 situações.
  *
- * The six situations are a definition list, not a card grid. A card grid would
- * repeat the layout family used by Soluções, and the skill bans a default
- * divide-y list above five items.
+ * O reframe deixou de dividir espaço com uma coluna de corpo à direita e passou
+ * a fechar a seção sozinho, em corpo maior. É a função que a narrativa dá a ele:
+ * o momento de virada, não uma nota de rodapé do heading.
  */
 export function Problema() {
   return (
@@ -24,26 +22,20 @@ export function Problema() {
       className="pxto-interval pb-14 md:pb-16 lg:pb-20"
     >
       <Container width="wide">
-        <div className="grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <Heading level={2} size="section" id="problema-heading">
-              {problema.heading}
-            </Heading>
-            <p className="mt-6 max-w-[46ch] text-lg text-ink">
-              {problema.reframe}
-            </p>
-          </div>
-
-          <div className="space-y-4 lg:col-span-5">
-            {problema.body.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} className="text-base text-ink-secondary">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+        <div className="max-w-[30ch] lg:max-w-[38ch]">
+          <Heading level={2} size="section" id="problema-heading">
+            {problema.heading}
+          </Heading>
         </div>
 
-        <DefinitionList items={problema.situations} className="mt-12 lg:mt-14" />
+        <DefinitionList
+          items={problema.situations}
+          className="pxto-reveal-stagger mt-12 lg:mt-14"
+        />
+
+        <p className="pxto-reveal mt-12 max-w-[46ch] text-lg text-ink lg:mt-14">
+          {problema.reframe}
+        </p>
       </Container>
     </section>
   );

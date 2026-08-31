@@ -21,14 +21,13 @@ export function Solucoes() {
       className="pxto-interval pb-14 md:pb-16 lg:pb-20"
     >
       <Container width="wide">
-        <div className="max-w-prose">
+        <div className="max-w-[28ch]">
           <Heading level={2} size="section" id="solucoes-heading">
             {solucoes.heading}
           </Heading>
-          <p className="mt-5 text-base text-ink-secondary">{solucoes.intro}</p>
         </div>
 
-        <ul className="mt-12 grid grid-cols-1 gap-x-8 gap-y-0 md:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+        <ul className="pxto-reveal-stagger mt-12 grid grid-cols-1 gap-x-8 gap-y-0 md:grid-cols-2 lg:mt-16 lg:grid-cols-4">
           {solutions.map((solution) => (
             <ServiceCard key={solution.slug} solution={solution} />
           ))}

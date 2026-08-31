@@ -1,36 +1,46 @@
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
+import { MediaBackdrop } from "@/components/ui/MediaBackdrop";
 import { posicionamento } from "@/content/home";
 
 /**
- * The pivot of the page: recognition becomes "there is a company for this".
+ * O pivô da página: o reconhecimento vira "existe uma empresa para isso".
  *
- * A ground shift rather than a rule marks the change, which is the design
- * system's elevation rule and avoids hairlines used as texture. The heading and
- * the body sit in offset columns so the composition steps rather than stacks.
+ * A foto é fundo do bloco inteiro, com o texto por cima. O `MediaBackdrop`
+ * resolve véu, tema e estado pendente. Enquanto não houver ativo, a seção
+ * renderiza exatamente como antes, sobre `ground-subtle`.
+ *
+ * O corpo usa tinta primária, não secundária: sobre foto a secundária reprova
+ * em AA em qualquer opacidade de véu. Ver MediaBackdrop.
  */
 export function Posicionamento() {
   return (
-    <section
-      aria-labelledby="posicionamento-heading"
-      className="border-y border-rule bg-ground-subtle py-14 md:py-16 lg:py-20"
+    <MediaBackdrop
+      image={posicionamento.media}
+      sizes="100vw"
+      className="border-y border-rule bg-ground-subtle"
     >
-      <Container width="wide">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-8">
-            <Heading level={2} size="display" id="posicionamento-heading">
-              {posicionamento.heading}
-            </Heading>
+      <section
+        aria-labelledby="posicionamento-heading"
+        className="py-14 md:py-16 lg:py-20"
+      >
+        <Container width="wide">
+          <div className="pxto-reveal-stagger grid grid-cols-1 gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <Heading level={2} size="display" id="posicionamento-heading">
+                {posicionamento.heading}
+              </Heading>
+            </div>
+            <div className="space-y-4 lg:col-span-7 lg:col-start-6">
+              {posicionamento.body.map((paragraph) => (
+                <p key={paragraph.slice(0, 24)} className="max-w-prose text-base text-ink">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
-          <div className="space-y-4 lg:col-span-7 lg:col-start-6">
-            {posicionamento.body.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} className="max-w-prose text-base text-ink-secondary">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </MediaBackdrop>
   );
 }

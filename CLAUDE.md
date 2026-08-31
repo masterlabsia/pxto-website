@@ -211,7 +211,7 @@ Source: `docs/content/WEBSITE_COPY.md` and `docs/narrative/NARRATIVE.md`.
 
 Source: `docs/design-system/DESIGN_SYSTEM.md`.
 
-**Dials:** `DESIGN_VARIANCE: 6`, `MOTION_INTENSITY: 3`, `VISUAL_DENSITY: 5`.
+**Dials:** `DESIGN_VARIANCE: 6`, `MOTION_INTENSITY: 5`, `VISUAL_DENSITY: 5`.
 
 1. **Tokens only.** No arbitrary values. `p-[13px]` and `text-[#333]` are review
    failures. If a value is missing, the scale is wrong and the scale gets fixed.
@@ -230,10 +230,12 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
 8. **Type:** one family plus its mono companion. Three weights. No serif. Body
    measure 60 to 72 characters. Emphasis by weight or italic within the family,
    never a second family.
-9. **Motion:** state feedback only, 120 to 180ms, `opacity` and `transform` and
-   colour properties only. **No scroll-triggered entrance animation anywhere.**
-   No parallax, no pinning, no marquee, no perpetual loops. Reduced motion
-   respected.
+9. **Motion:** feedback de estado, 120 a 180ms, mais a revelação de entrada em
+   CSS (`animation-timeline: view()`), que move só `opacity` e `translate`.
+   **Sem scroll-scrub, sem parallax, sem pinning, sem marquee, sem loop
+   perpétuo, e nunca no Hero nem dentro de um diagrama.** Sob reduced-motion a
+   regra de revelação não é escrita: zerar duração não desliga animação por
+   timeline.
 10. **Layout variety:** at least four distinct layout families on a long page.
     Never three consecutive sections with the same split pattern.
 11. **At most one eyebrow per three sections.** Prefer none. The headline is

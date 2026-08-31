@@ -34,6 +34,15 @@ export const ImageSchema = z.object({
    * pending asset as an outstanding deliverable.
    */
   pending: z.boolean().optional(),
+  /**
+   * O que precisa ser produzido. Aparece SOMENTE no slot do estado pendente,
+   * como briefing para a PXTO, e nunca como texto acessível.
+   *
+   * Existe porque `alt` e briefing são coisas diferentes: "Imagem principal,
+   * 1600x1200" é um briefing útil e um alt péssimo. Sem separar, um dos dois
+   * fica errado.
+   */
+  brief: z.string().optional(),
 });
 export type PxtoImage = z.infer<typeof ImageSchema>;
 

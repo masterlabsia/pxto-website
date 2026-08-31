@@ -31,7 +31,7 @@ export const gestaoDeContratos: Project = {
   // integration work (POSITIONING 12.3).
   solutions: ["integracoes", "software"],
   summary:
-    "Módulo interno que trouxe o ciclo de vida de contratos para dentro da operação, eliminando a ponte manual entre o sistema comercial e a ferramenta jurídica externa em que o processo vivia.",
+    "O ciclo de vida dos contratos, trazido para dentro da operação.",
 
   context:
     "A operação jurídica de uma empresa que não pode ser identificada. O projeto foi entregue sob acordo de confidencialidade: o cliente não é nomeado e as ferramentas envolvidas também não.",

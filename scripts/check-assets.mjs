@@ -20,19 +20,35 @@ const missing = [];
 const pending = [];
 let publishedCount = 0;
 
+/**
+ * Extrai cada referência de imagem de um módulo de conteúdo e classifica em
+ * pendente ou ausente. Serve tanto para projetos quanto para imagens de seção.
+ */
+function scanImages(src, label) {
+  for (const block of src.split(/\bsrc:\s*"/).slice(1)) {
+    const path = block.slice(0, block.indexOf('"'));
+    if (!path.startsWith("/")) continue;
+    const scope = block.slice(0, block.indexOf("}") + 1);
+    if (/pending:\s*true/.test(scope)) pending.push(`${label}: ${path}`);
+    else if (!existsSync(join("public", path))) missing.push(`${label}: ${path}`);
+  }
+}
+
 for (const file of files) {
   const src = readFileSync(join(dir, file), "utf8");
   if (!/published:\s*true/.test(src)) continue;
   publishedCount += 1;
+  scanImages(src, file);
+}
 
-  // Each image literal is a block ending at its closing brace.
-  for (const block of src.split(/\bsrc:\s*"/).slice(1)) {
-    const path = block.slice(0, block.indexOf('"'));
-    const scope = block.slice(0, block.indexOf("}") + 1);
-    const isPending = /pending:\s*true/.test(scope);
-    if (isPending) pending.push(`${file}: ${path}`);
-    else if (!existsSync(join("public", path))) missing.push(`${file}: ${path}`);
-  }
+// Imagens de seção. Antes ficavam de fora, então tirar `pending` de uma delas
+// sem o arquivo existir passava batido e virava imagem quebrada em produção.
+for (const file of ["home.ts", "site.ts"]) {
+  const full = join("src/content", file);
+  if (existsSync(full)) scanImages(readFileSync(full, "utf8"), file);
+}
+for (const file of readdirSync("src/content/pages").filter((f) => f.endsWith(".ts"))) {
+  scanImages(readFileSync(join("src/content/pages", file), "utf8"), `pages/${file}`);
 }
 
 if (missing.length > 0) {

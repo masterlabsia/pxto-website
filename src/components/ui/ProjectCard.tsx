@@ -34,7 +34,7 @@ export function ProjectCard({
     <article className="group">
       <Link href={`/projetos/${project.slug}`} className="block">
         {project.coverImage.pending ? (
-          <ImageSlot ratio="16 / 10" label={project.coverImage.alt} />
+          <ImageSlot ratio="16 / 10" label={project.coverImage.brief ?? project.coverImage.alt} />
         ) : (
           <div className="relative aspect-[16/10] w-full overflow-hidden border border-rule bg-ground-subtle">
             <Image

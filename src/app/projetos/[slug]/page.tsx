@@ -78,7 +78,7 @@ export default async function ProjectPage({ params }: Params) {
 
           <div className="mt-10 lg:mt-12">
             {project.coverImage.pending ? (
-              <ImageSlot ratio="16 / 9" label={project.coverImage.alt} />
+              <ImageSlot ratio="16 / 9" label={project.coverImage.brief ?? project.coverImage.alt} />
             ) : (
               <div className="relative aspect-[16/9] w-full border border-rule bg-ground-subtle">
                 <Image

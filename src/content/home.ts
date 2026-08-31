@@ -10,6 +10,19 @@
  */
 
 export const hero = {
+  /**
+   * `pending: true` enquanto não houver ativo. O componente Media renderiza o
+   * slot rotulado com o `brief`, e troca sozinho para next/image quando a flag
+   * cair. Publicar a foto é edição de conteúdo, não de componente.
+   */
+  media: {
+    src: "/images/site/hero.avif",
+    alt: "Interface de um projeto entregue pela PXTO.",
+    brief: "Imagem principal. Captura real de projeto liberado ou fotografia própria. 1600x1100.",
+    width: 1600,
+    height: 1100,
+    pending: true,
+  },
   /** FIXED. PRD 12. Set as three lines, which the sentence structure asks for. */
   headlineLines: [
     "Conectamos sistemas.",
@@ -23,11 +36,9 @@ export const hero = {
 export const problema = {
   /** FIXED. PRD 13. */
   heading: "Sua empresa já tem tecnologia. O problema é quando ela não conversa.",
-  body: [
-    "Cada ferramenta foi contratada para resolver um problema específico. Nenhuma delas foi feita para conversar com as outras.",
-    "O espaço entre elas acaba sendo preenchido por pessoas: digitando de novo o que um sistema já sabe, mantendo planilhas que só existem para transportar dados, lembrando de executar um processo que deveria rodar sozinho.",
-    "Esse trabalho não aparece em nenhum relatório. Aparece na equipe que nunca dá conta e na operação que só cresce contratando mais gente.",
-  ],
+  // Os 3 parágrafos de corpo saíram: [0] e [1] já existiam quase literalmente em
+  // sobrePage.porQue, e [2] foi migrado para lá. Deduplicação, não corte.
+  // O reconhecimento passa a ser trabalho das 6 situações abaixo.
   /** The six situations are FIXED by PRD 13. Descriptions are DRAFT. */
   situations: [
     {
@@ -62,22 +73,37 @@ export const problema = {
   ],
   /** Narrative 3.2 move 3. Do not cut. Without it the section is only uncomfortable. */
   reframe:
-    "Nada disso é consequência de uma decisão errada. É o que acontece quando a operação cresce mais rápido do que as ferramentas que ela foi juntando pelo caminho. E tem solução.",
+    "Nada disso é consequência de uma decisão errada. É o que acontece quando a operação cresce mais rápido que as ferramentas que ela foi juntando pelo caminho. E tem solução.",
 } as const;
 
 export const posicionamento = {
+  /**
+   * Foto de fundo do bloco inteiro, com o texto por cima.
+   *
+   * Enquanto `pending` for verdadeiro a seção renderiza sobre `ground-subtle`,
+   * exatamente como antes. Publicar a foto é remover a flag.
+   */
+  media: {
+    src: "/images/site/posicionamento.avif",
+    alt: "Duas ferramentas que registram a mesma informação sem trocar dados entre si.",
+    brief: "Fundo do bloco inteiro. Fotografia própria, horizontal, de contraste baixo e sem ponto focal no centro, onde fica o texto. Sem marca de cliente, sem dado real. 2400x1200.",
+    width: 2400,
+    height: 1200,
+    pending: false,
+  },
   heading: "O problema não está nos seus sistemas. Está entre eles.",
   body: [
     "A PXTO trabalha nesse espaço: entre as ferramentas, entre os processos, entre o que o software faz e o que a sua operação realmente precisa.",
-    "Começamos entendendo o problema. Depois conectamos sistemas, automatizamos processos, construímos software ou colocamos no ar a presença digital que faltava. O que for necessário para resolver o caso.",
+    // O segundo parágrafo saiu: repetia a headline do hero e antecipava a seção
+    // Soluções, que vem logo abaixo. A mesma lógica vive em solucoesPage.overview.
   ],
 } as const;
 
 export const solucoes = {
   /** FIXED. PRD 14. */
   heading: "Tecnologia para resolver problemas reais.",
-  intro:
-    "Quatro formas de resolver o mesmo tipo de problema. Qual delas se aplica ao seu caso é uma conclusão do diagnóstico, não uma escolha que você precisa fazer antes de conversar.",
+  // O intro saiu: repetia quase palavra por palavra solucoesPage.overview.body[2],
+  // onde o mesmo argumento aparece com mais espaço.
 } as const;
 
 export const comoTrabalhamos = {
@@ -88,31 +114,23 @@ export const comoTrabalhamos = {
     {
       name: "Entendemos",
       lead: "Mapeamos o problema, contexto e objetivo.",
-      detail:
-        "Antes de propor qualquer coisa, precisamos entender como a operação funciona hoje, inclusive as partes que ninguém documentou.",
     },
     {
       name: "Desenhamos",
       lead: "Definimos a melhor abordagem para transformar a necessidade em solução.",
-      detail:
-        "É aqui que decidimos o que construir, o que conectar e o que simplesmente não precisa existir.",
     },
     {
       name: "Construímos",
       lead: "Desenvolvemos a solução utilizando as tecnologias mais adequadas ao problema.",
-      detail: "A tecnologia é escolhida pelo problema, não o contrário.",
     },
     {
       name: "Integramos",
       lead: "Conectamos a solução ao ecossistema existente do cliente quando necessário.",
-      detail:
-        "Uma solução que não conversa com o resto da operação vira mais um sistema isolado.",
     },
     {
       name: "Evoluímos",
       lead: "Monitoramos, ajustamos e evoluímos a solução conforme novas necessidades.",
-      /** No further promise of continuity: the service model is undefined. */
-      detail: null,
+
     },
   ],
   /** Required by PRD 15: never claim every project passes through all five. */
@@ -137,26 +155,22 @@ export const diferenciais = {
   items: [
     {
       title: "Começamos pelo problema",
-      body: "Antes de propor qualquer solução, entendemos o que está acontecendo. Diagnóstico primeiro, tecnologia depois.",
     },
     {
       title: "Um só responsável pelo caminho inteiro",
-      body: "Entender, desenhar, construir, integrar e evoluir. Sem repassar o problema de um fornecedor para outro no meio do caminho.",
     },
     {
       title: "A tecnologia é escolhida pelo problema",
-      body: "Não temos plataforma para defender nem produto para empurrar. A ferramenta certa é a que resolve o seu caso.",
     },
     {
       title: "Construímos o que o problema exige",
-      body: "Nem mais, nem menos. Solução superdimensionada custa caro para construir e mais caro ainda para manter.",
     },
   ],
 } as const;
 
 export const homeCta = {
   heading: "Descreva o problema. A solução é o nosso trabalho.",
-  body: "Você não precisa chegar com uma especificação pronta, nem saber qual tecnologia usar. Conte o que não está funcionando. O resto é conversa.",
+  body: "Você não precisa chegar com uma especificação pronta, nem saber qual tecnologia usar.",
 } as const;
 
 export const homeMeta = {

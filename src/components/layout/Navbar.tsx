@@ -43,7 +43,7 @@ export function Navbar() {
             aria-label="PXTO, página inicial"
             className="inline-flex items-center transition-opacity duration-fast hover:opacity-80"
           >
-            <Logo decorative className="h-10 w-10" />
+            <Logo decorative className="h-7 md:h-8" />
           </Link>
 
           <nav aria-label="Navegação principal" className="hidden md:block">

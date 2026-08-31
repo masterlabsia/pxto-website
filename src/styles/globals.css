@@ -128,7 +128,17 @@
   --container-content: 70rem;     /* 1120px */
   --container-wide: 85rem;        /* 1360px */
 
-  /* Motion. MOTION_INTENSITY 3: state feedback only. */
+  /* Véu sobre foto de fundo.
+     Usa a cor de fundo do próprio tema, e não uma cor fixa, para que a seção
+     não inverta o tema no meio da página. 72% é o valor verificado: garante
+     4.5:1 com tinta primária mesmo na pior foto possível, em ambos os temas.
+     Ver DESIGN_SYSTEM.md 13.2c antes de reduzir. */
+  --color-scrim: color-mix(in srgb, var(--pxto-ground) 72%, transparent);
+
+  /* Deslocamento da revelação de entrada. MOTION_INTENSITY 5. */
+  --reveal-shift: calc(var(--spacing) * 2);
+
+  /* Motion. MOTION_INTENSITY 5: feedback de estado + revelação de entrada. */
   --duration-fast: 120ms;
   --duration-base: 160ms;
   --duration-slow: 180ms;
@@ -202,5 +212,61 @@
   /* Optical hanging rule used by the process sequence and the record list. */
   .pxto-rule-top {
     border-block-start: 1px solid var(--color-rule);
+  }
+
+  /*
+   * Revelação de entrada. MOTION_INTENSITY 5.
+   *
+   * Por que CSS e não IntersectionObserver: o argumento decisivo é o modo de
+   * falha, não os bytes. IO exige que o estado inicial seja "escondido", e
+   * esconder conteúdo até um script rodar contradiz a regra de que o conteúdo
+   * está presente quando a página está. Aqui, navegador sem suporte a view()
+   * simplesmente ignora a regra e entrega a página estática.
+   *
+   * DUPLO PORTÃO, e a ordem importa:
+   *   prefers-reduced-motion: no-preference  a regra nem é escrita
+   *   @supports (animation-timeline: view()) sem suporte, nada é aplicado
+   *
+   * O portão de reduced-motion NÃO é redundante com o bloco !important lá
+   * embaixo. Animação por timeline é progress-based: a duração é ignorada, o
+   * progresso vem da posição de rolagem. Zerar animation-duration não desliga
+   * nada. A defesa correta é não escrever a regra.
+   *
+   * animation-range usa `entry`, não `cover`: um elemento mais alto que a
+   * viewport nunca completaria a faixa e ficaria travado em opacidade parcial,
+   * que é falha de contraste e não detalhe estético.
+   *
+   * fill-mode both faz o que já está visível no carregamento renderizar em
+   * opacidade 1 de imediato, então a primeira dobra se protege sozinha.
+   *
+   * Sem will-change: com mais de dez elementos animados, promover todos a
+   * camada custa mais do que economiza. Opacidade e translate já são
+   * compositados.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .pxto-reveal,
+      .pxto-reveal-stagger > * {
+        animation: pxto-reveal-in both var(--ease-out);
+        animation-timeline: view();
+        animation-range: entry 0% entry 45%;
+      }
+    }
+  }
+}
+
+/*
+ * Só opacity e translate. `translate` é propriedade independente, escolhida
+ * para não conflitar com nenhum transform de hover.
+ * Movimento por transform não conta para CLS, então a contribuição é zero.
+ */
+@keyframes pxto-reveal-in {
+  from {
+    opacity: 0;
+    translate: 0 var(--reveal-shift);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }

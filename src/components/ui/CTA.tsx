@@ -29,7 +29,7 @@ export function CTA({
       className="border-t border-rule bg-ground-subtle py-14 md:py-16 lg:py-20"
     >
       <Container width="wide">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="pxto-reveal-stagger grid grid-cols-1 gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Heading level={2} size="section" id={headingId}>
               {heading}

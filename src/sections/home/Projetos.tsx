@@ -41,7 +41,10 @@ export function Projetos() {
           </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:mt-16">
+        {/* Três colunas em lg pelo mesmo motivo de /projetos: em duas colunas o
+            terceiro card fica órfão. O formato do card não muda, só a contagem
+            de colunas, que é decisão de página. */}
+        <div className="pxto-reveal-stagger mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}

@@ -37,7 +37,7 @@ these.
 
 ```
 DESIGN_VARIANCE:  6
-MOTION_INTENSITY: 3
+MOTION_INTENSITY: 5
 VISUAL_DENSITY:   5
 ```
 
@@ -358,11 +358,27 @@ imitating glass.**
 
 `SPECIFIED`, following the skill's Section 3.C.
 
-- **One family for the whole project.** Candidates: Phosphor, Hugeicons, Radix
-  Icons, Tabler. `lucide-react` is discouraged and used only if PXTO asks.
-- **Never hand-roll SVG icon paths.** If a glyph is missing, compose from
-  primitives or add a second library, and then standardise on it.
-- **Stroke width standardised globally**, 1.5.
+- **Family: Heroicons** (`@heroicons/react`), set `24/outline`. Decidido em
+  29/08/2026 pela PXTO.
+
+  Heroicons não constava na lista herdada da Taste Skill (Phosphor, Hugeicons,
+  Radix Icons, Tabler). Foi adotado porque **satisfaz nativamente os requisitos
+  que essa lista existia para garantir**, e é o único que satisfaz:
+
+  | Requisito deste design system | Heroicons `24/outline` |
+  | --- | --- |
+  | Stroke padronizado em 1.5 | `strokeWidth: 1.5` por padrão |
+  | Cor herdada do tema | `stroke: "currentColor"` por padrão |
+  | Sem dimensão fixa, só `viewBox` | Sim |
+  | Ícone decorativo não anunciado | `aria-hidden="true"` por padrão |
+
+  Nenhuma das quatro opções listadas vem com stroke 1.5 por padrão. Na hierarquia
+  de prioridade do projeto, o Design System (4) está acima da Taste Skill (5), e
+  a regra substantiva é o stroke 1.5, não a lista de nomes. MIT, 324 ícones.
+
+- **Um único set.** `24/outline`, dimensionado por classe (`size-4`, `size-5`).
+  Não misturar com os sets `solid`, `20` ou `16`.
+- **Never hand-roll SVG icon paths.**
 - Sizes: 16, 20, 24. Aligned optically to the text baseline, not boxed.
 - Icons are `aria-hidden` when adjacent to a text label. Icon-only controls carry
   an accessible name.
@@ -370,6 +386,16 @@ imitating glass.**
 
 **Where icons are permitted:** form state, disclosure controls, external link
 indicators, navigation affordances.
+
+**Em uso hoje**, e só aqui:
+
+| Componente | Ícone | Justificativa |
+| --- | --- | --- |
+| `FormStatus` | `CheckCircleIcon`, `ExclamationTriangleIcon` | Cor não pode ser o único sinal (WCAG 1.4.1). O ícone é a pista redundante |
+| `ArrowLink` | `ArrowRightIcon` | Afordância de navegação. Substituiu o glifo `&rarr;`, que nunca alinhava opticamente |
+
+O toggle do menu mobile **continua em texto** ("Menu" / "Fechar"). Texto é mais
+claro que um hambúrguer e não custa nada.
 
 **Where icons are banned:** as decoration beside every section heading, as a
 feature-grid ornament, as a substitute for a real image, or as a brand
@@ -409,6 +435,105 @@ The intersection is narrow and non-negotiable in both directions.
 - Formats: AVIF or WebP with fallback. Explicit `width` and `height` to prevent
   layout shift. Lazy loading below the fold, eager for the hero.
 
+### 13.2b Como uma seção recebe imagem
+
+`SPECIFIED`
+
+A unidade reutilizável é a **mídia**, não a seção. Seções têm proporções de grid
+genuinamente diferentes, e um componente de seção com mídia viraria um
+god-component com uma prop por variação.
+
+```
+src/components/ui/Media.tsx      resolve imagem real vs slot pendente
+src/components/ui/ImageSlot.tsx  o slot rotulado, usado só pelo Media
+src/content/*.ts                 dono da referência do ativo
+```
+
+**A seção continua dona do seu layout.** O `Media` só entrega o quadro pronto.
+
+**Ligar e desligar é edição de conteúdo, não de componente.** Um campo `media`
+opcional no conteúdo da seção:
+
+| Estado do conteúdo | O que renderiza |
+| --- | --- |
+| Sem campo `media` | A composição sem imagem da seção |
+| `media` com `pending: true` | Split assimétrico com o slot rotulado |
+| `media` com `pending: false` | Split assimétrico com `next/image` |
+
+Publicar a foto é remover uma flag. Remover a foto é apagar o campo. Em nenhum
+dos casos o componente muda. `Posicionamento` implementa as duas composições e
+serve de referência.
+
+**`alt` e `brief` são campos diferentes.** `alt` é texto acessível e descreve a
+imagem. `brief` descreve o que precisa ser produzido, aparece somente no slot
+pendente, e nunca vira texto acessível. Sem separar, um dos dois fica errado:
+"Imagem principal, 1600x1100" é briefing útil e alt péssimo.
+
+**`sizes` é obrigatório** quando a imagem existe. Sem ele o navegador baixa a
+maior variante em qualquer viewport.
+
+**O `check-assets` valida imagem de seção**, não só de projeto. Tirar `pending`
+sem o arquivo existir reprova o build.
+
+**Cuidado com o teto de zigzag** (Part I.7): no máximo duas seções consecutivas
+em split assimétrico. Adicionar mídia a uma seção pode estourar esse limite sem
+que ninguém perceba.
+
+### 13.2c Foto de fundo em bloco inteiro
+
+`SPECIFIED`. Componente: `MediaBackdrop`.
+
+Foto ocupando a seção inteira, com o texto por cima. Três decisões, nenhuma
+estética.
+
+**1. O véu usa a cor de fundo do próprio tema, não uma cor fixa.**
+
+Um bloco com foto normalmente vira "sempre escuro", o que seria inversão de tema
+no meio da página, proibida pelo theme lock (Part I.3.3 regra 3). Com o véu
+seguindo o tema, o claro fica com texto escuro sobre foto clareada e o escuro
+com texto claro sobre foto escurecida. A paridade de hierarquia se mantém.
+
+Token: `--color-scrim`, definido como a cor de fundo do tema a 72%.
+
+**2. A opacidade é 0.72, verificada e não escolhida por gosto.**
+
+Pior caso possível, medido no browser com foto de teste totalmente preta:
+
+| Tema | Fundo efetivo | Contraste com tinta primária |
+| --- | --- | --- |
+| Claro | `rgb(181,181,181)` | **9,19:1** |
+| Escuro | `rgb(10,11,12)` | **16,49:1** |
+
+Reduzir a opacidade exige verificar contra a foto real. Abaixo de 0.65 reprova
+em AA no tema escuro.
+
+**3. O estado pendente não renderiza placeholder.**
+
+Sem foto, o bloco fica exatamente como estava. Um slot rotulado ocupando uma
+seção inteira seria pior que a ausência da foto.
+
+#### Regra de texto sobre foto
+
+**Dentro de `MediaBackdrop` o corpo usa tinta primária, nunca
+`ink-secondary`.** A secundária reprova em AA sobre foto em qualquer opacidade
+de véu, medido:
+
+| Opacidade | Secundária, tema claro | Secundária, tema escuro |
+| --- | --- | --- |
+| 0.60 | 2,17:1 | 1,64:1 |
+| 0.72 | 3,10:1 | 2,55:1 |
+| 0.80 | 3,84:1 | 3,44:1 |
+
+Nenhuma alcança 4,5:1. **A hierarquia vem de tamanho e peso, não de cor.**
+
+#### O véu e a proibição de gradiente
+
+PRD 33 proíbe uso pesado de gradiente. O véu é uma camada sólida e uniforme, e é
+mecanismo de acessibilidade, não decoração: sem ele o contraste sobre foto
+arbitrária não é garantido. A mesma lógica que permite movimento com função
+(§32.6) permite este véu. Um véu em degradê, para efeito visual, continua
+proibido.
+
 ### 13.3 Blocked
 
 `BLOCKED`. **PXTO has no cleared images.** See Part IV.3. Until assets exist,
@@ -417,11 +542,53 @@ for PXTO, which is what the skill prescribes as the last resort.
 
 ## 14. Motion principles
 
-`SPECIFIED`. `MOTION_INTENSITY: 3`.
+`SPECIFIED`. `MOTION_INTENSITY: 5`. Elevado de 3 em 29/08/2026, decisão da PXTO,
+para sustentar a narrativa visual da home.
+
+### 14.0 Revelação de entrada
+
+Uma única adição em relação ao dial 3: elementos revelam ao entrar na viewport,
+com deslocamento de 8px e opacidade.
+
+**Implementada em CSS puro**, `animation-timeline: view()`, em
+`src/styles/globals.css`. Zero JavaScript, zero client component novo. O
+argumento não é peso, é modo de falha: IntersectionObserver exigiria esconder o
+conteúdo até um script rodar, o que contradiz 14.2. Navegador sem suporte a
+`view()` recebe a página estática, que é o estado aprovado anteriormente.
+
+**Duplo portão, e a ordem importa:**
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) { ... }
+}
+```
+
+O portão de reduced-motion **não é redundante** com o bloco `!important` de
+14.3. Animação por timeline é progress-based: a duração é ignorada e o progresso
+vem da posição de rolagem. Zerar `animation-duration` não desliga nada. A defesa
+correta é não escrever a regra.
+
+**`animation-range: entry 0% entry 45%`**, nunca `cover`: um elemento mais alto
+que a viewport nunca completaria a faixa e ficaria travado em opacidade parcial,
+que é falha de contraste, não detalhe estético. `fill-mode: both` faz o que já
+está visível no carregamento renderizar em opacidade 1 de imediato.
+
+**Onde nunca aplicar:**
+
+1. **No Hero.** É candidato a LCP, e o Chrome atrasa LCP em elemento com
+   opacidade abaixo de 1.
+2. **Na raiz do `MediaBackdrop`.** A foto entraria junto com o texto. Aplicar no
+   bloco de texto interno: a foto está presente, as palavras chegam.
+3. **No interior de um diagrama.** Setas percorrendo o fluxo é scroll-scrub, o
+   que levaria o dial para 7. O diagrama é revelado como bloco único.
+
+**Sem `will-change`.** Com mais de dez elementos animados, promover todos a
+camada custa mais do que economiza.
 
 ### 14.1 What exists
 
-State feedback only:
+State feedback, mais a revelação de 14.0:
 
 | Interaction | Duration | Easing |
 | --- | --- | --- |
@@ -436,8 +603,10 @@ Animated properties are limited to `opacity`, `transform`, `background-color`,
 
 ### 14.2 What does not exist
 
-- **No scroll-triggered entrance animation anywhere.** Content is present when
-  the page is.
+- **Nenhum scroll-scrub, nenhum pinning, nenhum parallax.** A revelação de 14.0
+  é a única animação disparada por posição, e ela move só opacidade e translate.
+  O conteúdo continua presente quando a página está: sem o mecanismo, tudo
+  renderiza normalmente.
 - No parallax, no pinning, no scroll hijack.
 - No perpetual loops, no marquee, no shimmer, no typewriter.
 - No page transition.
@@ -450,8 +619,12 @@ Animated properties are limited to `opacity`, `transform`, `background-color`,
    storytelling, feedback, or state transition. "It looks good" is not an answer.
 2. **Motion claimed is motion shown.** At intensity 3 the page is honestly still.
    Nothing half-built.
-3. `prefers-reduced-motion: reduce` removes transform and opacity transitions and
-   leaves instant state changes. Colour transitions may remain.
+3. `prefers-reduced-motion: reduce` remove transições de transform e opacidade e
+   deixa mudanças de estado instantâneas. Transições de cor podem permanecer.
+   **Para a revelação de 14.0 a regra é mais forte:** ela não é sequer escrita
+   sob reduced-motion, porque zerar duração não desliga animação por timeline.
+   O gate `audit:a11y` verifica `animationName` e `animationTimeline`, não só
+   `transitionDuration`.
 4. **Tactile feedback** on `:active` is a 1px translate or `scale(0.98)`, not a
    colour flash.
 

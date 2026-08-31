@@ -194,22 +194,80 @@ for (const scheme of ["light", "dark"]) {
   }
 }
 
-// --- Reduced motion: transitions must be neutralised ---
+// --- Reduced motion -------------------------------------------------------
+// Cobre transição E animação. Animação com `animation-timeline: view()` é
+// progress-based: a duração é ignorada, o progresso vem da posição de rolagem.
+// O bloco !important do globals.css zera duration e NÃO desliga esse mecanismo.
+// A defesa correta é não escrever a regra sob reduced-motion, e este gate é o
+// que garante isso.
 const rmCtx = await browser.newContext({ reducedMotion: "reduce", viewport: { width: 1280, height: 900 } });
 const rmPage = await rmCtx.newPage();
 await rmPage.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+// Rola a página inteira: uma animação por timeline só se manifesta ao rolar.
+await rmPage.evaluate(async () => {
+  const step = window.innerHeight;
+  for (let y = 0; y < document.body.scrollHeight; y += step) {
+    window.scrollTo(0, y);
+    await new Promise((r) => setTimeout(r, 60));
+  }
+  window.scrollTo(0, 0);
+});
 await rmPage.waitForTimeout(300);
-const longTransitions = await rmPage.evaluate(() =>
-  [...document.querySelectorAll("*")]
-    .filter((el) => {
-      const d = getComputedStyle(el).transitionDuration;
-      return d && d.split(",").some((v) => parseFloat(v) > 0.05);
-    })
-    .slice(0, 5)
-    .map((el) => el.tagName.toLowerCase()),
-);
-for (const t of longTransitions) fail("/ [reduced-motion]", "reduced-motion", `transition still active on ${t}`);
+
+const motionLeaks = await rmPage.evaluate(() => {
+  const out = { transitions: [], animations: [], timelines: [] };
+  for (const el of document.querySelectorAll("*")) {
+    const cs = getComputedStyle(el);
+    const tag = el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.split(" ")[0] : "");
+    const d = cs.transitionDuration;
+    if (d && d.split(",").some((v) => parseFloat(v) > 0.05)) out.transitions.push(tag);
+    if (cs.animationName && cs.animationName !== "none") out.animations.push(`${tag} (${cs.animationName})`);
+    const tl = cs.animationTimeline;
+    if (tl && tl !== "auto" && tl !== "none") out.timelines.push(`${tag} (${tl})`);
+  }
+  for (const k of Object.keys(out)) out[k] = [...new Set(out[k])].slice(0, 5);
+  return out;
+});
+for (const t of motionLeaks.transitions) fail("/ [reduced-motion]", "reduced-motion", `transição ativa em ${t}`);
+for (const a of motionLeaks.animations) fail("/ [reduced-motion]", "reduced-motion", `animação ativa em ${a}`);
+for (const t of motionLeaks.timelines) fail("/ [reduced-motion]", "reduced-motion", `animation-timeline ativa em ${t}`);
 await rmCtx.close();
+
+// --- Texto sobre foto: verificação por identidade, não por cálculo ---------
+// O cálculo de contraste tem falso positivo dentro de MediaBackdrop: o walker
+// encontra o véu (rgba com alpha) e o parser descarta o alpha, medindo contra a
+// cor pura do tema. Aqui a checagem é exata: dentro de [data-media-backdrop] a
+// cor de texto tem que ser a tinta primária, nunca a secundária.
+for (const scheme of ["light", "dark"]) {
+  const bdCtx = await browser.newContext({ colorScheme: scheme, viewport: { width: 1280, height: 900 } });
+  const bdPage = await bdCtx.newPage();
+  await bdPage.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+  await bdPage.waitForTimeout(300);
+  const offenders = await bdPage.evaluate(() => {
+    const root = getComputedStyle(document.documentElement);
+    const ink = root.getPropertyValue("--color-ink").trim();
+    const bad = [];
+    for (const host of document.querySelectorAll("[data-media-backdrop]")) {
+      for (const el of host.querySelectorAll("p, li, dd, span, h1, h2, h3, h4")) {
+        if (!(el.textContent ?? "").trim()) continue;
+        const probe = document.createElement("span");
+        probe.style.color = "var(--color-ink)";
+        host.appendChild(probe);
+        const expected = getComputedStyle(probe).color;
+        host.removeChild(probe);
+        const actual = getComputedStyle(el).color;
+        if (actual !== expected) {
+          bad.push(`${el.tagName.toLowerCase()} "${(el.textContent ?? "").trim().slice(0, 30)}" = ${actual}, esperado ${expected}`);
+        }
+      }
+    }
+    return { bad: bad.slice(0, 5), ink };
+  });
+  for (const b of offenders.bad) {
+    fail(`/ [${scheme}]`, "texto-sobre-foto", `${b}. Sobre foto usa tinta primária, nunca secundária`);
+  }
+  await bdCtx.close();
+}
 
 await browser.close();
 
@@ -218,4 +276,4 @@ if (failures.length > 0) {
   for (const f of failures) console.error("  " + f);
   process.exit(1);
 }
-console.log(`a11y audit: ok (${ROUTES.length} routes, light and dark, contrast + focus + headings + landmarks + targets + labels + reduced motion)`);
+console.log(`a11y audit: ok (${ROUTES.length} rotas, claro e escuro: contraste, foco, headings, landmarks, alvos, labels, reduced-motion com animação e timeline, texto sobre foto)`);

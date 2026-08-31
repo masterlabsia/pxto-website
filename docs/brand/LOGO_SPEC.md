@@ -1,13 +1,12 @@
 # PXTO. Especificação dos arquivos de marca
 
-**Versão:** 1.0
-**Data:** 28/08/2026
-**Para:** quem for recriar as logos
+**Versão:** 2.0
+**Data:** 31/08/2026
+**Para:** quem produzir ou substituir arquivos de marca
 **Status:** briefing técnico. Não define identidade, define requisitos de arquivo.
 
-> Este documento não decide como a marca deve ser. Ele registra o que os
-> arquivos precisam cumprir para funcionar no site, com base no que foi medido
-> nos arquivos entregues em 28/08/2026.
+> A v1.0 descrevia a marca quadrada com "pxto" vazado, substituída em 30/08/2026.
+> Este documento descreve o que existe hoje e o que ainda falta.
 
 ---
 
@@ -15,226 +14,193 @@
 
 | Arquivo | Conteúdo | Situação |
 | --- | --- | --- |
-| `public/logo.svg` | Quadrado sólido com "pxto" vazado | Aplicado na navbar e no rodapé. **Ilegível abaixo de 64px** |
-| `public/favicon.png` | "x" turquesa sobre quadrado preto, 1254x1254, 457 KB | Redimensionado para os ícones do site. **O master é grande demais para ficar em `public/`** |
+| `public/logo.svg` | Wordmark horizontal "pxto", letras pretas e "x" verde `#308459`. Proporção 2.24:1 | **Em uso** na navbar e no rodapé |
+| `public/favicon.png` | "x" isolado turquesa `#009D88` sobre quadrado preto, 1254x1254, 457 KB | Master. Os ícones do site são gerados dele |
+| `src/app/icon.png` | 64x64, 1,8 KB | Favicon, gerado |
+| `src/app/apple-icon.png` | 180x180, 7,6 KB | Ícone de aplicativo, gerado |
 
-São duas marcas diferentes, e isso está certo: uma assinatura completa e um
-ícone. O problema está na execução dos arquivos, não no sistema.
-
----
-
-## 2. Os dois problemas medidos
-
-### 2.1 O wordmark não sobrevive em tamanho pequeno
-
-Teste de legibilidade do `logo.svg`, renderizado e medido:
-
-| Tamanho | Leitura |
-| --- | --- |
-| 24px | "p to" |
-| 32px | "p to" |
-| 40px | "p to" |
-| 48px | "p to" |
-| 64px | "x" visível, fraco |
-| 96px | legível |
-
-**A navbar usa 40px**, que é o maior tamanho compatível com o teto de 80px de
-altura da navegação. Nesse tamanho a marca lê "p to".
-
-Causa: o traço do "x" é fino demais em relação ao peso das outras letras. Num
-wordmark, todos os traços precisam de peso óptico comparável, senão o mais fino
-desaparece primeiro.
-
-### 2.2 Os arquivos são vetorização automática, não vetor nativo
-
-O `logo.svg` tem a assinatura de um autotrace: um grupo com
-`transform="translate(0,1254) scale(0.1,-0.1)"` e um path único com 62
-subcaminhos, vários deles resíduos de um pixel. O ruído fica visível a partir
-de 64px, principalmente nas bordas do "x".
-
-Consequências: arquivo maior que o necessário, bordas sujas ao ampliar, e
-impossibilidade de ajustar traço ou espaçamento sem redesenhar.
+São duas marcas: uma assinatura horizontal e um ícone. O sistema está certo.
 
 ---
 
-## 3. O que precisa ser entregue
+## 2. O que a marca nova resolveu
 
-### 3.1 Marca principal (wordmark)
+**A legibilidade em tamanho pequeno.** A marca anterior era um quadrado com
+"pxto" vazado, e o traço do "x" era fino demais: media-se "p to" até 48px, e o
+"x" só aparecia a partir de 64px. Na navbar, a 40px, a marca lia errado.
 
-| Requisito | Valor |
-| --- | --- |
-| Formato | SVG, vetor nativo, **não vetorização de imagem** |
-| Construção | Caminhos limpos, sem resíduos, sem grupos de transformação aninhados |
-| `viewBox` | Presente e ajustado ao conteúdo |
-| Cor | **Um único preenchimento**, para que o site possa trocar por `currentColor` |
-| Sem | `width`/`height` fixos, prolog XML, DOCTYPE, IDs gerados, `<style>` embutido |
-| Tamanho de arquivo | Alvo abaixo de 3 KB |
-
-### 3.2 Variante para tamanho pequeno
-
-**Este é o item que falta e que resolve o problema da navbar.**
-
-Uma versão do wordmark ajustada para funcionar entre 24 e 48px:
-
-- Traço do "x" com peso comparável ao do "p", "t" e "o"
-- Espaçamento entre letras ligeiramente aberto
-- Detalhes que somem nesse tamanho, simplificados ou removidos
-
-É prática normal de manual de marca. Um logotipo bem construído tem ao menos
-duas versões de desenho, não apenas dois tamanhos do mesmo arquivo.
-
-**Critério de aceite:** renderizado a 32px, as quatro letras precisam ser
-distinguíveis.
-
-### 3.3 Ícone
-
-O "x" isolado já cumpre esse papel e funciona bem. O que falta:
-
-| Requisito | Valor |
-| --- | --- |
-| Formato | **SVG**, além do PNG |
-| Fundo | Versão com fundo e versão com fundo transparente |
-| Legibilidade | Verificar a 16px, que é o tamanho real na aba do navegador |
-
-O SVG do ícone importa porque hoje os ícones do site são gerados por
-redimensionamento de um PNG. Com vetor, ficam nítidos em qualquer densidade de
-tela.
-
-### 3.4 Conjunto completo
-
-| Arquivo | Uso |
-| --- | --- |
-| `logo.svg` | Assinatura, tamanhos grandes |
-| `logo-compact.svg` | Navbar e usos entre 24 e 48px |
-| `icon.svg` | Favicon e ícone de aplicativo |
-| `icon-transparent.svg` | Sobreposição em fundos variados |
-| Versão monocromática | Uma cor, para impressão e fundos difíceis |
+O wordmark horizontal é legível a **28px de altura**, que é o tamanho em uso na
+navbar. Problema encerrado.
 
 ---
 
-## 4. Requisitos de cor
+## 3. O que ela trouxe, e precisa de decisão
 
-O site tem dois temas e ambos precisam funcionar.
+### 3.1. Três cores de marca concorrendo
 
-### 4.1 Como o site resolve isso hoje
+| Onde | Cor | Contraste sobre branco |
+| --- | --- | --- |
+| Logo | Verde `#308459` | ~4,0:1 |
+| Favicon | Turquesa `#009D88` | ~3,4:1 |
+| Accent do site | Azul `#1B4DE4` | passa AA |
 
-O `logo.svg` entregue vinha com `fill="#000000"` fixo, e **desaparecia sobre o
-fundo escuro** (`#0e0f11`). A correção aplicada foi trocar por `currentColor`:
-o quadrado assume a cor do texto e o fundo da página aparece através das letras
-vazadas.
+Na navbar as três aparecem ao mesmo tempo: logo verde à esquerda, botão azul à
+direita, e o ícone turquesa na aba do navegador.
 
-Isso só funciona porque a marca usa **um único preenchimento**. Se a nova versão
-tiver duas ou mais cores, essa solução deixa de funcionar e será preciso entregar
-uma variante por tema.
+**Isso precisa de decisão da PXTO, não de código.** E tem consequência técnica:
 
-**Recomendação:** manter a marca em um único preenchimento.
+- Se o **verde** virar o accent, `#308459` sobre branco dá cerca de 4,0:1. Passa
+  raspando para texto de corpo e **todos os pares precisam ser revalidados** em
+  AA antes da troca.
+- Se o **turquesa** virar o accent, ele **reprova** para texto de corpo e links
+  exigiriam um tom mais escuro.
+- Se o **azul** permanecer, logo e favicon precisam ser refeitos.
 
-### 4.2 Conflito de cor a resolver
+### 3.2. Duas cores no wordmark, e o que isso exige
 
-| Onde | Cor |
+O wordmark tem dois papéis de cor: letras e "x". Isso é bom, e o site já trata:
+
+- **Letras: `currentColor`.** Seguem a tinta do tema, funcionam no claro e no
+  escuro sem um segundo arquivo.
+- **"x": cor da marca**, fixa nos dois temas.
+
+**Restrição para qualquer versão futura: no máximo duas cores, e a segunda
+precisa vir declarada no arquivo.** O gerador reprova com três ou mais, porque
+aí o tema não fecha sem entregar variantes por tema.
+
+O arquivo entregue veio com as **letras sem cor declarada**, o que as renderiza
+pretas por padrão e as faria sumir no tema escuro. O gerador trata isso: path
+sem cor declarada vira `currentColor`.
+
+### 3.3. A tipografia da marca
+
+O arquivo registra a fonte original: **Aeonik Medium**, agora vetorizada.
+
+Isso é informação de marca que não existia em lugar nenhum. A tipografia do site
+ainda está marcada como candidata (Geist). **Se Aeonik for a fonte da marca, é
+um argumento forte para ser também a do site**, e a decisão pertence ao mesmo
+lote das cores.
+
+---
+
+## 4. Como trocar a marca
+
+```bash
+# 1. substitua o arquivo
+cp nova-marca.svg public/logo.svg
+
+# 2. regenere o módulo que o site lê
+npm run build:logo
+```
+
+**Por que o passo 2 existe.** A geometria vive em `src/lib/logo-paths.ts`, para
+que o `<symbol>` seja declarado uma vez por página e reutilizado por `<use>`, em
+vez de repetir os paths na navbar e no rodapé. Sem o passo 2, trocar o SVG não
+muda nada no site: foi exatamente o que aconteceu em 30/08/2026.
+
+O gerador reprova, em vez de corrigir em silêncio, quando encontra:
+
+- ausência de `viewBox`;
+- nenhum `<path>`;
+- mais de uma cor de acento;
+- `transform` em `<path>` individual, que a extração não preserva.
+
+---
+
+## 5. Requisitos de arquivo
+
+### 5.1. A armadilha do transform
+
+**O erro mais provável, e o que já aconteceu.** O Inkscape exporta o desenho em
+coordenadas cruas e o reposiciona com um `transform` no grupo de camada:
+
+```xml
+<g id="layer1" transform="translate(-112.4804,-127.89224)">
+```
+
+Extrair só os `<path>` e descartar esse transform desloca o desenho: o SVG
+original renderiza certo e **a versão do site aparece cortada na direita e na
+base**. O gerador agora preserva o transform dos grupos. Se o transform estiver
+em paths individuais, ele reprova e pede o achatamento no editor.
+
+### 5.2. Para qualquer SVG entregue
+
+- Vetor nativo, **não vetorização automática de imagem**
+- `viewBox` presente e coerente com o conteúdo
+- Sem prolog XML, DOCTYPE, `width` e `height` fixos
+- Sem `<style>` embutido, sem IDs de editor (colidem quando o SVG é inserido
+  inline na página)
+- Sem `<image>` embutido: um SVG que contém bitmap não é vetor
+- No máximo duas cores, a segunda declarada explicitamente
+- Alvo abaixo de 4 KB
+
+### 5.3. Para PNG
+
+- Master em tamanho razoável, **não 1254x1254 com 457 KB**
+- Canal alpha quando houver transparência
+- 512x512 basta como master de ícone
+
+---
+
+## 6. O que ainda falta
+
+| Item | Situação |
 | --- | --- |
-| `favicon.png` entregue | Turquesa, medido em **`#009D88`** |
-| Accent do site hoje | Azul **`#1B4DE4`**, marcado como candidato |
-
-**São cores diferentes, e uma delas está errada.** O site usa o azul em links,
-foco, estados ativos e botões primários. O ícone da aba usa turquesa. Hoje um
-visitante vê duas cores de marca concorrendo.
-
-Isso precisa de decisão da PXTO, não de código:
-
-1. **O turquesa é a cor da marca.** Nesse caso o accent do design system muda
-   para `#009D88` e todos os pares de contraste precisam ser revalidados em AA.
-   O turquesa sobre branco dá cerca de 3,4:1, o que **reprova** para texto de
-   corpo e exige um tom mais escuro para links.
-2. **O azul é a cor da marca.** Nesse caso o ícone precisa ser refeito em azul.
-3. **O turquesa é só do ícone.** Possível, mas raro e difícil de sustentar.
-
-Enquanto não houver decisão, o site segue com o azul candidato e o ícone com
-turquesa, e a inconsistência permanece visível.
-
----
-
-## 5. Requisitos técnicos
-
-Para qualquer SVG entregue:
-
-- Sem prolog XML nem DOCTYPE
-- Sem `width` e `height` fixos, apenas `viewBox`
-- Sem `<style>` embutido, sem classes, sem IDs gerados por editor. IDs colidem
-  quando o SVG é inserido em linha na página
-- Sem `<image>` embutido. Um SVG que contém um bitmap não é vetor
-- Sem metadados de editor, camadas ocultas ou objetos fora da área
-- Caminhos com números arredondados, três casas decimais bastam
-- Passar por otimização (SVGO ou equivalente) antes da entrega
-
-Para PNG:
-
-- Entregar o master em tamanho razoável, **não 1254x1254 com 457 KB**
-- Com canal alpha quando houver transparência
-- 512x512 é suficiente como master de ícone
-
----
-
-## 6. Espaçamento e uso
-
-Ainda não definido, e faz falta:
-
-- **Área de respiro:** distância mínima entre a marca e qualquer outro elemento,
-  expressa em fração da própria marca
-- **Tamanho mínimo:** por meio, impresso e em tela
-- **Fundos permitidos:** claro, escuro, sobre imagem
-- **Usos proibidos:** distorção, rotação, troca de cor, contorno, sombra,
-  recomposição das letras
+| **Decisão de cor da marca** | Três cores concorrendo. Ver 3.1. É o item mais urgente |
+| **Versão monocromática** | Não existe. Necessária para impressão e fundos difíceis |
+| **Ícone em SVG** | Só existe em PNG. Vetor deixaria os ícones nítidos em qualquer densidade |
+| **Ícone com fundo transparente** | Só existe a versão com quadrado preto |
+| **Área de respiro** | Não definida. Distância mínima entre a marca e qualquer outro elemento, em fração da própria marca |
+| **Tamanho mínimo** | Medido em 28px de altura para tela. Falta definir para impresso |
+| **Usos proibidos** | Não documentados: distorção, rotação, troca de cor, contorno, sombra, recomposição das letras |
 
 ---
 
 ## 7. Como validar antes de entregar
 
-O site tem um teste de tamanho pronto. Depois de substituir os arquivos:
-
 ```bash
-npm run build
-npx next start -p 5600
-npm run audit          # inclui contraste em ambos os temas
+npm run build:logo   # reprova arquivo malformado
+npm run check        # typecheck, lint, ativos, build
+npm run audit        # inclui contraste computado nos dois temas
 ```
 
-E a checagem visual mínima:
+Checagem visual mínima:
 
-1. Renderizar o wordmark a 24, 32, 40, 48, 64 e 96px. **As quatro letras
-   precisam ser distinguíveis a partir de 32px.**
-2. Renderizar sobre `#fcfcfc` e sobre `#0e0f11`. A marca precisa aparecer nos
-   dois.
-3. Renderizar o ícone a 16px e conferir se ainda é reconhecível.
+1. Renderizar a 24, 32, 48 e 96px de **altura**. A marca é horizontal: dimensione
+   por altura, nunca force largura e altura juntas, que distorce.
+2. Renderizar sobre `#fcfcfc` e sobre `#0e0f11`. **Precisa aparecer nos dois.**
+3. Conferir se o desenho inteiro cabe no `viewBox`, sem corte na direita nem na
+   base. É a falha de 5.1.
 4. Conferir o contraste da cor da marca contra os dois fundos, em AA.
 
 ---
 
 ## 8. Checklist de entrega
 
-- [ ] `logo.svg`, vetor nativo, preenchimento único, abaixo de 3 KB
-- [ ] `logo-compact.svg`, legível a 32px
-- [ ] `icon.svg`, com e sem fundo
+- [x] Wordmark em SVG, vetor nativo
+- [x] Legível a 28px de altura
+- [x] Funciona nos dois temas
+- [x] No máximo duas cores
+- [ ] **Decisão sobre a cor da marca: verde, turquesa ou azul**
+- [ ] Decisão sobre a tipografia: Aeonik é a fonte da marca e do site?
 - [ ] Versão monocromática
-- [ ] Master PNG do ícone, 512x512, com alpha
-- [ ] Decisão sobre a cor da marca: turquesa ou azul
-- [ ] Área de respiro e tamanho mínimo definidos
+- [ ] Ícone em SVG, com e sem fundo
+- [ ] Master PNG do ícone em 512x512 com alpha
+- [ ] Área de respiro e tamanho mínimo impresso
 - [ ] Usos proibidos documentados
-- [ ] Todos os SVGs otimizados e sem metadados de editor
 
 ---
 
-## 9. O que o site faz enquanto isso
+## 9. O que o site faz hoje
 
 | Item | Estado |
 | --- | --- |
-| Navbar | Usa `logo.svg` a 40px. **Lê "p to".** Trocar por `logo-compact.svg` quando existir |
-| Rodapé | Usa `logo.svg` a 56px. Aceitável |
-| Favicon | Gerado do `favicon.png` a 64px e 180px. Funciona |
-| Tema escuro | Resolvido por `currentColor` |
-| Accent | Azul candidato `#1B4DE4`, em conflito com o turquesa do ícone |
-| `public/favicon.png` | 457 KB servidos publicamente sem uso. **Pode sair de `public/`**, os ícones já são gerados |
+| Navbar | Wordmark a 28px em mobile, 32px em desktop. Legível |
+| Rodapé | Wordmark a 36px |
+| Favicon | Gerado do PNG a 64px e 180px |
+| Tema escuro | Resolvido: letras em `currentColor`, "x" na cor da marca |
+| Accent do site | Azul `#1B4DE4`, candidato, **em conflito com o verde do logo** |
+| `public/favicon.png` | 457 KB servidos publicamente sem uso. Pode sair de `public/` |
 
-Voltar ao wordmark em texto no cabeçalho, até existir a variante compacta, é uma
-linha em `src/components/layout/Navbar.tsx`.
-
-O limiar de legibilidade medido está registrado em `src/components/ui/Logo.tsx`.
+O pipeline de geração está em `scripts/build-logo.mjs` e o componente em
+`src/components/ui/Logo.tsx`.

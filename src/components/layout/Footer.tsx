@@ -17,7 +17,7 @@ export function Footer() {
       <Container width="wide">
         <div className="grid grid-cols-1 gap-10 py-12 md:grid-cols-12 md:py-16">
           <div className="md:col-span-5">
-            <Logo label={site.name} className="h-14 w-14" />
+            <Logo label={site.name} className="h-9" />
             <p className="mt-4 max-w-prose text-sm text-ink-secondary">
               {site.descriptor}
             </p>

@@ -58,7 +58,27 @@ const securityHeaders = [
   },
 ];
 
+/**
+ * Diretório de build, configurável por ambiente.
+ *
+ * POR QUE ISTO EXISTE. `next dev` e `next start` compartilham `.next/` por
+ * padrão. Rodar a auditoria, que faz `next build` seguido de `next start`, com
+ * um `next dev` no ar reescreve `.next/` por baixo do dev server. Ele fica com
+ * IDs de módulo em memória apontando para chunks que já não existem, e toda
+ * rota passa a responder com
+ *
+ *     TypeError: __webpack_modules__[moduleId] is not a function
+ *
+ * O código está íntegro; o cache é que ficou inconsistente. O sintoma engana
+ * porque parece erro de aplicação.
+ *
+ * `npm run audit:build` e `npm run audit:start` apontam para `.next-audit`, de
+ * modo que auditar não interfere no dev server. Ver package.json.
+ */
+const distDir = process.env.NEXT_DIST_DIR ?? ".next";
+
 const nextConfig: NextConfig = {
+  distDir,
   reactStrictMode: true,
   poweredByHeader: false,
   trailingSlash: false,
