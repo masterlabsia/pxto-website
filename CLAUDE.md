@@ -472,6 +472,11 @@ main                  protected. Production
    the source of truth, so a divergence is a defect, not a follow-up.
 6. Required checks: typecheck, lint, content validation, build, E2E, axe,
    Lighthouse budgets.
+7. **Nenhum trailer de coautoria de IA na mensagem de commit.** Sem
+   `Co-Authored-By: Claude`, sem `Generated with`, sem assinatura equivalente. O
+   autor do commit é a pessoa. O repositório é público, e coautoria externa num
+   projeto institucional da empresa não é o que a assinatura deveria comunicar.
+   Vale mesmo quando a ferramenta pede o trailer por padrão.
 
 ### 17.1. Git hooks
 
