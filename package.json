@@ -19,7 +19,9 @@
     "audit:security": "node scripts/audit-security.mjs",
     "build:logo": "node scripts/build-logo.mjs",
     "audit:build": "NEXT_DIST_DIR=.next-audit next build",
-    "audit:start": "NEXT_DIST_DIR=.next-audit next start"
+    "audit:start": "NEXT_DIST_DIR=.next-audit next start",
+    "prepare": "husky",
+    "verify:staged": "node scripts/verify-staged.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -39,6 +41,7 @@
     "eslint": "^9.18.0",
     "eslint-config-next": "^15.1.6",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "husky": "^9.1.7",
     "playwright": "^1.62.1",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.3"

@@ -8,6 +8,9 @@
  *   ink     letras. Renderizam com currentColor e seguem o tema.
  *   accent  o "x". Mantém a cor da marca nos dois temas.
  */
+/** sha256 truncado de public/logo.svg no momento da geracao. Ver scripts/verify-staged.mjs. */
+export const LOGO_SOURCE_HASH = "61b8ce79fbdee119";
+
 export const LOGO_VIEWBOX = "0 0 2853.0577 1272.5305";
 
 /**

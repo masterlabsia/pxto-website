@@ -18,12 +18,19 @@
  *
  * Uso: node scripts/build-logo.mjs
  */
+import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 
 const SRC = "public/logo.svg";
 const OUT = "src/lib/logo-paths.ts";
 
 const svg = readFileSync(SRC, "utf8");
+
+// Impressao digital da origem. O hook de pre-commit compara este valor com o
+// hash de public/logo.svg e reprova quando o SVG foi trocado sem rodar
+// `npm run build:logo`, que foi exatamente a falha de 30/08/2026: o arquivo
+// mudou, o modulo derivado nao, e o site continuou exibindo a marca antiga.
+const sourceHash = createHash("sha256").update(svg).digest("hex").slice(0, 16);
 
 const viewBox = svg.match(/\bviewBox="([^"]+)"/)?.[1];
 if (!viewBox) {
@@ -101,6 +108,9 @@ const output = `/**
  *   ink     letras. Renderizam com currentColor e seguem o tema.
  *   accent  o "x". Mantém a cor da marca nos dois temas.
  */
+/** sha256 truncado de public/logo.svg no momento da geracao. Ver scripts/verify-staged.mjs. */
+export const LOGO_SOURCE_HASH = ${JSON.stringify(sourceHash)};
+
 export const LOGO_VIEWBOX = ${JSON.stringify(viewBox)};
 
 /**

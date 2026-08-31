@@ -473,6 +473,39 @@ main                  protected. Production
 6. Required checks: typecheck, lint, content validation, build, E2E, axe,
    Lighthouse budgets.
 
+### 17.1. Git hooks
+
+Husky is installed, so the rules above run without anyone remembering them.
+Hooks live in `.husky/` and are wired by the `prepare` script, which means
+`npm install` sets them up on a fresh clone.
+
+| Hook | Runs | Enforces |
+| --- | --- | --- |
+| `pre-commit` | `verify:staged`, `typecheck`, `lint`, `check:assets` | §9.1, §9.2, and the two rules below |
+| `commit-msg` | `scripts/verify-commit-msg.mjs` | §17.3 Conventional Commits, §0.6 zero em-dashes, 72 character subject |
+
+`pre-commit` deliberately **does not build**. `next build` writes into `.next/`
+and would break a running dev server, which is the failure described in §18.1.
+The build stays with `npm run check` and CI, on a clean tree. Measured cost of
+the hook is about three seconds.
+
+`scripts/verify-staged.mjs` covers two failures that `tsc` and ESLint let
+through untouched, and both have already broken this project:
+
+1. **An em-dash in `src/`.** §0.6 is absolute and had no commit-time gate.
+   `audit-content.mjs` only inspects rendered pages, which is after the build,
+   with a server up, once the text is already committed.
+2. **Drift between `public/logo.svg` and `src/lib/logo-paths.ts`.** Replacing
+   the SVG without running `npm run build:logo` breaks no type and no lint rule.
+   The site simply keeps serving the old mark, silently. The generator records a
+   hash of its source as `LOGO_SOURCE_HASH`, and the hook compares it.
+
+Both scan only staged files, so the cost tracks the size of the commit rather
+than the size of the repository.
+
+**Bypassing with `--no-verify` is a decision, not a shortcut.** If a hook is
+wrong, fix the hook.
+
 ---
 
 ## 18. Testing requirements
