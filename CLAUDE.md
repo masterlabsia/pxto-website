@@ -50,7 +50,7 @@ intersection of technology and operations.
 | Repository | `pxto-website` |
 | Planned domain | `pxto.co` |
 | Language of the site | Portuguese (`pt-BR`) |
-| Language of documentation | English, with Portuguese copy quoted verbatim |
+| Language of documentation | **Portuguese (`pt-BR`)**, decidido em 31/08/2026. Documentos anteriores a essa data estão em inglês e são reescritos quando tocados, não em massa |
 | Current state | **Documentation complete. No application code exists.** |
 
 **Nine routes:** `/`, `/solucoes`, `/solucoes/{integracoes,automacao,software,sites}`,
