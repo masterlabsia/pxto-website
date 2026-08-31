@@ -494,6 +494,32 @@ a Button renders its children tests React, not the product.
 those are the two places where a failure is silent. A broken form loses a lead
 with no error anywhere.
 
+### 18.1. Never audit against the dev server's build directory
+
+`next dev` and `next start` share `.next/` by default. Running the audit, which
+builds and then serves, while a dev server is up rewrites `.next/` underneath
+it. The dev server keeps module IDs in memory that point at chunks that no
+longer exist, and every route starts answering with
+
+    TypeError: __webpack_modules__[moduleId] is not a function
+
+**The code is fine; the cache is not.** The symptom is misleading because it
+reads as an application error, and the reflex of clearing `.next` fixes it just
+long enough to be confusing.
+
+`distDir` is configurable through `NEXT_DIST_DIR` (see `next.config.ts`), and
+the audit scripts point at `.next-audit`:
+
+```bash
+npm run dev                     # .next,       porta 3000
+npm run audit:build             # .next-audit, nao toca no dev
+npm run audit:start -- -p 7500  # .next-audit
+npm run audit                   # as seis suites contra a 7500
+```
+
+`npm run check` still builds into `.next`, because it is the production gate and
+runs on a clean tree. **Do not run it with a dev server up.**
+
 ---
 
 ## 19. Definition of Done

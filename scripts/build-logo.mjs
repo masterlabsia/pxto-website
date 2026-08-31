@@ -91,7 +91,7 @@ if (accentColors.size > 1) {
 const accent = [...accentColors][0] ?? null;
 const [, , w, h] = viewBox.split(/\s+/).map(Number);
 
-const module = `/**
+const output = `/**
  * GERADO POR scripts/build-logo.mjs. NÃO EDITAR À MÃO.
  * Fonte: ${SRC}
  *
@@ -121,7 +121,7 @@ export type LogoPath = { role: "ink" | "accent"; d: string };
 export const LOGO_PATHS: readonly LogoPath[] = ${JSON.stringify(paths, null, 2)} as const;
 `;
 
-writeFileSync(OUT, module);
+writeFileSync(OUT, output);
 
 const ink = paths.filter((p) => p.role === "ink").length;
 const acc = paths.filter((p) => p.role === "accent").length;
