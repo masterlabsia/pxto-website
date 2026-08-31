@@ -23,7 +23,7 @@ export function DefinitionList({
   return (
     <dl
       className={cn(
-        "grid grid-cols-1 gap-x-10 gap-y-0 md:grid-cols-2",
+        "grid grid-cols-1 gap-x-10 gap-y-0 md:grid-cols-2 lg:grid-cols-3",
         className,
       )}
     >

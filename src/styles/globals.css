@@ -197,6 +197,24 @@
   }
 }
 
+/*
+ * Altura da navbar, para o Hero de viewport cheia descontar.
+ *
+ * A navbar e `sticky top-0`, entao ocupa espaco no fluxo. Um Hero de 100dvh
+ * cheios empurraria os CTAs para fora da tela exatamente pela altura dela.
+ *
+ * Os valores acompanham `h-16 md:h-[72px]` em Navbar.tsx, mais 1px da borda
+ * inferior. Medidos no browser: 65px e 73px.
+ */
+:root {
+  --nav-height: 65px;
+}
+@media (width >= 48rem) {
+  :root {
+    --nav-height: 73px;
+  }
+}
+
 @layer utilities {
   /* The interval: one oversized vertical gap between major argument movements.
      DESIGN_SYSTEM.md Part I.6. Used at most three times per page. */
@@ -206,6 +224,23 @@
   @media (width >= 64rem) {
     .pxto-interval {
       padding-block-start: calc(var(--spacing) * 28);
+    }
+  }
+
+  /*
+   * Hero de altura de viewport.
+   *
+   * `100dvh` e nao `100vh`: DESIGN_SYSTEM.md 321 e CLAUDE.md 9.8. Em mobile a
+   * barra do navegador entra e sai, e `vh` mede a viewport maior, entao o
+   * conteudo do fim do Hero fica cortado sob a barra. `dvh` acompanha.
+   *
+   * So a partir de lg. Abaixo disso o Hero empilha texto e imagem, e forcar
+   * altura de viewport abriria um vazio entre os dois, com a imagem jogada
+   * para fora da tela.
+   */
+  @media (width >= 64rem) {
+    .pxto-hero-viewport {
+      min-height: calc(100dvh - var(--nav-height));
     }
   }
 

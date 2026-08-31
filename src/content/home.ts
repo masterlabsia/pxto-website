@@ -10,19 +10,14 @@
  */
 
 export const hero = {
-  /**
-   * `pending: true` enquanto não houver ativo. O componente Media renderiza o
-   * slot rotulado com o `brief`, e troca sozinho para next/image quando a flag
-   * cair. Publicar a foto é edição de conteúdo, não de componente.
+  /*
+   * O Hero carrega o diagrama de sistemas, em src/content/diagrams. O slot de
+   * foto que existia aqui saiu junto com o `Media` que o consumia.
+   *
+   * DIVERGÊNCIA REGISTRADA: VISUAL_DIRECTION.md 9 especifica fotografia neste
+   * slot. A troca por diagrama ainda não foi refletida no documento.
    */
-  media: {
-    src: "/images/site/hero.avif",
-    alt: "Interface de um projeto entregue pela PXTO.",
-    brief: "Imagem principal. Captura real de projeto liberado ou fotografia própria. 1600x1100.",
-    width: 1600,
-    height: 1100,
-    pending: true,
-  },
+
   /** FIXED. PRD 12. Set as three lines, which the sentence structure asks for. */
   headlineLines: [
     "Conectamos sistemas.",
@@ -85,7 +80,12 @@ export const posicionamento = {
    */
   media: {
     src: "/images/site/posicionamento.avif",
-    alt: "Duas ferramentas que registram a mesma informação sem trocar dados entre si.",
+    /*
+     * O alt descreve a imagem que esta no arquivo hoje, nao a que o briefing
+     * pede. Enquanto as duas forem diferentes, o alt acompanha o arquivo: quem
+     * usa leitor de tela precisa receber o que existe, nao a intencao.
+     */
+    alt: "Vista noturna do planeta, com linhas de luz ligando pontos distantes.",
     brief: "Fundo do bloco inteiro. Fotografia própria, horizontal, de contraste baixo e sem ponto focal no centro, onde fica o texto. Sem marca de cliente, sem dado real. 2400x1200.",
     width: 2400,
     height: 1200,

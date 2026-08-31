@@ -12,6 +12,7 @@ import { posicionamento } from "@/content/home";
  *
  * O corpo usa tinta primária, não secundária: sobre foto a secundária reprova
  * em AA em qualquer opacidade de véu. Ver MediaBackdrop.
+
  */
 export function Posicionamento() {
   return (
@@ -22,7 +23,7 @@ export function Posicionamento() {
     >
       <section
         aria-labelledby="posicionamento-heading"
-        className="py-14 md:py-16 lg:py-20"
+        className="pb-14 pt-10 md:pb-16 md:pt-12 lg:pb-20 lg:pt-14"
       >
         <Container width="wide">
           <div className="pxto-reveal-stagger grid grid-cols-1 gap-8 lg:grid-cols-12">
