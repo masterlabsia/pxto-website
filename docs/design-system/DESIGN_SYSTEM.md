@@ -574,14 +574,15 @@ que a viewport nunca completaria a faixa e ficaria travado em opacidade parcial,
 que é falha de contraste, não detalhe estético. `fill-mode: both` faz o que já
 está visível no carregamento renderizar em opacidade 1 de imediato.
 
-**Onde nunca aplicar:**
+**Onde não aplicar a revelação de entrada:**
 
 1. **No Hero.** É candidato a LCP, e o Chrome atrasa LCP em elemento com
    opacidade abaixo de 1.
 2. **Na raiz do `MediaBackdrop`.** A foto entraria junto com o texto. Aplicar no
    bloco de texto interno: a foto está presente, as palavras chegam.
-3. **No interior de um diagrama.** Setas percorrendo o fluxo é scroll-scrub, o
-   que levaria o dial para 7. O diagrama é revelado como bloco único.
+3. **No interior de um diagrama.** A revelação trata o diagrama como bloco
+   único. Movimento dentro do diagrama é outro mecanismo, e quem governa é
+   14.4.
 
 **Sem `will-change`.** Com mais de dez elementos animados, promover todos a
 camada custa mais do que economiza.
@@ -597,17 +598,22 @@ State feedback, mais a revelação de 14.0:
 | Disclosure open and close | 180ms | `cubic-bezier(0.16, 1, 0.3, 1)` |
 | Menu open and close | 180ms | same |
 | Form state change | 160ms | `ease-out` |
+| Desenho do diagrama, uma vez no carregamento (14.4) | 300ms por traço, 850ms no total | `ease-out` |
 
 Animated properties are limited to `opacity`, `transform`, `background-color`,
-`border-color` and `color`. Never `height`, `width`, `top` or `left`.
+`border-color`, `color` and `stroke-dashoffset`. Never `height`, `width`, `top`
+or `left`.
+
+`stroke-dashoffset` entrou com o desenho de 14.4. Pertence à mesma classe das
+outras: altera pintura, nunca layout, e por isso não contribui para CLS.
 
 ### 14.2 What does not exist
 
-- **Nenhum scroll-scrub, nenhum pinning, nenhum parallax.** A revelação de 14.0
-  é a única animação disparada por posição, e ela move só opacidade e translate.
-  O conteúdo continua presente quando a página está: sem o mecanismo, tudo
-  renderiza normalmente.
-- No parallax, no pinning, no scroll hijack.
+- **Nenhum pinning, nenhum parallax, nenhum scroll hijack.** Scroll-scrub não
+  está nesta lista: ele é condicional, e quem governa é 14.4. A revelação de
+  14.0 e o scrub de 14.4 são as duas únicas animações disparadas por posição,
+  e ambas movem só opacidade e transform. O conteúdo continua presente quando a
+  página está: sem o mecanismo, tudo renderiza no estado final.
 - No perpetual loops, no marquee, no shimmer, no typewriter.
 - No page transition.
 - **No `window.addEventListener('scroll')`.** Hard ban. Use IntersectionObserver
@@ -627,6 +633,97 @@ Animated properties are limited to `opacity`, `transform`, `background-color`,
    `transitionDuration`.
 4. **Tactile feedback** on `:active` is a 1px translate or `scale(0.98)`, not a
    colour flash.
+
+### 14.4 Scroll-scrub
+
+`SPECIFIED`. Revisão de 01/09/2026, decisão da PXTO. Substitui a proibição
+categórica que constava de 14.2.
+
+**Regra principal: scroll-scrub não é decoração.** Ele existe quando o progresso
+da rolagem tem significado narrativo ou funcional, ou seja quando avançar na
+página é a própria representação de avançar no conceito. O teste é de
+substituição: se o movimento puder ser trocado pela revelação de 14.0 sem perda
+de sentido, era decoração, e a revelação é a resposta certa.
+
+#### Onde pode ser usado
+
+Narrativa visual, diagrama e visualização de sistema, quando o movimento estiver
+diretamente ligado ao conceito apresentado:
+
+- fluxo de dados;
+- conexão entre sistemas;
+- transformação de informação;
+- arquitetura;
+- processos;
+- timelines;
+- evolução de métricas;
+- composição e desmontagem do X da marca.
+
+#### Onde evitar
+
+| Lugar | Por quê | O que fazer no lugar |
+| --- | --- | --- |
+| **Hero** | O conteúdo principal não pode depender da rolagem para aparecer. A prioridade é carregamento e percepção imediata | Animação de entrada é permitida, desde que não bloqueie a apresentação do conteúdo. O teste está abaixo |
+| **Raiz do `MediaBackdrop`** | A mídia precisa estar disponível de imediato. A presença da foto não depende de rolagem | Animar os elementos internos, nunca a raiz |
+| **Componentes informacionais simples** | Card, texto, lista e bloco de conteúdo não recebem scroll-scrub por estética | A revelação de 14.0, ou uma microinteração, que já bastam |
+
+#### O teste do Hero
+
+"Não bloquear a apresentação do conteúdo" tem medida, não é julgamento. As três
+condições valem juntas:
+
+1. **O elemento candidato a LCP nunca inicia com opacidade abaixo de 1.** O
+   Chrome adia o LCP enquanto o texto está parcialmente transparente, então uma
+   headline que começa a 0.2 é regressão de métrica, não efeito.
+2. **Nada no Hero depende da rolagem para chegar ao estado final.** Quem abre a
+   página e não rola vê o Hero completo.
+3. **O que se move é o que não carrega leitura.** O diagrama pode se desenhar
+   uma vez no carregamento. Headline, subheadline e CTAs, não.
+
+#### O desenho único no carregamento
+
+Caso vizinho e permitido, que **não é scroll-scrub**: o diagrama desenha o
+próprio traço uma vez, por tempo, quando a página carrega. É a animação de
+entrada que a linha do Hero acima autoriza, e passa o teste porque só traço se
+move.
+
+Implementado, e são as regras que o mantêm correto:
+
+1. **Retângulo e rótulo estão no estado final desde o primeiro quadro.** Só as
+   arestas e as junções animam. Rótulo é texto, e texto não se move.
+2. **A ordem do desenho é a ordem de `edges` no arquivo de conteúdo**, e a
+   direção é a ordem dos pontos de cada aresta. Um diagrama novo controla a
+   própria sequência sem tocar em componente nem em CSS.
+3. **Teto de 900ms.** O que existe hoje soma 850ms.
+4. **SVG inline não é candidato a LCP**, então o desenho não disputa com a
+   métrica. A headline continua sendo o elemento medido, e ela não anima.
+5. **Sem `will-change`**, mesma razão de 14.0.
+
+Ligado por seção, com a prop `animate` de `Media`. Padrão desligado: um diagrama
+dentro de texto corrido não se desenha.
+
+#### Implementação
+
+`animation-timeline: scroll()` ou `view()`, em CSS, pelo mesmo motivo de 14.0: o
+progresso vem do navegador, sem JavaScript, sem client component novo e sem
+biblioteca de animação. **Nenhuma biblioteca de animação entra por causa desta
+regra** (`../technical/TECHNICAL_ARCHITECTURE.md`, sete dependências de runtime),
+e `window.addEventListener('scroll')` continua proibido sem exceção.
+
+Vale o mesmo portão duplo de 14.0, e pela mesma razão: sob
+`prefers-reduced-motion: reduce` a regra **não é escrita**, porque animação por
+timeline é progress-based e zerar duração não desliga nada. O desenho no
+carregamento usa o mesmo par, trocando o segundo portão pelo recurso de que
+depende, `@supports (container-type: inline-size)`.
+
+**O estado sem animação é o estado final, nunca o inicial.** Um navegador sem
+suporte, ou um visitante com reduced-motion, recebe o diagrama desenhado por
+inteiro. Um movimento que só faz sentido enquanto roda é um movimento que
+esconde conteúdo, e aí volta a ser o que 14.2 proíbe.
+
+**O gate não vê os quadros do meio.** `audit:a11y` amostra um instante, então a
+verificação dos estados intermediários é manual. Ver
+`../technical/RUNBOOK.md` §4.1.
 
 ## 15. Accessibility requirements
 

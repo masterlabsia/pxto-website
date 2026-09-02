@@ -148,6 +148,11 @@ does:
 - **`audit-content` reads `innerText`.** Text inside SVG `<text>` does not
   appear reliably. Diagram labels are scanned as content data instead, which is
   why diagram geometry is declared as nodes and edges rather than as paths.
+- **Um scroll-scrub é verificado só no estado final.** O gate de a11y amostra
+  um instante, e `DESIGN_SYSTEM.md` §14.4 passou a permitir scrub em diagrama.
+  Os quadros intermediários não são checados por nada automático. É por isso
+  que §14.4 exige que o estado sem animação seja o estado final: o que o gate
+  vê é o que o visitante recebe quando o mecanismo não roda.
 - **Document byte weight is not budgeted.** Inline SVG lands in the HTML
   document, not in `imgKb`. One diagram measured 472 bytes gzipped, so six stay
   within noise, but the budget does not exist yet.

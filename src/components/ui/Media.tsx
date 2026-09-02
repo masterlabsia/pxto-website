@@ -37,6 +37,7 @@ export function Media({
   sizes,
   priority = false,
   caption,
+  animate = false,
   className,
 }: {
   image: PxtoAsset;
@@ -47,6 +48,8 @@ export function Media({
   priority?: boolean;
   /** Legenda abaixo do quadro. Nunca sobreposta à imagem. */
   caption?: string;
+  /** Só para diagrama: desenha o traço uma vez no carregamento. 14.4. */
+  animate?: boolean;
   className?: string;
 }) {
   // Diagrama não tem estado pendente nem `sizes`: a geometria já está aqui.
@@ -55,11 +58,16 @@ export function Media({
       // max-w-lg trava o topo da faixa de escala. Sem o teto, no layout
       // empilhado o diagrama ocupa a largura toda e os rótulos chegam a 30px,
       // porque texto em SVG escala com o quadro.
+      //
+      // `container-type: inline-size` só entra com `animate`, e é o que dá ao
+      // desenho a largura real do quadro em `cqw`. Fora daí não se paga
+      // containment por nada. A altura vem de `aspect-ratio`, não do conteúdo,
+      // então conter o eixo inline não muda layout nenhum.
       <div
         className="mx-auto w-full max-w-lg overflow-hidden border border-rule bg-ground-subtle"
-        style={{ aspectRatio: ratio }}
+        style={{ aspectRatio: ratio, ...(animate && { containerType: "inline-size" }) }}
       >
-        <Diagram diagram={image} className="h-full w-full" />
+        <Diagram diagram={image} animate={animate} className="h-full w-full" />
       </div>
     );
 

@@ -288,6 +288,73 @@
       }
     }
   }
+
+  /*
+   * Desenho único do diagrama. DESIGN_SYSTEM.md 14.4.
+   *
+   * Uma vez, no carregamento, por tempo e não por rolagem. Não é scroll-scrub:
+   * é a animação de entrada que 14.4 permite no Hero, e passa o teste de lá
+   * porque só traço se move. Retângulo, rótulo e o resto da página estão no
+   * estado final desde o primeiro quadro, e SVG inline não é candidato a LCP.
+   *
+   * POR QUE `cqw` E NÃO O COMPRIMENTO EM UNIDADES DO viewBox. As formas usam
+   * `vector-effect: non-scaling-stroke`, e sob ele o tracejado é medido no
+   * espaço da tela, não no do viewBox. O diagrama renderiza entre 0.81 e 1.45
+   * de escala, então um dasharray fixo em unidades do viewBox abriria um vão
+   * no meio do traço em telas grandes. `100cqw` é a largura real do quadro, e
+   * `--pxto-draw / --pxto-vb` é a fração dessa largura que o traço ocupa, o
+   * que dá o comprimento em pixels de tela em qualquer escala.
+   *
+   * AS TRÊS FOLGAS, e todas foram medidas, não estimadas.
+   *
+   * 1. O traço leva 1.02 para que arredondamento de subpixel nunca deixe um
+   *    vão na ponta quando o desenho termina.
+   * 2. O vão do padrão é o triplo do traço. Com `stroke-dasharray` de valor
+   *    único o vão é igual ao traço, e o padrão se repete: o traço seguinte
+   *    reentra pelo fim do caminho e desenha um cotoco no quadro inicial.
+   *    Verificado em tela antes desta linha existir.
+   * 3. O offset inicial leva 1.04 para que o traço comece inteiramente fora do
+   *    caminho. Com `stroke-linecap: square`, um segmento de comprimento zero
+   *    desenharia um quadradinho visível.
+   *
+   * DEGRADAÇÃO. Sem suporte a container query o `calc` é inválido, o dasharray
+   * volta a `none` e a linha nasce sólida. Sob reduced-motion a regra não é
+   * escrita. Nos dois casos o que aparece é o estado final, nunca o inicial,
+   * que é o que 14.4 exige.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (container-type: inline-size) {
+      [data-draw] [data-edge] {
+        --pxto-dash: calc(var(--pxto-draw) / var(--pxto-vb) * 102cqw);
+        stroke-dasharray: var(--pxto-dash) calc(var(--pxto-dash) * 3);
+        stroke-dashoffset: calc(var(--pxto-dash) * 1.04);
+        animation: pxto-draw-edge 300ms var(--ease-out) both;
+        animation-delay: calc(var(--pxto-i) * 110ms);
+      }
+
+      /* A junção acende quando o barramento chega nela. Só opacidade: o ponto
+         é conteúdo não textual, e nada nele se desloca. */
+      [data-draw] [data-junction] {
+        animation: pxto-draw-junction 180ms var(--ease-out) both;
+        animation-delay: calc(300ms + var(--pxto-i) * 90ms);
+      }
+    }
+  }
+}
+
+@keyframes pxto-draw-edge {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pxto-draw-junction {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /*

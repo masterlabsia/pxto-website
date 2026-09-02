@@ -232,10 +232,16 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
    never a second family.
 9. **Motion:** feedback de estado, 120 a 180ms, mais a revelação de entrada em
    CSS (`animation-timeline: view()`), que move só `opacity` e `translate`.
-   **Sem scroll-scrub, sem parallax, sem pinning, sem marquee, sem loop
-   perpétuo, e nunca no Hero nem dentro de um diagrama.** Sob reduced-motion a
-   regra de revelação não é escrita: zerar duração não desliga animação por
-   timeline.
+   **Sem parallax, sem pinning, sem scroll hijack, sem marquee, sem loop
+   perpétuo.** **Scroll-scrub é condicional, não proibido** (revisão de
+   01/09/2026, `DESIGN_SYSTEM.md` §14.4): vale em narrativa visual, diagrama e
+   visualização de sistema, quando o progresso da rolagem tem significado
+   narrativo ou funcional. Nunca como decoração. Evitar no Hero, na raiz do
+   `MediaBackdrop` e em card, texto ou lista. No Hero, nada depende da rolagem
+   para chegar ao estado final e o elemento de LCP nunca inicia abaixo de
+   opacidade 1. Sempre em CSS: nenhuma biblioteca de animação entra por causa
+   disso. Sob reduced-motion a regra não é escrita, porque zerar duração não
+   desliga animação por timeline, e o estado sem animação é o estado final.
 10. **Layout variety:** at least four distinct layout families on a long page.
     Never three consecutive sections with the same split pattern.
 11. **At most one eyebrow per three sections.** Prefer none. The headline is

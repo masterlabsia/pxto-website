@@ -54,9 +54,11 @@ export function Hero() {
             </div>
           </div>
 
+          {/* `animate`: desenho único no carregamento, DESIGN_SYSTEM.md 14.4. */}
           <Media
             image={sistemasConectados}
             ratio="16 / 11"
+            animate
             className="lg:col-span-5"
           />
         </div>

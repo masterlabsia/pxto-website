@@ -23,12 +23,49 @@ import type { PxtoDiagram } from "@/content/schemas";
  *
  * SEM ACENTO. A regra 7.6 diz que o acento significa interativo, focado ou
  * definido. Um diagrama estático não é nenhum dos três.
+ *
+ * DESENHO ÚNICO, com `animate`. Uma vez no carregamento, DESIGN_SYSTEM.md 14.4.
+ * Desenha só traço: os retângulos e os rótulos estão presentes desde o primeiro
+ * quadro. É o que a 14.4 pede ao dizer que só se move o que não carrega
+ * leitura, e é também a leitura certa do conceito, porque os sistemas já
+ * existem e o que a PXTO faz é ligar um ao outro.
+ *
+ * A ORDEM DO DESENHO É A ORDEM DE `edges` NO ARQUIVO DE CONTEÚDO, e a direção é
+ * a ordem dos pontos de cada aresta. Um diagrama novo controla a sua própria
+ * sequência sem tocar em componente nem em CSS.
+ *
+ * O comprimento de cada traço é calculado aqui e entra como número puro em
+ * `--pxto-draw`. O CSS o converte para `cqw`, e o motivo está no comentário de
+ * `globals.css`: com `non-scaling-stroke` o traço tracejado é medido em pixels
+ * de tela, não em unidades do viewBox.
  */
+
+/** Comprimento de uma polilinha, em unidades do viewBox. */
+function polylineLength(points: readonly (readonly [number, number])[]): number {
+  let total = 0;
+  for (let i = 1; i < points.length; i += 1) {
+    const from = points[i - 1];
+    const to = points[i];
+    if (!from || !to) continue;
+    total += Math.hypot(to[0] - from[0], to[1] - from[1]);
+  }
+  return total;
+}
+
+/** Largura do viewBox, terceiro valor da lista. Base da conversão para `cqw`. */
+function viewBoxWidth(viewBox: string): number {
+  const width = Number(viewBox.trim().split(/\s+/)[2]);
+  return Number.isFinite(width) && width > 0 ? width : 100;
+}
+
 export function Diagram({
   diagram,
+  animate = false,
   className,
 }: {
   diagram: PxtoDiagram;
+  /** Desenha o traço uma vez no carregamento. DESIGN_SYSTEM.md 14.4. */
+  animate?: boolean;
   className?: string;
 }) {
   return (
@@ -37,7 +74,13 @@ export function Diagram({
       role="img"
       aria-label={diagram.alt}
       data-diagram
+      data-draw={animate ? "" : undefined}
       className={className}
+      style={
+        animate
+          ? ({ "--pxto-vb": viewBoxWidth(diagram.viewBox) } as React.CSSProperties)
+          : undefined
+      }
     >
       <g
         className="text-ink-secondary"
@@ -54,11 +97,20 @@ export function Diagram({
           ele o traço variaria de 1.2px a 2.2px, e o peso de linha deixaria de
           bater com o 1.5 dos ícones e com as réguas de 1px.
         */}
-        {diagram.edges.map((edge) => (
+        {diagram.edges.map((edge, index) => (
           <polyline
             key={edge.points.map((p) => p.join()).join(" ")}
             points={edge.points.map(([x, y]) => `${x},${y}`).join(" ")}
             vectorEffect="non-scaling-stroke"
+            data-edge=""
+            style={
+              animate
+                ? ({
+                    "--pxto-draw": polylineLength(edge.points),
+                    "--pxto-i": index,
+                  } as React.CSSProperties)
+                : undefined
+            }
           />
         ))}
 
@@ -74,8 +126,17 @@ export function Diagram({
           />
         ))}
 
-        {diagram.junctions.map(([x, y]) => (
-          <circle key={`${x},${y}`} cx={x} cy={y} r={2.5} fill="currentColor" stroke="none" />
+        {diagram.junctions.map(([x, y], index) => (
+          <circle
+            key={`${x},${y}`}
+            cx={x}
+            cy={y}
+            r={2.5}
+            fill="currentColor"
+            stroke="none"
+            data-junction=""
+            style={animate ? ({ "--pxto-i": index } as React.CSSProperties) : undefined}
+          />
         ))}
       </g>
 
