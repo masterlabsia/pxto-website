@@ -64,8 +64,9 @@ Visual:
       A — Especificação is recommended)
 - [ ] **Variante compacta da marca** para 24 a 48px. O wordmark entregue lê
       "p to" abaixo de 64px. Ver `LOGO_SPEC.md` §2.1
-- [ ] **Cor da marca: turquesa `#009D88` ou azul `#1B4DE4`?** O ícone entregue e
-      o accent do site usam cores diferentes. Ver `LOGO_SPEC.md` §4.2
+- [ ] **Cor da marca: verde do logo ou turquesa do favicon?** (Atualizado em 11/11/2026: o
+      acento do site deixou de ser o azul `#1B4DE4` e passou a ser a própria tinta, então
+      sobra decidir só entre o verde do logo e o turquesa do ícone.) Ver `LOGO_SPEC.md` §4.2
 - [ ] Colour palette — no colours are specified anywhere in the PRD.
 - [ ] Typography — no typefaces are specified anywhere in the PRD.
 - [ ] Whether a formal brand guideline exists outside this repository.

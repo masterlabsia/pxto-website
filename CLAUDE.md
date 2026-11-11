@@ -20,11 +20,18 @@ Violating any of these is a defect, not a judgement call.
    results, years of experience, or technologies used in a project. Everything
    factual originates from PXTO (PRD §53).
 2. **Never invent a capability.** The company does four things: integrações,
-   automação, software, sites. Nothing else is offered.
+   automação, software, sites. Nothing else is offered. **Resultado como serviço
+   é o modelo de contratação, não uma quinta oferta** (`POSITIONING.md` §18).
 3. **Never change positioning** without explicit human approval.
 4. **Never add a layout slot that wants social proof.** No logo wall, no
    testimonial region, no counter, no stat bar, no badge shelf, at any
-   breakpoint. Not even empty.
+   breakpoint. Not even empty. **Única exceção, decidida em 11/11/2026:** a seção
+   **Parcerias** da Home, que lista só nomes de empresas autorizadas, em texto, com
+   peso igual, **numa faixa que passa na tela, logo abaixo do Hero e sem título
+   visível** (ver 7.9). Sem logo, número,
+   depoimento, descrição ou contador, e **omitida por inteiro quando nenhuma está
+   autorizada**. O registro de cada autorização está em
+   `docs/parcerias.md`. Qualquer outro uso continua proibido.
 5. **Never publish a project** whose `published` flag is not `true`. That flag
    requires a signed disclosure checklist.
 6. **Never use an em-dash** in anything a user can see. Zero. Use a period, a
@@ -51,13 +58,14 @@ intersection of technology and operations.
 | Planned domain | `pxto.co` |
 | Language of the site | Portuguese (`pt-BR`) |
 | Language of documentation | **Portuguese (`pt-BR`)**, decidido em 31/08/2026. Documentos anteriores a essa data estão em inglês e são reescritos quando tocados, não em massa |
-| Current state | **Documentation complete. No application code exists.** |
+| Current state | **Documentação e aplicação existem.** A Home foi refeita em 10/11/2026 a partir da exploração no Stitch. Ver "Estado atual" no fim deste arquivo |
 
 **Nine routes:** `/`, `/solucoes`, `/solucoes/{integracoes,automacao,software,sites}`,
 `/projetos`, `/projetos/[slug]`, `/sobre`, `/contato`.
 
 **Stack:** Next.js App Router, TypeScript strict, React Server Components,
-Tailwind v4, Zod. Seven runtime dependencies. See §8.
+Tailwind v4, Zod. Manrope e JetBrains Mono via `next/font/google`. **Cinco dependências
+de runtime** (`next`, `react`, `react-dom`, `zod`, `@heroicons/react`). See §8.
 
 ---
 
@@ -147,6 +155,15 @@ Source: `docs/brand/BRAND_FOUNDATION.md`.
    simplicity, sophistication, confidence.
 8. **Must never resemble** a futuristic, cyberpunk, generic AI startup, creative
    agency or SaaS template look. No gradient-heavy, no glassmorphism-heavy.
+   **Revisado em 10/11/2026:** o responsável adotou a direção do protótipo H612
+   (escuro, título leve, contêineres arredondados, vidro e uma luz que segue o
+   mouse), que fica perto desse limite. A credibilidade vem de contenção: luz só
+   nos três contêineres da Home, vidro só no botão secundário e na navbar, nada de painel falso,
+   métrica inventada, logos nem fotografia de banco. Ver `DESIGN_SYSTEM.md` 3.3.4a.
+9. **Resultado como serviço nunca vira promessa.** O copy descreve um modelo de
+   trabalho. Nenhuma garantia de resultado, prazo, economia ou índice de sucesso,
+   e nenhuma condição de pagamento, até existir definição comercial
+   (`POSITIONING.md` §18.3 e §18.4). A sigla OaaS não aparece ao visitante.
 
 ---
 
@@ -195,7 +212,8 @@ Source: `docs/content/WEBSITE_COPY.md` and `docs/narrative/NARRATIVE.md`.
    single sentence states a falsehood.
 6. **CTA labels:** primary is always *Fale com a PXTO*. Contextual alternatives
    are *Vamos conversar*, *Conte seu projeto*, *Quero conversar sobre meu
-   projeto*, *Começar uma conversa*. Hero secondary is *Ver projetos*.
+   projeto*, *Começar uma conversa*. Hero secondary is *Ver soluções* (revisado em
+   10/11/2026, era *Ver projetos*; volta a ele quando houver projeto liberado).
 7. **Banned CTAs:** "Saiba mais" as a primary CTA, "Clique aqui", "Solicite
    agora".
 8. **No duplicate CTA intent on one page.** One label per intent, used
@@ -217,23 +235,42 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
    failures. If a value is missing, the scale is wrong and the scale gets fixed.
 2. **Spacing comes from the scale**, base 4px. Vertical rhythm resolves to
    multiples of 4.
-3. **Radius rule:** `0` for structure, `2px` for interactive, `4px` for modal and
-   popover only. Nothing is round. No pill buttons.
+3. **Radius rule** (revisado em 10/11/2026): botão é pílula, contêiner de seção
+   tem `20px`, inputs `4px`, modal `12px`. Dentro de um contêiner, listas e
+   colunas ficam retas. Sem raios misturados no mesmo componente.
 4. **Shadows:** exactly one token, used by modals only. Elevation is communicated
    by border and ground shift.
 5. **No gradients, no glassmorphism, no glow.** Not as surface, not as accent,
-   not as hover.
+   not as hover. **Exceções decididas em 10/11/2026, e só estas:** o botão
+   secundário de vidro, a navbar com desfoque e a luz do mouse (`GlowField`),
+   que vive no Hero, no Modelo de trabalho e no CTA da Home, nos contêineres
+   arredondados e em escala menor fora do Hero. Qualquer outro uso continua proibido.
 6. **One accent, locked site-wide.** If it appears, something is interactive,
-   focused, or defined. Success and danger are form states only.
+   focused, or defined. Success and danger are form states only. **O acento é a
+   própria tinta** (branco no escuro, preto no claro). O único tom de cor é o
+   índigo da luz do Hero, que é atmosfera e nunca marca algo clicável.
 7. **Dual theme.** Light and dark ship together and are both tested. One theme
    per page. No section inverts mid-page.
-8. **Type:** one family plus its mono companion. Three weights. No serif. Body
+8. **Type:** one family plus its mono companion (Manrope e JetBrains Mono, desde
+   10/11/2026), com títulos em peso 300. Three weights. No serif. Body
    measure 60 to 72 characters. Emphasis by weight or italic within the family,
    never a second family.
 9. **Motion:** feedback de estado, 120 a 180ms, mais a revelação de entrada em
-   CSS (`animation-timeline: view()`), que move só `opacity` e `translate`.
-   **Sem parallax, sem pinning, sem scroll hijack, sem marquee, sem loop
-   perpétuo.** **Scroll-scrub é condicional, não proibido** (revisão de
+   CSS (`animation-timeline: view()`), que move só `opacity` e `translate`,
+   **mais a régua de seção que se desenha** (`transform: scaleX`, `DESIGN_SYSTEM.md`
+   §14.0, decidido em 10/11/2026): a linha no topo de cada seção se desenha ao
+   entrar na tela e o conteúdo entra logo depois. É traço de estrutura, nunca decoração. (O fio que
+   conectava as seções da Home foi removido em 11/11/2026.) **Exceção de 11/11/2026, e só esta: a faixa de nomes da seção Parcerias**
+   (`PartnersMarquee`), que anda em `translate` e para no hover, no foco e sob
+   reduced-motion. **Sem botão de pausa**, a pedido do responsável: é uma lacuna de
+   WCAG 2.2.2 para quem usa só o teclado, registrada em `docs/parcerias.md`. **Exceções de 11/11/2026 (branch `feature/transicoes`),
+   `DESIGN_SYSTEM.md` §14.5:** (a) o **parallax da foto de fundo** dentro dos contêineres
+   arredondados (`translate`, de -6% a +6%, nunca no Hero); (b) o **zoom de entrada** do
+   contêiner (`scale` de 94% a 100%); (c) a **navbar** que passa de limpa a vidro ao rolar
+   (só cor e desfoque, altura fixa); (d) a **transição entre páginas** por View
+   Transitions (`PageTransitions`, só `opacity` e `translate`). Tudo some sob
+   reduced-motion. **Sem pinning, sem scroll hijack, sem loop perpétuo fora da faixa de
+   Parcerias.** **Scroll-scrub é condicional, não proibido** (revisão de
    01/09/2026, `DESIGN_SYSTEM.md` §14.4): vale em narrativa visual, diagrama e
    visualização de sistema, quando o progresso da rolagem tem significado
    narrativo ou funcional. Nunca como decoração. Evitar no Hero, na raiz do
@@ -248,14 +285,22 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
     enough.
 12. **No section-number eyebrows.** No `01 / INDEX`, no `001 · Capabilities`. The
     five process steps are named by their verbs; the numerals appear once, only
-    where order carries meaning.
+    where order carries meaning. **Exceções de 11/11/2026, escolhidas pelo responsável:**
+    a numeração 01 a 06 das situações do Problema (marcador visual por CSS, os itens não
+    têm ordem) e os nós 01 a 05 da linha do tempo do Como trabalhamos (onde a ordem é a
+    informação). Nenhum outro uso.
 13. **No hairline rules as decoration.** Rules separate real content or they do
     not exist.
 14. **Icons:** one library, stroke width 1.5, sizes 16, 20, 24. Never hand-roll
     SVG paths. No icon beside every heading. No icon feature grids. No emoji.
 15. **Images:** real only. No stock standing in for real work, no generated
     mockups, no div-based fake product UI, no hand-rolled decorative SVG, no
-    placeholder imagery. Caption below the image, never overlaid.
+    placeholder imagery. Caption below the image, never overlaid. **Exceção de
+    11/11/2026, e só estas duas imagens:** as imagens de atmosfera geradas por IA do
+    Modelo de trabalho e do CTA da Home, que não representam trabalho,
+    pessoa, cliente nem produto, e cujo alt diz que são geradas. Registro, pedidos e
+    contraste medido em `docs/imagens.md`. Qualquer outra imagem gerada precisa de
+    decisão própria.
 
 ---
 
@@ -264,8 +309,13 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
 Source: `docs/technical/TECHNICAL_ARCHITECTURE.md`.
 
 1. **Server Components by default.** A client component is a leaf, marked
-   `'use client'`, and never wraps server content. Four are expected at launch:
-   navbar menu, contact form, DefinedTerm, theme toggle.
+   `'use client'`, and never wraps server content. Os
+   previstos no lançamento eram quatro (menu da navbar, formulário, DefinedTerm, alternador
+   de tema). **Hoje existem seis**, todos folhas: `Navbar` (menu móvel), `ContactForm`,
+   `AnalyticsListener` e `PageEvent` (eventos), `GlowField` (a luz do mouse, 10/11/2026) e
+   `PageTransitions` (transição entre páginas, 11/11/2026, não renderiza nada). A faixa de
+   Parcerias (`PartnersMarquee`) é componente de servidor. `DefinedTerm` e o alternador de
+   tema ainda não existem. Cada novo client leaf precisa ser listado aqui.
 2. **Static rendering.** Every page prerenders. The only dynamic surface is the
    contact Server Action.
 3. **`app/` composes, it does not implement.** Route files assemble sections and
@@ -280,7 +330,9 @@ Source: `docs/technical/TECHNICAL_ARCHITECTURE.md`.
 7. **Types derive from schemas** with `z.infer`. Never maintain a parallel
    interface.
 8. **One component per file.** No barrel files.
-9. **Seven runtime dependencies.** Adding one requires stating what it replaces.
+9. **Cinco dependências de runtime** (`next`, `react`, `react-dom`, `zod`,
+   `@heroicons/react`). A contagem de sete que constava antes incluía o `geist`, removido
+   em 11/11/2026 quando a fonte passou a ser a Manrope. Adding one requires stating what it replaces.
    There is deliberately no animation library, no state management library, no
    CSS-in-JS, no component library, no CMS, no database, no auth.
 10. **shadcn/ui is not used at launch.** Radix primitives are added individually,
@@ -477,7 +529,8 @@ main                  protected. Production
    that changes a component must update its design system entry. Documentation is
    the source of truth, so a divergence is a defect, not a follow-up.
 6. Required checks: typecheck, lint, content validation, build, E2E, axe,
-   Lighthouse budgets.
+   Lighthouse budgets. A CI (§18.0) roda todos, com os orçamentos medidos direto
+   em vez de Lighthouse.
 7. **Nenhum trailer de coautoria de IA na mensagem de commit.** Sem
    `Co-Authored-By: Claude`, sem `Generated with`, sem assinatura equivalente. O
    autor do commit é a pessoa. O repositório é público, e coautoria externa num
@@ -537,6 +590,25 @@ a Button renders its children tests React, not the product.
 **The two highest-value tests are content validation and the form E2E**, because
 those are the two places where a failure is silent. A broken form loses a lead
 with no error anywhere.
+
+### 18.0. A CI (criada em 11/11/2026)
+
+`.github/workflows/ci.yml` roda, em todo PR e em todo push em `main` e `develop`:
+tipos, lint, assets, o build de produção em `.next-audit` e as **seis auditorias** de
+`scripts/` (funcional, responsiva, acessibilidade com axe, conteúdo, segurança e
+performance), contra o site servido localmente. Antes disso, nada rodava sozinho: as
+auditorias dependiam de alguém lembrar de executá-las.
+
+- **Não há framework de teste unitário** (nem Jest nem Vitest), de propósito: o código
+  é quase todo apresentação e conteúdo, e o conteúdo já é validado pelo Zod no
+  carregamento. As auditorias fazem o papel de E2E.
+- **A performance é medida direto** pela Performance API (`audit-perf.mjs`), e não por
+  Lighthouse. O script foi escrito quando o ambiente tinha Node 20, e Lighthouse exige
+  Node 22. A CI usa Node 22, então dá para adicionar Lighthouse depois.
+- **Para a CI vermelha bloquear a mesclagem**, a proteção do ramo `main` precisa
+  exigir o check `verificar`. É uma configuração do repositório no GitHub, manual.
+- **Ainda não rodou num runner de verdade.** Os passos foram validados localmente, um a
+  um, mas o primeiro PR é o teste real.
 
 ### 18.1. Never audit against the dev server's build directory
 
@@ -630,29 +702,55 @@ brand's entire differentiation is that it does not overclaim.
 
 ---
 
-## Current state and blockers
+## Estado atual e bloqueios
 
-**Nothing is implemented.** The documentation phase is complete.
+**Atualizado em 10/11/2026.** Esta seção antes dizia que nada estava implementado.
+O repositório tem aplicação: rotas, componentes, tokens, conteúdo e auditorias.
 
-**Not blocked.** Phase 1 foundation can start today: Next.js, TypeScript strict,
-Tailwind v4, ESLint, folder structure, CI. It touches no UI and needs no brand
-asset.
+**A Home segue o protótipo H612 do Stitch** e comunica resultado como serviço
+(a seção Parcerias lista Play9ContentGroup e Casaeaser, com autorização declarada e
+comprovante escrito ainda a anexar, ver `docs/parcerias.md`):
+Hero em contêiner arredondado com a luz do mouse, Problema, Posicionamento, Modelo
+de trabalho, Soluções em 4 colunas, Como trabalhamos sem numeração e CTA final em
+contêiner arredondado. O Footer virou um cartão em largura total, no espírito do rodapé da Apple. Projetos e
+Diferenciais saíram dela.
+Detalhes em `docs/architecture/PAGE_SPECS.md` §1 e
+`docs/content/WEBSITE_COPY.md` §1.
 
-**Blocked, and must not be invented:**
+**Movimento (branch `feature/transicoes`, 11/11/2026):** zoom de entrada dos contêineres,
+parallax da foto de fundo, navbar que passa de limpa a vidro ao rolar, transição entre
+páginas por View Transitions e a luz do mouse também no Posicionamento e no rodapé.
+Regras e limites em `docs/design-system/DESIGN_SYSTEM.md` §14.5. As seções Problema,
+Posicionamento, Modelo de trabalho, Soluções, Como trabalhamos e CTA foram redesenhadas a
+partir de uma segunda exploração do Stitch, só no desenho e com o texto aprovado.
 
-| Blocker | Blocks |
+**Código que existe e hoje não tem uso, deixado de propósito:** as seções `Projetos` e
+`Diferenciais` da Home (voltam quando houver projeto liberado e conteúdo aprovado), os
+componentes `Media` e `Diagram` com o diagrama `sistemas-conectados` (plano de diagramas) e
+a foto `posicionamento.avif`. O resto que ficou sem uso foi removido.
+
+**Rascunhos sem aprovação formal do posicionamento:** a seção Modelo de trabalho,
+o CTA final "Conte o resultado que você precisa." e o corpo curto do Problema.
+Estão marcados como `DRAFT` nos documentos e no código.
+
+**Ainda bloqueado, e não pode ser inventado:**
+
+| Bloqueio | Bloqueia |
 | --- | --- |
-| Logo, colour palette, typefaces | Every component. Nothing visual should be built before the palette and typefaces exist |
-| Real photography | Every page with a visual. Launch blocker |
-| Project disclosure clearance | `/projetos`, `/projetos/[slug]`, the Home projects section |
-| Contact channels and lead destination | `/contato`, the footer, the form |
-| Privacy notice wording | The form and the footer |
-| Vision, name origin, founder visibility | `/sobre` cannot be completed |
+| Comprovante escrito das autorizações de parceria | A seção Parcerias está no ar com autorização só declarada. O comprovante e a grafia oficial dos nomes são do responsável (`docs/parcerias.md`) |
+| Liberação de projeto assinada | `/projetos`, `/projetos/[slug]` e a seção de projetos da Home |
+| Fotografia real | Páginas de projeto e `/sobre`. O Modelo de trabalho e o CTA da Home usam imagem de atmosfera gerada por IA (`docs/imagens.md`), que pode ser trocada por foto real sem mexer no resto. O Problema e o Hero seguem sem imagem |
+| Canais de contato e destino dos leads | `/contato`, o footer, o formulário |
+| Texto do aviso de privacidade | O formulário e o footer |
+| Visão, origem do nome, visibilidade do fundador | `/sobre` não pode ser concluída |
+| Definição comercial de "resultado" | Qualquer promessa além do modelo de trabalho (`POSITIONING.md` §18.4) |
+| Aprovação formal de paleta e fonte | Os valores em uso (neutros, Manrope, JetBrains Mono) são `SPECIFIED`, sem aprovação de marca |
 
-**Unapproved decisions that code must not assume.** The visual direction, the
-positioning territory, the headline direction, the project category axis, and the
-rejection of shadcn/ui are all recommendations awaiting a human decision. Do not
-treat any of them as settled without confirmation.
+**Decisões ainda não aprovadas que o código não deve assumir além do que já está
+em uso:** o território de posicionamento, a direção de headline e o eixo de
+categoria dos projetos.
+
+---
 
 ## Frontend Design Skill
 
@@ -694,6 +792,9 @@ docs/content/WEBSITE_COPY.md                 the words
 docs/design-system/DESIGN_SYSTEM.md          tokens and components
 docs/technical/TECHNICAL_ARCHITECTURE.md     stack and code structure
 docs/technical/definition-of-done.md         the completion checklist
+docs/imagens.md                              registro das imagens: origem, pedidos, contraste medido
+docs/parcerias.md                            registro das empresas citadas e das autorizações
+docs/content/PROPOSTA_COPY_2026-11-11.md     proposta de copy aprovada em 11/11/2026
 ```
 
 Each `docs/<area>/README.md` explains that area's role and lists its open

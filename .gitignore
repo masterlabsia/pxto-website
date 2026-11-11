@@ -14,3 +14,6 @@ next-env.d.ts
 steps.m
 .next-audit
 .pxto
+# Originais das imagens geradas, em resolução cheia (2 MB cada). O site usa os AVIF
+# de public/images/site. Ver docs/imagens.md.
+assets-source/

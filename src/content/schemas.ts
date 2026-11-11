@@ -103,6 +103,21 @@ export type PxtoDiagram = z.infer<typeof DiagramSchema>;
  */
 export type PxtoAsset = PxtoImage | PxtoDiagram;
 
+/**
+ * Uma empresa citada na seção Parcerias.
+ *
+ * `authorized` é a autorização por escrito para citar a empresa (CLAUDE.md 16.1).
+ * A evidência dela, o tipo de relação e qualquer raciocínio de divulgação ficam
+ * em docs/parcerias.md e NUNCA aqui: se está no dado de runtime, está publicável
+ * (CLAUDE.md 16.6). Sem logo, sem descrição, sem número, sem depoimento.
+ */
+export const PartnerSchema = z.object({
+  /** Exatamente como o responsável informou. */
+  name: z.string().min(1),
+  authorized: z.boolean(),
+});
+export type Partner = z.infer<typeof PartnerSchema>;
+
 export const SolutionSchema = z.object({
   slug: SolutionSlug,
   name: z.string().min(1),

@@ -55,9 +55,9 @@ export const contactCopy = {
     },
     mensagem: {
       label: "Sua mensagem",
-      placeholder: "Descreva o problema que precisa resolver",
+      placeholder: "Descreva o resultado que você precisa ou o problema que quer resolver",
       helper:
-        "Não precisa ser formal nem detalhado. O essencial é entender o que está acontecendo hoje.",
+        "Não precisa ser formal nem detalhado. O essencial é entender o que precisa acontecer na sua operação.",
     },
   },
   submit: "Enviar mensagem",

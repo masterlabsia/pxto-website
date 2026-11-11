@@ -9,6 +9,53 @@
 
 ---
 
+> **Revisão de 10/11/2026, direção H612.** O responsável escolheu adaptar ao PXTO
+> o layout de um protótipo público do Stitch ("H612"): escuro primeiro, neutro,
+> título em peso leve, contêineres arredondados e botões de vidro. **Isso
+> substitui o que este documento dizia sobre cantos retos, ausência de glow,
+> gradiente e vidro, e sobre a paleta laranja da exploração anterior.** Os trechos
+> tocados estão em português (`CLAUDE.md` §1) e o resto segue em inglês. O que mudou:
+>
+> - **Paleta** (3.2): neutra, sem cor de marca saturada. O "acento" é a própria
+>   tinta: botão primário branco no escuro e preto no claro.
+> - **Tipografia** (4.2): Manrope, com títulos em peso 300, e JetBrains Mono.
+> - **Escala** (5): `text-7xl`, 72px, só para a headline do Hero.
+> - **Raios** (10): 4, 8, 12 e 20px. Contêineres de seção em 20px. Botão é pílula.
+> - **Vidro, glow e gradiente** (3.3, 11): permitidos em três lugares e só neles:
+>   botão secundário de vidro, navbar com desfoque e a luz do mouse no Hero.
+> - **Botão** (Part II): pílula, `lg` de 48px, secundário em vidro.
+> - **ServiceCard**: variante `column`. **CTA**: contêiner arredondado, sem apoio.
+>   **DefinitionList**: disposição `stack`. **Footer**: cartão em largura total, no
+>   espírito do rodapé da Apple (11/11/2026).
+> - **Imagens de atmosfera geradas por IA** no Modelo de trabalho e no CTA (fundo
+>   com véu), decididas em 11/11/2026. O CTA tem o contêiner em largura total e com a
+>   altura da tela do computador (`.pxto-fill-viewport`, `100dvh`, a partir de `lg`).
+>   Exceção à regra 13.1, restrita a essas duas. O véu do CTA é leve (55%) e o do Modelo é o padrão (72%),
+>   conforme o contraste medido. Registro em `../imagens.md`.
+> - **Seções redesenhadas a partir de uma segunda exploração do Stitch** (11/11/2026,
+>   escolha do responsável, só o desenho, com o texto aprovado): lista numerada em cartão
+>   (Problema), Posicionamento centralizado, dois painéis com seta (Modelo de trabalho),
+>   cartões de solução e linha do tempo horizontal (Como trabalhamos). CTA alinhado à esquerda.
+> - **Faixa de nomes que passa**, logo abaixo do Hero e sem título (14.2), a única do site.
+> - **Hero e faixa de parcerias numa tela só** (`.pxto-first-screen`), a partir de `lg`:
+>   o Hero ocupa o que sobra de `100dvh` menos a navbar e a faixa. Em janela baixa a
+>   headline desce um degrau da escala (`text-6xl` até 704px de altura, `text-5xl` até 608px).
+> - **Hero em largura total** da página, com 20px de margem. É a única seção fora
+>   dos 1200px do contêiner `wide`.
+> - **Item de lista com linha que cresce** (`.pxto-line-item`): régua de 2px que
+>   atravessa o topo no hover e no foco.
+> - O **tema da Home é um só** de ponta a ponta (3.3.3). A faixa escura da
+>   exploração do Stitch foi descartada por inverter o tema no meio da página.
+>
+> **O que NÃO veio do protótipo, de propósito:** as fotografias (não são nossas, e
+> a regra é só imagem real), o painel com métricas falsas, o código de mentira e a
+> faixa de logos. Nada disso pode aparecer sem fonte do PXTO (`CLAUDE.md` §0.1).
+>
+> Paleta e fonte seguem sem aprovação de marca formal. Passam a ser o que o site
+> usa, e trocar é editar o bloco de tokens.
+
+---
+
 ## How to read this document
 
 | Status | Meaning |
@@ -122,35 +169,61 @@ state and appear nowhere else.
 
 ### 3.2 Candidate values
 
-`CANDIDATE`. Replaced by the brand palette when it exists.
+`SPECIFIED` desde 10/11/2026. Direção do protótipo H612, **sem aprovação de marca**:
+trocar a paleta é editar `src/styles/globals.css` e este quadro.
 
 | Token | Light | Dark |
 | --- | --- | --- |
-| `ground` | `#FCFCFC` | `#0E0F11` |
-| `ground-subtle` | `#F4F5F6` | `#141619` |
-| `surface` | `#FFFFFF` | `#1A1D21` |
-| `ink` | `#111214` | `#E9EBED` |
-| `ink-secondary` | `#5C6066` | `#8E949B` |
-| `ink-disabled` | `#9AA0A6` | `#5F666D` |
-| `rule` | `#E3E5E8` | `#242830` |
-| `rule-strong` | `#C7CBD1` | `#343A43` |
-| `accent` | `#1B4DE4` | `#5B86FF` |
-| `accent-hover` | `#1740BE` | `#7C9EFF` |
-| `accent-contrast` | `#FFFFFF` | `#0E0F11` |
+| `ground` | `#FFFFFF` | `#141313` |
+| `ground-subtle` | `#F3F3F4` | `#1C1B1B` |
+| `surface` | `#FFFFFF` | `#201F1F` |
+| `ink` | `#1A1C1C` | `#E5E2E1` |
+| `ink-secondary` | `#5E5E5E` | `#C7C6C6` |
+| `ink-disabled` | `#848484` | `#6B6B6B` |
+| `rule` | `#E5E5E5` | `#333232` |
+| `rule-strong` | `#C6C6C6` | `#444748` |
+| `accent` | `#000000` | `#FFFFFF` |
+| `accent-hover` | `#1B1B1B` | `#E2E2E2` |
+| `accent-contrast` | `#FFFFFF` | `#141313` |
 | `success` | `#1A7F4B` | `#4ADE80` |
 | `danger` | `#B42318` | `#FF6B5E` |
+| `glow` | `#6366F1` | `#6366F1` |
 | `focus` | same as accent | same as accent |
+
+**O acento é a tinta.** Como no protótipo, o botão primário é branco no escuro e
+preto no claro, e o foco usa a mesma cor. A hierarquia vem de peso e de contraste,
+não de matiz. **O único tom de cor é o `glow`** (índigo), e ele é atmosfera: só
+existe na luz do mouse dos contêineres (3.3.4a) e nunca marca algo clicável.
+
+**Antes, na exploração do Stitch (10/11/2026, descartada):** acento laranja
+(`#B34600` claro, `#E8691A` escuro) e fonte Inter. O `#D35400` original dava
+4,17:1 com texto branco, abaixo do AA.
 
 ### 3.3 Rules
 
 `DERIVED` and `SPECIFIED`
 
 1. **Dual mode is mandatory.** Both themes ship together and both are tested.
-2. **No pure black, no pure white** as ground or ink. Pure values kill depth.
+2. **Sem preto puro como fundo.** Branco puro só como fundo do tema claro
+   (`ground` e `surface`). O botão primário é preto no claro e branco no escuro,
+   porque é o próprio acento (3.2).
 3. **Theme lock per page.** No section inverts mid-page.
-4. **No gradients** as surface or brand expression. §33.
-5. **No glassmorphism.** No `backdrop-filter` as a surface treatment. §33.
-6. **No glow.** No coloured outer shadow, ever.
+4. **Sem gradiente** como superfície ou expressão de marca. §33.
+5. **Sem glassmorphism** como superfície. §33.
+6. **Sem glow**, e nenhuma sombra colorida, nunca.
+
+   **4a. Exceções decididas em 10/11/2026, e só estas três:**
+   - **Botão secundário de vidro** (`bg-ink/10` com `backdrop-blur-md`).
+   - **Navbar** com fundo a 80% e desfoque.
+   - **A luz do mouse** (`GlowField`): três círculos desfocados em índigo, dentro
+     de um contêiner arredondado, no lugar da fotografia do protótipo. **Vive em
+     três lugares da Home: o Hero (escala cheia) e o Modelo de trabalho e o CTA
+     (escala 0,6 e intensidade 0,6, porque o texto de apoio deles é
+     `ink-secondary`).** É a única ocorrência de glow e de gradiente suave no
+     site, e o rodapé não leva. Fica atrás do conteúdo, com metade da força no
+     tema claro para o texto passar em AA. Sem ponteiro fino ou sob
+     reduced-motion, a luz fica parada.
+   Qualquer outro uso continua proibido.
 7. **Accent carries meaning.** If it appears, something is interactive, focused,
    or defined. It is never decorative.
 8. **Every pair validated** against WCAG 2.2 AA before use. Part I.15.
@@ -172,7 +245,15 @@ unrelated families read as a compromise.
 
 ### 4.2 Candidate families
 
-`CANDIDATE`. `BLOCKED` on the brand decision.
+**Adotado desde 10/11/2026: Manrope (texto e títulos) e JetBrains Mono (rótulos
+utilitários).** Vêm do protótipo H612. **Títulos em peso 300**, texto em 400 e
+rótulos em 500. Sem serifa: o protótipo usa Noto Serif em alguns títulos, e isso
+não foi adotado (4.3 e `CLAUDE.md` §7.8). Seguem sem aprovação de marca, e trocar é
+editar `src/app/layout.tsx` e o bloco de tokens. Os arquivos são servidos do
+próprio domínio (`next/font/google` baixa no build), então a regra 4.3.4 continua
+valendo: nenhum link para Google Fonts chega ao navegador.
+
+Candidatos considerados antes, mantidos como referência:
 
 | Role | Candidates |
 | --- | --- |
@@ -203,8 +284,8 @@ Applying the skill's Section 4.1:
 ## 5. Type scale
 
 `SPECIFIED`. Base 16px. Roughly a 1.25 ratio at text sizes, loosening at display.
-Ten steps, largest heading 3.5 times body, which is the ceiling Direction A prime
-sets.
+Onze degraus. Os títulos de seção chegam a 3,5 vezes o corpo (`text-6xl`), o teto
+da Direção A prime. A **headline do Hero é a única exceção**, com `text-7xl`.
 
 | Token | Size | Line height | Tracking | Use |
 | --- | --- | --- | --- | --- |
@@ -218,12 +299,14 @@ sets.
 | `text-3xl` | 30px | 1.25 | `-0.015em` | Section heading, h2 mobile |
 | `text-4xl` | 38px | 1.15 | `-0.02em` | Section heading desktop, h2 |
 | `text-5xl` | 48px | 1.1 | `-0.025em` | Page heading, h1 |
-| `text-6xl` | 56px | 1.05 | `-0.03em` | Home hero only |
+| `text-6xl` | 56px | 1.05 | `-0.03em` | Título de seção em destaque (Modelo de trabalho, CTA final), a partir de `lg` |
+| `text-7xl` | 72px | 1.05 | `-0.03em` | **Só a headline do Hero da Home**, a partir de `lg` |
 
-**Hero note.** PRD §12 fixes a three-line headline. The skill caps headlines at
-two lines. The PRD wins, and the conflict is resolved by scale: the hero is set
-at `text-4xl` mobile to `text-5xl` desktop, not `text-6xl`, so three lines still
-fit the viewport with both CTAs visible. `text-6xl` is reserved and may go unused.
+**Nota sobre o Hero.** O PRD §12 fixa uma headline de três linhas e a skill limita
+a duas. Vale o PRD, e o conflito se resolve por escala: `text-4xl` no mobile,
+`text-6xl` a partir de `sm` e `text-7xl` a partir de `lg`. O Hero é só texto, então
+a escala carrega a presença e as três linhas cabem na primeira tela com os dois
+botões visíveis. `text-7xl` não é permitido em nenhum outro lugar.
 
 **Weights:** 400 body, 500 UI and labels, 600 headings. Three weights. No 300, no
 800.
@@ -323,19 +406,21 @@ region. `100vh` jumps on iOS Safari when the address bar collapses.
 
 ## 10. Border radius
 
-`SPECIFIED`. **Shape consistency lock**: one documented rule, applied everywhere.
+`SPECIFIED`. **Revisado em 10/11/2026 (direção H612).** Antes: estrutura reta,
+2px nos interativos, "nada é redondo". Agora:
 
 | Token | Value | Applies to |
 | --- | --- | --- |
-| `radius-none` | 0 | Structural surfaces, sections, panels, images, figures, tables |
-| `radius-sm` | 2px | Interactive elements: buttons, inputs, selects, textareas, tags, focus rings |
-| `radius-md` | 4px | Modal and popover only |
+| `radius-sm` | 4px | Inputs, selects, tags, foco |
+| `radius-md` | 8px | Cartões pequenos, popover |
+| `radius-lg` | 12px | Modal |
+| `radius-xl` | 20px | **Contêineres de seção**: Hero, Modelo de trabalho, CTA, Footer |
+| `rounded-full` | pílula | **Botões** |
 
-**The rule:** structure is sharp, interaction is slightly softened, nothing is
-round. This encodes the engineering personality and it is checkable in review.
-
-**Banned:** pill radius on buttons, fully rounded cards, mixed radii within one
-component, any radius above 4px.
+**A regra:** botão é pílula e contêiner de seção é 20px. Dentro de um contêiner,
+listas e colunas ficam retas, separadas por régua. **Misturar raios no mesmo
+componente continua proibido.** Imagem real, quando houver, segue o raio do
+contêiner que a recebe.
 
 ## 11. Shadows
 
@@ -352,7 +437,8 @@ performance decision.
 
 **Rules:** exactly one shadow token exists. It is tinted to the ground hue, never
 pure black on a light ground. **No coloured shadow, no glow, no inset highlight
-imitating glass.**
+imitating glass.** O vidro e a luz do Hero aprovados em 10/11/2026 estão em 3.3.4a
+e não usam sombra.
 
 ## 12. Iconography
 
@@ -415,7 +501,7 @@ The intersection is narrow and non-negotiable in both directions.
 | Permitted | Banned |
 | --- | --- |
 | Cleared captures of real project interfaces and outputs | Stock photography standing in for real work |
-| Honest environmental or material photography | Generated mockups of work never built |
+| Honest environmental or material photography | Generated mockups of work never built. **Exceção de 11/11/2026:** as duas imagens de atmosfera geradas da Home (`../imagens.md`), que não representam trabalho |
 | Diagrams that explain a real flow | Div-based fake product UI, fake dashboards, fake terminals |
 | Real product output, anonymised | Blurred or pixelated client marks |
 | | Hand-rolled decorative SVG illustration |
@@ -574,6 +660,37 @@ que a viewport nunca completaria a faixa e ficaria travado em opacidade parcial,
 que é falha de contraste, não detalhe estético. `fill-mode: both` faz o que já
 está visível no carregamento renderizar em opacidade 1 de imediato.
 
+**Revisão de 10/11/2026: deslocamento de 16px e faixa `entry 10% entry 55%`.** O
+deslocamento de 8px passava despercebido em tela grande. A faixa começa em 10%
+para a régua da seção (abaixo) se desenhar antes e o conteúdo entrar depois dela.
+Os títulos de seção também revelam, e não só as listas.
+
+**Régua de seção que se desenha** (`.pxto-section-rule`, decidida em 10/11/2026;
+**sem uso na Home desde a adoção do protótipo H612**, que separa seções por espaço
+e por contêiner, e não por linha de ponta a ponta. O utilitário continua em
+`globals.css` para reaplicar).
+Pedido do responsável: a rolagem precisa reforçar que a PXTO é uma empresa de
+tecnologia. O caminho escolhido foi o traço de esquema técnico, e não efeito de
+brilho, partícula ou luz, que a marca proíbe (`CLAUDE.md` §4.8).
+
+- A linha de 1px no topo de cada seção se desenha da esquerda para a direita
+  conforme a seção entra na tela, em `transform: scaleX`, sem animar `width`, então
+  não dispara layout nem conta para CLS.
+- O conteúdo da seção entra logo depois dela. É a única régua que se move: as
+  réguas dentro de listas, como a dos passos do processo, continuam estáticas,
+  porque separam conteúdo (`CLAUDE.md` §7.13).
+- É scroll-driven em CSS puro: a seção declara `view-timeline` e o `::before`, que
+  é a linha, o consome. Mesmo duplo portão de 14.0 (reduced-motion e `@supports`).
+  Sem suporte ou sob reduced-motion, a linha nasce inteira, que é o estado final.
+- **Fora do Hero.** A primeira régua é a do Problema, e nada no Hero depende da
+  rolagem (14.4).
+- O `view-timeline` precisa estar na seção, e não na própria linha: uma linha de
+  1px entraria na tela em um quadro e o efeito sumiria.
+
+**Traço que conecta as seções: REMOVIDO em 11/11/2026**, a pedido do responsável. Foi um fio
+vertical na margem esquerda da Home, com um nó quadrado em cada seção. Não combinava com os
+contêineres arredondados do protótipo H612, e o CSS saiu de `globals.css`.
+
 **Onde não aplicar a revelação de entrada:**
 
 1. **No Hero.** É candidato a LCP, e o Chrome atrasa LCP em elemento com
@@ -609,15 +726,54 @@ outras: altera pintura, nunca layout, e por isso não contribui para CLS.
 
 ### 14.2 What does not exist
 
-- **Nenhum pinning, nenhum parallax, nenhum scroll hijack.** Scroll-scrub não
+- **Nenhum pinning, nenhum scroll hijack.** (O parallax da foto de fundo em contêiner
+  arredondado é exceção de 11/11/2026, ver 14.5.) Scroll-scrub não
   está nesta lista: ele é condicional, e quem governa é 14.4. A revelação de
   14.0 e o scrub de 14.4 são as duas únicas animações disparadas por posição,
   e ambas movem só opacidade e transform. O conteúdo continua presente quando a
   página está: sem o mecanismo, tudo renderiza no estado final.
-- No perpetual loops, no marquee, no shimmer, no typewriter.
-- No page transition.
+- No perpetual loops, no marquee, no shimmer, no typewriter. **Única exceção,
+  decidida em 11/11/2026: a faixa de nomes da seção Parcerias da Home**
+  (`PartnersMarquee`), como o "logo roll" do protótipo H612, **logo abaixo do Hero e
+  sem título visível**. Anda só em `translate`, em loop sem emenda, **com um ponto entre os nomes** (desenhado
+  em CSS, não é texto), e para no hover e no
+  foco dentro. **Não tem botão de pausa**, a pedido do responsável (11/11/2026), o que é
+  uma lacuna de WCAG 2.2.2 para quem usa só o teclado: o axe não testa esse critério, mas
+  a regra de AA do projeto o inclui. Para fechar a lacuna sem botão, a faixa pode parar
+  depois de alguns ciclos. Com reduced-motion nada anda: vira uma lista parada, cada
+  nome uma vez. A faixa é `aria-hidden`, porque repete os nomes, e a
+  lista real é lida uma vez por leitor de tela. A repetição é técnica, para o loop não
+  ter vão, e não indica mais empresas do que as autorizadas.
+- **Transição entre páginas: existe desde 11/11/2026**, ver 14.5.
 - **No `window.addEventListener('scroll')`.** Hard ban. Use IntersectionObserver
   or CSS scroll-driven animation if a case ever arises.
+
+### 14.5 Movimento entre seções, navbar e páginas (11/11/2026)
+
+`SPECIFIED`, na branch `feature/transicoes`. Pedido do responsável: "mais movimento entre
+os contêineres, a luz do mouse em mais lugares, transição entre páginas e a navbar". Tudo é
+CSS, exceto a transição de página. Tudo some sob reduced-motion e sem suporte do navegador,
+e o estado sem animação é sempre o estado final.
+
+| Efeito | Onde | O que se move | Como |
+| --- | --- | --- | --- |
+| **Zoom de entrada** do contêiner | Posicionamento, Modelo de trabalho, CTA (`.pxto-container-in`) | `scale` de 94% a 100% e `opacity` de 35% a 100% | `animation-timeline: view()`, faixa `entry 0% entry 55%`. **Nunca no Hero** (LCP) |
+| **Parallax** da foto | Foto de fundo dos contêineres (`[data-media-backdrop] > img`) | `translate` de -6% a +6% da altura, foto ampliada em 15% | Linha do tempo **nomeada** no contêiner (`--pxto-photo`), porque o contêiner tem `overflow-hidden` e `view()` na própria foto ficaria parada |
+| **Cascata** do texto | Filhos de `.pxto-reveal-stagger` | `opacity` e `translate` | O 2º filho entra em `entry 8%`, do 3º em diante em `entry 14%` |
+| **Navbar** | Todas as páginas (`.pxto-navbar`) | Cor de fundo, cor da linha e desfoque, de "limpa" a vidro em 96px | `animation-timeline: scroll(root)`. **A altura não muda**, então não há CLS |
+| **Sublinhado** dos links da navbar | Links do menu | `scale-x` | Cresce da esquerda no hover e no foco, e fica inteiro no link da página atual |
+| **Luz do mouse** | Hero (cheia), Posicionamento, Modelo de trabalho e CTA (sem foto), rodapé | Posição de três círculos desfocados | `GlowField`. Fraca no Posicionamento e no rodapé (intensidade 0.6 e 0.45) para o texto passar em AA |
+| **Transição de página** | Toda navegação entre rotas | `opacity` e `translate` | `PageTransitions` (client leaf) + `::view-transition-*`. A navbar tem nome próprio e fica parada |
+
+**Contraste com o parallax.** O movimento pode levar qualquer pixel da foto para baixo do
+texto, então o pior caso é medido na imagem INTEIRA, e não só na faixa central
+(`../imagens.md`).
+
+**A transição de página não intercepta:** clique com modificador, `target` diferente de
+`_self`, `download`, link externo, mesma página (âncora `#`) e o botão voltar. Sem
+`startViewTransition` ou com reduced-motion, a navegação é o corte seco de sempre.
+
+**Removido na mesma rodada:** o fio vertical que conectava as seções.
 
 ### 14.3 Rules
 
@@ -707,7 +863,7 @@ dentro de texto corrido não se desenha.
 `animation-timeline: scroll()` ou `view()`, em CSS, pelo mesmo motivo de 14.0: o
 progresso vem do navegador, sem JavaScript, sem client component novo e sem
 biblioteca de animação. **Nenhuma biblioteca de animação entra por causa desta
-regra** (`../technical/TECHNICAL_ARCHITECTURE.md`, sete dependências de runtime),
+regra** (`../technical/TECHNICAL_ARCHITECTURE.md`, cinco dependências de runtime),
 e `window.addEventListener('scroll')` continua proibido sem exceção.
 
 Vale o mesmo portão duplo de 14.0, e pela mesma razão: sob
@@ -1014,6 +1170,7 @@ first, then composites, then page-specific.
 | **Purpose** | Present one of the four capabilities |
 | **Anatomy** | Title, PRD description, optional scope list, link to the capability page |
 | **Responsive** | Equal grid, 4 at `lg`, 2 at `md`, 1 below |
+| **Variants** | `ruled` (padrão): régua no topo e link com seta, usada em `/solucoes`. `column`: cartão com borda arredondada (`rounded-xl`), título, descrição e um link de texto separado por uma linha, em grade de 4 cartões, usado na Home (sem ícone e sem numeração). Uma variante é uma **disposição**, nunca uma hierarquia: as quatro instâncias de uma página usam sempre a mesma |
 | **Rules** | **All four instances are visually identical.** Equal cell size, equal content depth, equal treatment. This enforces the four-peer rule structurally |
 | **Never** | An icon per service. One service styled as featured. Different content lengths creating implied hierarchy |
 
@@ -1054,7 +1211,8 @@ first, then composites, then page-specific.
 | | |
 | --- | --- |
 | **Purpose** | Convert intent at the end of a page or major section |
-| **Anatomy** | Heading, one supporting line, one primary button |
+| **Anatomy** | Título, uma linha de apoio **opcional** e um botão primário |
+| **Variants** | Com `body`: título à esquerda e apoio com botão à direita (7 e 5 colunas), usada nas demais páginas. Sem `body`: contêiner arredondado (20px) com título grande centralizado e o botão logo abaixo, usada na Home desde 10/11/2026 |
 | **Responsive** | Offset left at `lg`, stacked below |
 | **Rules** | One primary action. Follows an argument, never precedes the reason to act |
 | **Never** | Two CTAs of the same intent on one page. Manufactured urgency. A secondary CTA competing at equal weight |

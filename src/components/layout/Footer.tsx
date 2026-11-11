@@ -1,37 +1,51 @@
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
+import { GlowField } from "@/components/ui/GlowField";
 import { navigation, site, contactChannels } from "@/content/site";
 import { solutions } from "@/content/solutions";
 
 /**
+ * Rodapé de informação, no espírito do rodapé da Apple: colunas com títulos
+ * pequenos e links discretos, e uma barra legal embaixo separada por uma linha.
+ * Largura total da página, com 20px de margem, como o Hero (decidido em
+ * 11/11/2026), dentro de um cartão arredondado.
+ *
+ * O que NÃO entra, porque não existe e não pode ser inventado: links de política
+ * de privacidade e termos (o texto está bloqueado, `CLAUDE.md` Estado atual),
+ * seletor de país, redes sociais e qualquer selo. A coluna de contato é omitida
+ * por inteiro enquanto os canais não existem, e não renderizada vazia.
+ *
+ * A luz do mouse (`GlowField`) também vive aqui, fraca (intensidade 0.45), a pedido do
+ * responsável em 11/11/2026. Os links usam a tinta secundária, que passa em AA com a luz
+ * fraca no tema claro.
+ *
  * No social proof of any kind, no placeholder social icons, no version stamp
- * (POSITIONING 13.6). The contact column is omitted entirely while the
- * channels are undefined, rather than rendered empty.
+ * (POSITIONING 13.6).
  */
+const linkClass =
+  "inline-block py-1.5 text-sm text-ink-secondary transition-colors duration-fast hover:text-ink hover:underline hover:underline-offset-4";
+
 export function Footer() {
   const hasChannels = Boolean(contactChannels.email ?? contactChannels.phone);
 
   return (
-    <footer className="border-t border-rule">
-      <Container width="wide">
-        <div className="grid grid-cols-1 gap-10 py-12 md:grid-cols-12 md:py-16">
-          <div className="md:col-span-5">
-            <Logo label={site.name} className="h-9" />
-            <p className="mt-4 max-w-prose text-sm text-ink-secondary">
+    <footer className="px-4 pb-5 pt-2 md:px-5">
+      <div className="relative isolate overflow-hidden rounded-xl border border-rule bg-ground-subtle p-6 md:p-10">
+        <GlowField scale={0.7} intensity={0.45} />
+        <div className="relative z-10 grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <Logo label={site.name} className="h-10 w-auto" />
+            <p className="mt-5 max-w-xs text-sm text-ink-secondary">
               {site.descriptor}
             </p>
           </div>
 
-          <nav aria-label="Soluções" className="md:col-span-3">
-            <p className="font-mono text-2xs uppercase text-ink-secondary">Soluções</p>
-            <ul className="mt-4 space-y-2">
+          <nav aria-label="Soluções" className="md:col-span-2 md:col-start-6">
+            <p className="text-sm font-medium text-ink">Soluções</p>
+            <ul className="mt-3">
               {solutions.map((s) => (
                 <li key={s.slug}>
-                  <Link
-                    href={`/solucoes/${s.slug}`}
-                    className="inline-block py-1 text-sm text-ink transition-colors duration-fast hover:text-accent"
-                  >
+                  <Link href={`/solucoes/${s.slug}`} className={linkClass}>
                     {s.name}
                   </Link>
                 </li>
@@ -40,14 +54,11 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Navegação" className="md:col-span-2">
-            <p className="font-mono text-2xs uppercase text-ink-secondary">Navegação</p>
-            <ul className="mt-4 space-y-2">
+            <p className="text-sm font-medium text-ink">Navegação</p>
+            <ul className="mt-3">
               {navigation.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="inline-block py-1 text-sm text-ink transition-colors duration-fast hover:text-accent"
-                  >
+                  <Link href={item.href} className={linkClass}>
                     {item.label}
                   </Link>
                 </li>
@@ -57,8 +68,8 @@ export function Footer() {
 
           {hasChannels ? (
             <div className="md:col-span-2">
-              <p className="font-mono text-2xs uppercase text-ink-secondary">Contato</p>
-              <ul className="mt-4 space-y-2 text-sm text-ink">
+              <p className="text-sm font-medium text-ink">Contato</p>
+              <ul className="mt-3 space-y-1.5 text-sm text-ink-secondary">
                 {contactChannels.email ? <li>{contactChannels.email}</li> : null}
                 {contactChannels.phone ? <li>{contactChannels.phone}</li> : null}
               </ul>
@@ -66,12 +77,12 @@ export function Footer() {
           ) : null}
         </div>
 
-        <div className="pxto-rule-top py-6">
-          <p className="font-mono text-2xs uppercase text-ink-secondary">
+        <div className="relative z-10 mt-12 border-t border-rule pt-6">
+          <p className="text-xs text-ink-secondary">
             &copy; {new Date().getFullYear()} {site.name}
           </p>
         </div>
-      </Container>
+      </div>
     </footer>
   );
 }

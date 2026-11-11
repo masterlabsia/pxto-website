@@ -35,6 +35,7 @@ export const sobrePage = {
       "Tecnologia é meio, não fim. Nenhuma ferramenta tem valor por si só: o valor aparece quando ela resolve um problema concreto de quem trabalha com ela todos os dias.",
       "Por isso não começamos escolhendo tecnologia. Começamos entendendo o problema, e a escolha técnica passa a ser uma consequência, não um ponto de partida.",
       "As ferramentas vão mudar. A capacidade de entender um problema e construir a solução, não.",
+      "Por isso o trabalho se organiza em torno do resultado que a operação precisa, e não em torno de horas ou de ferramentas.",
     ],
   },
   principios: {

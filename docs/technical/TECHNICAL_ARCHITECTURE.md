@@ -1,10 +1,30 @@
 # PXTO Technical Architecture Specification
 
 **Version:** 1.0
-**Status:** Specification. Nothing is implemented.
+**Status:** Specification, **com a aplicação já implementada** (ver a revisão de 11/11/2026 abaixo).
 **Sources:** [`../PRD.md`](../PRD.md) §36 to §50, [`../architecture/SITEMAP.md`](../architecture/SITEMAP.md), [`../architecture/PAGE_SPECS.md`](../architecture/PAGE_SPECS.md), [`../projects/PROJECT_FRAMEWORK.md`](../projects/PROJECT_FRAMEWORK.md), [`../design-system/DESIGN_SYSTEM.md`](../design-system/DESIGN_SYSTEM.md), [`../brand/VISUAL_DIRECTION.md`](../brand/VISUAL_DIRECTION.md)
 
 > Zero em-dash characters, per the rule now governing this project.
+
+> **Revisão de 11/11/2026**, em português por ter sido tocada (`CLAUDE.md` §1). O que a
+> implementação mudou em relação ao que está escrito no resto deste documento, que segue em
+> inglês:
+>
+> - **Dependências de runtime: cinco**, e não sete: `next`, `react`, `react-dom`, `zod` e
+>   `@heroicons/react`. O `geist` foi removido quando a fonte passou a ser a Manrope. Os
+>   Radix UI "por componente" ainda não foram necessários.
+> - **Fontes:** Manrope e JetBrains Mono, por `next/font/google` (baixadas no build e servidas
+>   do próprio domínio). Ver `DESIGN_SYSTEM.md` §4.2.
+> - **Componentes de cliente:** seis, todos folhas, listados em `CLAUDE.md` §8.1. O limite de
+>   "quatro" do lançamento foi superado, de forma registrada.
+> - **CI:** existe **um** workflow, `.github/workflows/ci.yml`, que roda tipos, lint, assets, o
+>   build de produção e as **seis auditorias** de `scripts/` (funcional, responsiva, axe,
+>   conteúdo, segurança e performance). O `e2e.yml` previsto na §21 **não existe**, e a
+>   performance é medida direto, e não por Lighthouse. Ver `CLAUDE.md` §18.0.
+> - **Movimento:** continua sem biblioteca de animação. É CSS (`animation-timeline`) e a API
+>   nativa de View Transitions, esta última por um client leaf de ~40 linhas, sem dependência.
+>   Ver `DESIGN_SYSTEM.md` §14.5.
+> - **Imagens:** AVIF gerados com o `sharp`, que já vem com o Next. Ver `../imagens.md`.
 
 ---
 
@@ -67,7 +87,7 @@ GitHub + GitHub Actions    source control and checks
 Vercel                     hosting, previews, production
 ```
 
-**Seven runtime dependencies at launch.** No animation library, no state
+**Five runtime dependencies today** (was seven at launch, see the 11/11/2026 note above). No animation library, no state
 management library, no CSS-in-JS, no component library, no CMS, no database, no
 auth. See §1.3.
 
@@ -181,7 +201,7 @@ before the first component is generated, not after.
 - **Server Actions** for the contact form, so no API layer exists for a single
   endpoint. See §13.
 
-**Client Component boundaries.** Only four are expected at launch: the navbar
+**Client Component boundaries.** Four were expected at launch (six exist today, see the 11/11/2026 note): the navbar
 menu toggle, the contact form, the DefinedTerm control, and the theme toggle if
 one ships. Each is a leaf. Layouts and pages stay on the server.
 

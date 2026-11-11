@@ -7,6 +7,14 @@ issues em 31/08/2026. Cada uma segue o formato do `CLAUDE.md` §20: o que está
 ambíguo, qual documento resolve, as opções, qual seria a escolha recomendada e
 por quê, e o que fica bloqueado enquanto isso.
 
+> **Atualização de 11/11/2026.** Várias destas decisões foram tomadas no código, na prática:
+> **#1** o acento deixou de ser uma cor (é a tinta), então a briga entre o azul e o verde do
+> logo acabou, e fica só a escolha entre verde e turquesa para o ícone. **#2** o site usa
+> **Manrope**, e não Geist, e a pergunta sobre Aeonik na marca continua aberta. **#3** o
+> movimento foi emendado de forma mais larga (`CLAUDE.md` §7.9). **#4** o slot do Hero
+> **não leva mídia**: é só texto e a luz do mouse. **#5** a foto do globo **saiu**. As issues
+> do GitHub não foram fechadas daqui, e quem decide fechá-las é o responsável.
+
 | # | Decisão | Recomendação |
 | --- | --- | --- |
 | [1](../../issues/1) | Cor da marca: verde, turquesa ou azul | Manter o azul, refazer logo e favicon |

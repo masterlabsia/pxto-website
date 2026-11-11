@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Hero } from "@/sections/home/Hero";
 import { Problema } from "@/sections/home/Problema";
 import { Posicionamento } from "@/sections/home/Posicionamento";
+import { ModeloDeTrabalho } from "@/sections/home/ModeloDeTrabalho";
 import { Solucoes } from "@/sections/home/Solucoes";
 import { ComoTrabalhamos } from "@/sections/home/ComoTrabalhamos";
-import { Projetos } from "@/sections/home/Projetos";
-import { Diferenciais } from "@/sections/home/Diferenciais";
+import { Parcerias } from "@/sections/home/Parcerias";
 import { CtaSection } from "@/sections/home/CtaSection";
 import { buildMetadata } from "@/lib/metadata";
 import { homeMeta } from "@/content/home";
@@ -23,13 +23,16 @@ export const metadata: Metadata = buildMetadata({
 export default function HomePage() {
   return (
     <>
-      <Hero />
+      {/* A primeira tela: o Hero e a faixa de parcerias numa tela só. Ver globals.css. */}
+      <div className="pxto-first-screen">
+        <Hero />
+        <Parcerias />
+      </div>
       <Problema />
       <Posicionamento />
+      <ModeloDeTrabalho />
       <Solucoes />
       <ComoTrabalhamos />
-      <Projetos />
-      <Diferenciais />
       <CtaSection />
     </>
   );
