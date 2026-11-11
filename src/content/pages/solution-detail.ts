@@ -55,7 +55,7 @@ export const solutionPages: Record<SolutionSlug, SolutionPage> = {
     },
     cta: {
       heading: "Tem dois sistemas que deveriam conversar?",
-      body: "Conte quais são e o que precisa circular entre eles.",
+      body: "Conte quais são e o que precisa circular entre eles. O caminho até lá é o nosso trabalho.",
       label: "Conte seu projeto",
     },
   },
@@ -95,7 +95,7 @@ export const solutionPages: Record<SolutionSlug, SolutionPage> = {
     },
     cta: {
       heading: "Existe um processo que consome sua equipe todo mês?",
-      body: "Descreva como ele funciona hoje. É por aí que começamos.",
+      body: "Descreva como ele funciona hoje e o que precisa deixar de ser manual. O caminho até lá é o nosso trabalho.",
       label: "Conte seu projeto",
     },
   },
@@ -176,7 +176,7 @@ export const solutionPages: Record<SolutionSlug, SolutionPage> = {
     },
     cta: {
       heading: "Precisa de um site que funcione de verdade?",
-      body: "Conte o que ele precisa resolver.",
+      body: "Conte o que ele precisa resolver. O caminho até lá é o nosso trabalho.",
       label: "Conte seu projeto",
     },
   },

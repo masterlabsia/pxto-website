@@ -3,7 +3,9 @@ import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { CTA } from "@/components/ui/CTA";
-import { Processo } from "@/sections/shared/Processo";
+import { Section } from "@/components/ui/Section";
+import { PageHero } from "@/sections/shared/PageHero";
+import { ComoTrabalhamos } from "@/sections/shared/ComoTrabalhamos";
 import { buildMetadata } from "@/lib/metadata";
 import { solucoesPage } from "@/content/pages/solucoes";
 import { solutions } from "@/content/solutions";
@@ -20,24 +22,11 @@ export default function SolucoesPage() {
   const p = solucoesPage;
   return (
     <>
-      <section className="border-b border-rule pb-12 pt-10 md:pb-16 md:pt-14 lg:pb-20 lg:pt-16">
-        <Container width="wide">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <Heading level={1} size="display">
-                {p.hero.heading}
-              </Heading>
-            </div>
-            <div className="lg:col-span-5 lg:col-start-8">
-              <p className="max-w-prose text-lg text-ink-secondary">{p.hero.body}</p>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero heading={p.hero.heading} body={p.hero.body} />
 
-      <section aria-labelledby="visao-geral" className="pxto-interval pb-14 md:pb-16 lg:pb-20">
+      <Section spacing="page" labelledBy="visao-geral">
         <Container width="wide">
-          <div className="grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
+          <div className="pxto-reveal-stagger grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <Heading level={2} size="section" id="visao-geral">
                 {p.overview.heading}
@@ -45,22 +34,22 @@ export default function SolucoesPage() {
             </div>
             <div className="space-y-4 lg:col-span-6 lg:col-start-7">
               {p.overview.body.map((t) => (
-                <p key={t.slice(0, 24)} className="text-base text-ink-secondary">
+                <p key={t.slice(0, 24)} className="text-base text-ink-secondary md:text-lg">
                   {t}
                 </p>
               ))}
             </div>
           </div>
 
-          <ul className="mt-12 grid grid-cols-1 gap-x-8 md:grid-cols-2 lg:mt-14 lg:grid-cols-4">
+          <ul className="pxto-reveal-stagger mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
             {solutions.map((s) => (
-              <ServiceCard key={s.slug} solution={s} />
+              <ServiceCard key={s.slug} solution={s} variant="column" />
             ))}
           </ul>
         </Container>
-      </section>
+      </Section>
 
-      <Processo headingId="processo-solucoes" />
+      <ComoTrabalhamos />
 
       <CTA headingId="cta-solucoes" heading={p.cta.heading} body={p.cta.body} />
     </>

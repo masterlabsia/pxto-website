@@ -403,7 +403,8 @@ tecnologia usar." Esse apoio é aproveitável, e pode voltar em outra página.
 
 **Metadata** — `DRAFT`
 Title: `Soluções — PXTO`
-Meta description: `Integrações, automação, software sob medida e sites. Quatro formas de resolver o mesmo tipo de problema — o diagnóstico define qual se aplica.`
+Meta description: `Integrações, automação, software sob medida e sites. O resultado que a operação precisa define o instrumento, e o diagnóstico mostra qual dos quatro se aplica.`
+(Revisado em 11/11/2026. Antes: "Quatro formas de resolver o mesmo tipo de problema — o diagnóstico define qual se aplica.")
 
 ---
 
@@ -592,7 +593,7 @@ Positioning line `FIXED` — §23.
 
 > ## Tem dois sistemas que deveriam conversar?
 >
-> Conte quais são e o que precisa circular entre eles.
+> Conte quais são e o que precisa circular entre eles. O caminho até lá é o nosso trabalho.
 >
 > **[Conte seu projeto]**
 
@@ -678,7 +679,7 @@ Positioning line `FIXED` — §24.
 
 > ## Existe um processo que consome sua equipe todo mês?
 >
-> Descreva como ele funciona hoje. É por aí que começamos.
+> Descreva como ele funciona hoje e o que precisa deixar de ser manual. O caminho até lá é o nosso trabalho.
 >
 > **[Conte seu projeto]**
 
@@ -882,9 +883,11 @@ reader, claims nothing unmeasurable.
 
 > ## Precisa de um site que funcione de verdade?
 >
-> Conte o que ele precisa resolver.
+> Conte o que ele precisa resolver. O caminho até lá é o nosso trabalho.
 >
 > **[Conte seu projeto]**
+
+(CTAs de 3.8, 4.8 e 6.8 revisados em 11/11/2026 para repetir a ideia de que a PXTO assume o caminho, já presente em 5.8. Sem promessa de resultado.)
 
 > ⚠ **Constraint** (§26; Narrative §17.2): this page must not read as a creative
 > agency offer. **No language about visual craft, creativity, brand experience or
@@ -1340,7 +1343,8 @@ Meta description: `A PXTO é uma empresa de tecnologia que trabalha no espaço e
 
 **Metadata** — `DRAFT`
 Title: `Contato — PXTO`
-Meta description: `Descreva o problema que precisa resolver. Não é preciso ter a especificação pronta nem saber qual tecnologia usar.`
+Meta description: `Descreva o resultado que você precisa ou o problema que quer resolver. Não é preciso ter a especificação pronta nem saber qual tecnologia usar.`
+(Revisado em 11/11/2026.)
 
 ---
 
@@ -1348,13 +1352,15 @@ Meta description: `Descreva o problema que precisa resolver. Não é preciso ter
 
 `DRAFT`
 
-> # Vamos conversar sobre o seu problema.
+> # Vamos conversar sobre o resultado que você precisa.
+
+(Revisado em 11/11/2026. Antes: "Vamos conversar sobre o seu problema.")
 
 ## 11.2 Mensagem
 
 `DRAFT` — the highest-leverage message on the page (Narrative §11.3).
 
-> ## Descreva o problema. Não é preciso ter a solução.
+> ## Descreva o resultado ou o problema. Não é preciso ter a solução.
 >
 > Você não precisa chegar com uma especificação pronta, um escopo fechado ou uma
 > tecnologia definida. Entender o problema é a primeira etapa do nosso trabalho de

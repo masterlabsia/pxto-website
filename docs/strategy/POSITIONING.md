@@ -934,8 +934,17 @@ Cada item é de negócio e **não pode ser resolvido por um agente** (§52 do PR
 - **Home**, seção Modelo de trabalho, entre Posicionamento e Soluções
   (`../content/WEBSITE_COPY.md` §1.4).
 - **Home**, CTA final: "Conte o resultado que você precisa." (§1.8).
-- **Não aparece** no Hero (texto fixo do PRD §12), na navbar, nos metadados
-  nem em descrição da empresa.
+- **Atualizado em 11/11/2026**, por aprovação do responsável (`../content/PROPOSTA_COPY_2026-11-11.md`):
+  o vocabulário do modelo ("resultado", "o caminho até lá") também aparece em
+  `/solucoes` (título, texto e metadata), nos CTAs das páginas de solução,
+  em `/sobre` (parágrafo de Como pensamos) e em `/contato` (título, mensagem,
+  campo e metadata). Nas páginas de solução o corpo continua descrevendo o
+  problema, e só o título e o CTA nomeiam o resultado. Nenhuma dessas linhas
+  promete resultado, prazo ou condição de pagamento (§18.3).
+- **Home, metadata:** a descrição leva o modelo desde 11/11/2026 (item 1.3 da
+  proposta).
+- **Não aparece** no Hero (texto fixo do PRD §12), na navbar nem na descrição
+  da empresa (JSON-LD `Organization`).
 
 ### 18.6 Riscos
 

@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/sections/shared/PageHero";
 import { Heading } from "@/components/ui/Heading";
 import { ContactForm } from "@/components/form/ContactForm";
 import { buildMetadata } from "@/lib/metadata";
 import { contactChannels } from "@/content/site";
+import { contatoPage } from "@/content/pages/contato";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Contato",
-  description:
-    "Descreva o problema que precisa resolver. Não é preciso ter a especificação pronta nem saber qual tecnologia usar.",
-  path: "/contato",
-});
+export const metadata: Metadata = buildMetadata({ ...contatoPage.meta, path: "/contato" });
 
 /**
  * Reduces the friction of starting a commercial conversation (PRD 28).
@@ -28,37 +25,25 @@ export default function ContatoPage() {
 
   return (
     <>
-      <section className="border-b border-rule pb-12 pt-10 md:pb-16 md:pt-14 lg:pb-16 lg:pt-16">
-        <Container width="wide">
-          <Heading level={1} size="display" className="max-w-[18ch]">
-            Vamos conversar sobre o seu problema.
-          </Heading>
-        </Container>
-      </section>
+      <PageHero heading={contatoPage.hero.heading} />
 
-      <section aria-labelledby="formulario" className="py-14 md:py-16 lg:py-20">
+      <section aria-labelledby="formulario" className="px-4 pb-24 pt-5 md:px-5 md:pb-32">
         <Container width="wide">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-4">
+            <div className="pxto-reveal-stagger lg:col-span-4">
               <Heading level={2} size="sub" id="formulario">
-                Descreva o problema. Não é preciso ter a solução.
+                {contatoPage.mensagem.heading}
               </Heading>
               <div className="mt-5 space-y-4 text-base text-ink-secondary">
-                <p>
-                  Você não precisa chegar com uma especificação pronta, um escopo
-                  fechado ou uma tecnologia definida. Entender o problema é a
-                  primeira etapa do nosso trabalho de qualquer forma.
-                </p>
-                <p>
-                  Conte o que não está funcionando, o que já foi tentado e o que
-                  precisaria acontecer. A partir daí a conversa fica concreta.
-                </p>
+                {contatoPage.mensagem.body.map((t) => (
+                  <p key={t.slice(0, 24)}>{t}</p>
+                ))}
               </div>
 
               {hasChannels ? (
                 <div className="pxto-rule-top mt-10 pt-6">
                   <p className="font-mono text-2xs uppercase text-ink-secondary">
-                    Prefere falar direto?
+                    {contatoPage.channelsLabel}
                   </p>
                   <ul className="mt-3 space-y-1 text-base text-ink">
                     {contactChannels.email ? <li>{contactChannels.email}</li> : null}
@@ -68,7 +53,7 @@ export default function ContatoPage() {
               ) : null}
             </div>
 
-            <div className="lg:col-span-7 lg:col-start-6">
+            <div className="pxto-reveal rounded-xl border border-rule bg-ground-subtle p-6 md:p-10 lg:col-span-7 lg:col-start-6">
               <ContactForm />
             </div>
           </div>

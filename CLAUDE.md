@@ -244,7 +244,8 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
    not as hover. **Exceções decididas em 10/11/2026, e só estas:** o botão
    secundário de vidro, a navbar com desfoque e a luz do mouse (`GlowField`),
    que vive no Hero, no Modelo de trabalho e no CTA da Home, nos contêineres
-   arredondados e em escala menor fora do Hero. Qualquer outro uso continua proibido.
+   arredondados e em escala menor fora do Hero, e (11/11/2026) no `PageHero` e no
+   CTA com `body` das páginas internas, também em escala menor. Qualquer outro uso continua proibido.
 6. **One accent, locked site-wide.** If it appears, something is interactive,
    focused, or defined. Success and danger are form states only. **O acento é a
    própria tinta** (branco no escuro, preto no claro). O único tom de cor é o

@@ -6,6 +6,8 @@ import { Heading } from "@/components/ui/Heading";
 import { Badge } from "@/components/ui/Badge";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { CTA } from "@/components/ui/CTA";
+import { Section } from "@/components/ui/Section";
+import { PageHero } from "@/sections/shared/PageHero";
 import { PageEvent } from "@/components/analytics/PageEvent";
 import { JsonLd, serviceJsonLd, breadcrumbJsonLd } from "@/lib/jsonld";
 import { buildMetadata } from "@/lib/metadata";
@@ -58,26 +60,14 @@ export default async function SolutionPage({ params }: Params) {
           { name: solution.name, path: `/solucoes/${solution.slug}` },
         ])}
       />
-      <section className="border-b border-rule pb-12 pt-10 md:pb-16 md:pt-14 lg:pb-20 lg:pt-16">
-        <Container width="wide">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <Badge>{solution.name}</Badge>
-              <Heading level={1} size="display" className="mt-5">
-                {solution.positioning}
-              </Heading>
-            </div>
-            <div className="lg:col-span-5 lg:col-start-8">
-              <p className="max-w-prose text-lg text-ink-secondary">{page.heroBody}</p>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero heading={solution.positioning} body={page.heroBody}>
+        <Badge>{solution.name}</Badge>
+      </PageHero>
 
       {/* Problema before the offer, on every page that has both. */}
-      <section aria-labelledby="problema" className="pxto-interval pb-14 md:pb-16 lg:pb-20">
+      <Section spacing="page" labelledBy="problema">
         <Container width="wide">
-          <div className="grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
+          <div className="pxto-reveal-stagger grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
             <div className="lg:col-span-6">
               <Heading level={2} size="section" id="problema">
                 {page.problema.heading}
@@ -85,52 +75,51 @@ export default async function SolutionPage({ params }: Params) {
             </div>
             <div className="space-y-4 lg:col-span-5 lg:col-start-8">
               {page.problema.body.map((t) => (
-                <p key={t.slice(0, 24)} className="text-base text-ink-secondary">
+                <p key={t.slice(0, 24)} className="text-base text-ink-secondary md:text-lg">
                   {t}
                 </p>
               ))}
             </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
-      <section
-        aria-labelledby="escopo"
-        className="border-y border-rule bg-ground-subtle py-14 md:py-16 lg:py-20"
-      >
+      <section aria-labelledby="escopo" className="px-4 py-5 md:px-5">
         <Container width="wide">
-          <div className="grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
-            <div className="lg:col-span-5">
-              <Heading level={2} size="section" id="escopo">
-                {page.oQueFazemos.heading}
-              </Heading>
-              <p className="mt-5 max-w-prose text-base text-ink">
-                {solution.description}
-              </p>
-              {page.oQueFazemos.note ? (
-                <p className="mt-4 max-w-prose text-sm text-ink-secondary">
-                  {page.oQueFazemos.note}
+          <div className="pxto-container-in rounded-xl border border-rule bg-ground-subtle px-6 py-16 md:px-12 md:py-24">
+            <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-12">
+              <div className="pxto-reveal-stagger lg:col-span-5">
+                <Heading level={2} size="section" id="escopo">
+                  {page.oQueFazemos.heading}
+                </Heading>
+                <p className="mt-6 max-w-prose text-base text-ink md:text-lg">
+                  {solution.description}
                 </p>
-              ) : null}
+                {page.oQueFazemos.note ? (
+                  <p className="mt-4 max-w-prose text-sm text-ink-secondary">
+                    {page.oQueFazemos.note}
+                  </p>
+                ) : null}
+              </div>
+              {/* Scope as real list markup, never a middle-dot joined string. */}
+              <ul className="pxto-reveal lg:col-span-6 lg:col-start-7">
+                {solution.scope.map((item) => (
+                  <li
+                    key={item}
+                    className="border-t border-rule py-4 font-mono text-2xs uppercase text-ink-secondary first:border-t-0"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-            {/* Scope as real list markup, never a middle-dot joined string. */}
-            <ul className="lg:col-span-6 lg:col-start-7">
-              {solution.scope.map((item) => (
-                <li
-                  key={item}
-                  className="pxto-rule-top py-3 font-mono text-2xs uppercase text-ink-secondary"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
           </div>
         </Container>
       </section>
 
-      <section aria-labelledby="abordagem" className="pxto-interval pb-14 md:pb-16 lg:pb-20">
+      <Section spacing="page" labelledBy="abordagem">
         <Container width="wide">
-          <div className="grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
+          <div className="pxto-reveal-stagger grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <Heading level={2} size="section" id="abordagem">
                 {page.abordagem.heading}
@@ -138,19 +127,19 @@ export default async function SolutionPage({ params }: Params) {
             </div>
             <div className="space-y-4 lg:col-span-7 lg:col-start-6">
               {page.abordagem.body.map((t) => (
-                <p key={t.slice(0, 24)} className="text-base text-ink">
+                <p key={t.slice(0, 24)} className="text-base text-ink md:text-lg">
                   {t}
                 </p>
               ))}
             </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
       {parsed.data === "sites" ? (
-        <section aria-labelledby="este-site" className="pb-14 md:pb-16 lg:pb-20">
+        <Section spacing="page" labelledBy="este-site" className="pt-0 md:pt-0">
           <Container width="wide">
-            <div className="grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
+            <div className="pxto-reveal-stagger grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
               <div className="lg:col-span-5">
                 <Heading level={2} size="section" id="este-site">
                   {esteSite.heading}
@@ -158,35 +147,38 @@ export default async function SolutionPage({ params }: Params) {
               </div>
               <div className="space-y-4 lg:col-span-6 lg:col-start-7">
                 {esteSite.body.map((t) => (
-                  <p key={t.slice(0, 24)} className="text-base text-ink-secondary">
+                  <p key={t.slice(0, 24)} className="text-base text-ink-secondary md:text-lg">
                     {t}
                   </p>
                 ))}
               </div>
             </div>
           </Container>
-        </section>
+        </Section>
       ) : null}
 
-      <section aria-labelledby="exemplos" className="pb-14 md:pb-16 lg:pb-20">
+      <Section spacing="page" labelledBy="exemplos" className="pt-0 md:pt-0">
         <Container width="wide">
-          <Heading level={2} size="section" id="exemplos">
+          <Heading level={2} size="section" id="exemplos" className="pxto-reveal">
             {page.exemplos.heading}
           </Heading>
           {/* Situations, never claimed engagements (PRD 53). */}
-          <ul className="mt-8 grid grid-cols-1 gap-x-12 md:grid-cols-2">
+          <ul className="pxto-reveal mt-12 grid grid-cols-1 overflow-hidden rounded-xl border border-rule bg-ground-subtle md:grid-cols-2">
             {page.exemplos.items.map((item) => (
-              <li key={item} className="pxto-rule-top py-4 text-base text-ink">
+              <li
+                key={item}
+                className="border-t border-rule p-6 text-base text-ink first:border-t-0 md:p-8 md:nth-2:border-t-0 md:even:border-l"
+              >
                 {item}
               </li>
             ))}
           </ul>
         </Container>
-      </section>
+      </Section>
 
       {/* Omitted entirely when no cleared project applies. Never an empty region. */}
       {related.length > 0 ? (
-        <section aria-labelledby="relacionados" className="pb-14 md:pb-16 lg:pb-20">
+        <Section spacing="page" labelledBy="relacionados" className="pt-0 md:pt-0">
           <Container width="wide">
             <Heading level={2} size="section" id="relacionados">
               Projetos
@@ -197,25 +189,23 @@ export default async function SolutionPage({ params }: Params) {
               ))}
             </div>
           </Container>
-        </section>
+        </Section>
       ) : null}
 
-      <section aria-labelledby="outras" className="pb-14 md:pb-16 lg:pb-20">
+      <Section spacing="page" labelledBy="outras" className="pt-0 md:pt-0">
         <Container width="wide">
-          <Heading level={2} size="sub" id="outras">
+          <Heading level={2} size="sub" id="outras" className="pxto-reveal">
             O diagnóstico pode apontar para outro caminho
           </Heading>
-          <ul className="mt-8 grid grid-cols-1 gap-x-8 md:grid-cols-3">
+          <ul className="pxto-reveal mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
             {siblings.map((s) => (
-              <li key={s.slug} className="pxto-rule-top py-5">
+              <li key={s.slug}>
                 <Link
                   href={`/solucoes/${s.slug}`}
-                  className="group block transition-colors duration-fast"
+                  className="group block rounded-xl border border-rule bg-ground-subtle p-6 transition-colors duration-fast hover:border-rule-strong md:p-8"
                 >
-                  <span className="text-lg font-medium text-ink group-hover:text-accent">
-                    {s.name}
-                  </span>
-                  <span className="mt-1 block font-mono text-2xs uppercase text-ink-secondary">
+                  <span className="text-lg font-medium text-ink">{s.name}</span>
+                  <span className="mt-2 block font-mono text-2xs uppercase text-ink-secondary">
                     {s.positioning}
                   </span>
                 </Link>
@@ -223,7 +213,7 @@ export default async function SolutionPage({ params }: Params) {
             ))}
           </ul>
         </Container>
-      </section>
+      </Section>
 
       <CTA
         headingId="cta-solucao"
