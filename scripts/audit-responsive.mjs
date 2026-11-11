@@ -46,6 +46,18 @@ for (const vp of VIEWPORTS) {
         if (r.width === 0 || r.height === 0) continue;
         const cs = getComputedStyle(el);
         if (cs.overflowX === "auto" || cs.overflowX === "scroll") continue;
+        // Cortado por um ancestral com overflow hidden que cabe na viewport: o
+        // excesso não aparece nem gera rolagem. É o caso da luz do herói, que é
+        // decoração aria-hidden maior que um celular, presa ao contêiner.
+        let clipped = false;
+        for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+          const acs = getComputedStyle(a);
+          if (acs.overflowX === "hidden" || acs.overflowX === "clip") {
+            const ar = a.getBoundingClientRect();
+            if (ar.left >= -1 && ar.right <= doc.clientWidth + 1) { clipped = true; break; }
+          }
+        }
+        if (clipped) continue;
         if (r.right > doc.clientWidth + 1 || r.left < -1) {
           escapees.push(`${el.tagName.toLowerCase()}.${(el.className || "").toString().split(" ")[0]}`);
         }

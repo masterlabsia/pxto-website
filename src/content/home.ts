@@ -11,11 +11,11 @@
 
 export const hero = {
   /*
-   * O Hero carrega o diagrama de sistemas, em src/content/diagrams. O slot de
-   * foto que existia aqui saiu junto com o `Media` que o consumia.
+   * O Hero é só texto nesta exploração. O diagrama de sistemas continua em
+   * src/content/diagrams, sem uso.
    *
    * DIVERGÊNCIA REGISTRADA: VISUAL_DIRECTION.md 9 especifica fotografia neste
-   * slot. A troca por diagrama ainda não foi refletida no documento.
+   * slot, e o documento ainda não reflete nenhuma das duas trocas.
    */
 
   /** FIXED. PRD 12. Set as three lines, which the sentence structure asks for. */
@@ -31,9 +31,13 @@ export const hero = {
 export const problema = {
   /** FIXED. PRD 13. */
   heading: "Sua empresa já tem tecnologia. O problema é quando ela não conversa.",
-  // Os 3 parágrafos de corpo saíram: [0] e [1] já existiam quase literalmente em
-  // sobrePage.porQue, e [2] foi migrado para lá. Deduplicação, não corte.
-  // O reconhecimento passa a ser trabalho das 6 situações abaixo.
+  // Os 3 parágrafos de corpo saíram na deduplicação: [0] e [1] já existiam quase
+  // literalmente em sobrePage.porQue, e [2] foi migrado para lá. O Stitch trouxe
+  // de volta uma versão curta, abaixo. Ela repete ideias de sobrePage.porQue, e
+  // se a deduplicação valer, é este parágrafo que sai.
+  /** DRAFT. Versão curta do corpo, como no Stitch. Não consta em WEBSITE_COPY.md. */
+  body:
+    "Cada ferramenta foi contratada para resolver um problema específico. Nenhuma delas foi feita para conversar com as outras. O espaço entre elas acaba sendo preenchido por pessoas.",
   /** The six situations are FIXED by PRD 13. Descriptions are DRAFT. */
   situations: [
     {
@@ -66,31 +70,20 @@ export const problema = {
         "O software resolve o caso geral. O seu caso é exatamente o que sobra.",
     },
   ],
-  /** Narrative 3.2 move 3. Do not cut. Without it the section is only uncomfortable. */
-  reframe:
-    "Nada disso é consequência de uma decisão errada. É o que acontece quando a operação cresce mais rápido que as ferramentas que ela foi juntando pelo caminho. E tem solução.",
+  /**
+   * Narrative 3.2 move 3. Versão curta, como no Stitch, decidida em 10/11/2026.
+   * A versão longa, em WEBSITE_COPY.md, acrescentava "É o que acontece quando a
+   * operação cresce mais rápido que as ferramentas que ela foi juntando pelo
+   * caminho." O reenquadramento continua aqui: a frase nega a culpa e anuncia
+   * a solução.
+   */
+  reframe: "Nada disso é consequência de uma decisão errada. E tem solução.",
 } as const;
 
 export const posicionamento = {
-  /**
-   * Foto de fundo do bloco inteiro, com o texto por cima.
-   *
-   * Enquanto `pending` for verdadeiro a seção renderiza sobre `ground-subtle`,
-   * exatamente como antes. Publicar a foto é remover a flag.
-   */
-  media: {
-    src: "/images/site/posicionamento.avif",
-    /*
-     * O alt descreve a imagem que esta no arquivo hoje, nao a que o briefing
-     * pede. Enquanto as duas forem diferentes, o alt acompanha o arquivo: quem
-     * usa leitor de tela precisa receber o que existe, nao a intencao.
-     */
-    alt: "Vista noturna do planeta, com linhas de luz ligando pontos distantes.",
-    brief: "Fundo do bloco inteiro. Fotografia própria, horizontal, de contraste baixo e sem ponto focal no centro, onde fica o texto. Sem marca de cliente, sem dado real. 2400x1200.",
-    width: 2400,
-    height: 1200,
-    pending: false,
-  },
+  // O bloco é só texto, como no Stitch. A foto de fundo (globo com rede de luz)
+  // saiu: contrariava 4.8, 7.5 e 7.15. O arquivo continua em
+  // public/images/site/posicionamento.avif, sem uso.
   heading: "O problema não está nos seus sistemas. Está entre eles.",
   body: [
     "A PXTO trabalha nesse espaço: entre as ferramentas, entre os processos, entre o que o software faz e o que a sua operação realmente precisa.",
@@ -99,9 +92,32 @@ export const posicionamento = {
   ],
 } as const;
 
+/**
+ * RASCUNHO. Resultado como serviço (OaaS), decidido com o responsável em
+ * 10/11/2026. Registrado em WEBSITE_COPY.md 1.4 e em POSITIONING.md 18, ainda
+ * sem aprovação formal do território (POSITIONING.md 14).
+ *
+ * Cuidado de redação: descreve um modelo de trabalho, não promete resultado.
+ * "Assume o caminho" não é garantia, e nenhuma linha daqui cita prazo, métrica
+ * ou índice de sucesso (POSITIONING.md 18.3).
+ */
+export const modeloDeTrabalho = {
+  heading: "Você define o resultado. A PXTO assume o caminho até ele.",
+  body: [
+    "Em vez de comprar horas ou ferramentas, você descreve o que precisa que aconteça na operação.",
+    "A PXTO desenha, constrói e conecta o que for necessário para chegar lá.",
+    "Você não precisa chegar com a solução pronta, nem saber qual tecnologia usar.",
+  ],
+} as const;
+
 export const solucoes = {
   /** FIXED. PRD 14. */
   heading: "Tecnologia para resolver problemas reais.",
+  /**
+   * DRAFT, aprovado em 11/11/2026. Ponte entre o Modelo de trabalho e as quatro
+   * soluções: o resultado vem primeiro e o instrumento é consequência.
+   */
+  lead: "O resultado define o instrumento. Qual deles se aplica é uma conclusão do diagnóstico.",
   // O intro saiu: repetia quase palavra por palavra solucoesPage.overview.body[2],
   // onde o mesmo argumento aparece com mais espaço.
 } as const;
@@ -169,13 +185,17 @@ export const diferenciais = {
 } as const;
 
 export const homeCta = {
-  heading: "Descreva o problema. A solução é o nosso trabalho.",
-  body: "Você não precisa chegar com uma especificação pronta, nem saber qual tecnologia usar.",
+  // RASCUNHO NÃO APROVADO, alinhado ao posicionamento OaaS. O texto aprovado
+  // em WEBSITE_COPY.md é "Descreva o problema. A solução é o nosso trabalho."
+  heading: "Conte o resultado que você precisa.",
+  // O parágrafo de apoio saiu a pedido, para seguir o Stitch. O texto aprovado
+  // em WEBSITE_COPY.md é "Você não precisa chegar com uma especificação pronta,
+  // nem saber qual tecnologia usar."
 } as const;
 
 export const homeMeta = {
   title:
     "PXTO. Integração de sistemas, automação de processos e software sob medida",
   description:
-    "A PXTO conecta sistemas, automatiza processos e constrói software sob medida. Tecnologia aplicada aos problemas reais da operação da sua empresa.",
+    "A PXTO conecta sistemas, automatiza processos e constrói software sob medida. Você descreve o resultado que precisa na operação, e a PXTO cuida do caminho até ele.",
 } as const;

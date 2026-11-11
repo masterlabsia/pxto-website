@@ -29,6 +29,7 @@ export function MediaBackdrop({
   image,
   priority = false,
   sizes = "100vw",
+  scrim = "default",
   className,
   children,
 }: {
@@ -36,6 +37,12 @@ export function MediaBackdrop({
   image?: PxtoImage;
   priority?: boolean;
   sizes?: string;
+  /**
+   * `default`: 72%, o valor verificado para a pior foto possível.
+   * `soft`: 55%, SÓ para foto escura que foi medida (hoje, só a do CTA da Home).
+   * Ver `--color-scrim-soft`.
+   */
+  scrim?: "default" | "soft";
   className?: string;
   children: React.ReactNode;
 }) {
@@ -63,7 +70,10 @@ export function MediaBackdrop({
             className="-z-10 object-cover"
           />
           {/* Véu verificado. Mecanismo de acessibilidade, não decoração. */}
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-scrim" />
+          <div
+            aria-hidden="true"
+            className={cn("absolute inset-0 -z-10", scrim === "soft" ? "bg-scrim-soft" : "bg-scrim")}
+          />
         </>
       ) : null}
       {children}

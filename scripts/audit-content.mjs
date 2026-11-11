@@ -28,6 +28,13 @@ const BANNED_VOCAB = [
 /** PRD 29. */
 const BANNED_CTA = ["saiba mais", "clique aqui", "solicite agora"];
 
+/**
+ * Nomes que o responsável autorizou citar, em 11/11/2026. Valem SOMENTE dentro da
+ * seção `[data-partners]`. Fora dela, e para qualquer outro nome da lista abaixo,
+ * o bloqueio continua. Registro em docs/parcerias.md.
+ */
+const AUTHORIZED_PARTNERS = ["Play9ContentGroup", "Casaeaser"];
+
 /** Confidential client material that must never surface. */
 const CONFIDENTIAL = [
   "highq", "thomson", "pipedrive", "play9", "playnest", "playconnect",
@@ -43,7 +50,9 @@ const FIXED_COPY = {
     "Sua empresa já tem tecnologia. O problema é quando ela não conversa.",
     "Tecnologia para resolver problemas reais.",
     "Fale com a PXTO",
-    "Ver projetos",
+    // Secundário do Hero. Era "Ver projetos" (PRD 12) até 10/11/2026, quando
+    // passou a rolar até Soluções. Ver WEBSITE_COPY.md 1.1.
+    "Ver soluções",
   ],
   "/solucoes/integracoes": ["Faça seus sistemas conversarem."],
   "/solucoes/automacao": ["Automatize o trabalho que não deveria precisar ser manual."],
@@ -74,6 +83,26 @@ for (const route of ROUTES) {
   const text = await page.evaluate(() => document.body.innerText);
   const html = await page.content();
   const lower = text.toLowerCase();
+  // Texto da seção de parcerias, e o resto da página sem ela. Os nomes
+  // autorizados são removidos do trecho da seção antes da checagem de nomes
+  // confidenciais: qualquer outro nome da lista que apareça ali continua falhando.
+  const partnersText = await page.evaluate(() =>
+    [...document.querySelectorAll("[data-partners]")].map((el) => el.innerText).join("\n"),
+  );
+  // Texto renderizado da página SEM a seção. Esconde a seção por um instante em vez
+  // de clonar o corpo: um clone inclui os <script> do Next, que carregam os dados
+  // da seção e fariam o nome aparecer "fora" dela.
+  const outsidePartners = await page.evaluate(() => {
+    const sections = [...document.querySelectorAll("[data-partners]")];
+    const previous = sections.map((el) => el.style.display);
+    sections.forEach((el) => { el.style.display = "none"; });
+    const visible = document.body.innerText;
+    sections.forEach((el, i) => { el.style.display = previous[i] ?? ""; });
+    return visible;
+  });
+  let partnersScrubbed = partnersText;
+  for (const name of AUTHORIZED_PARTNERS) partnersScrubbed = partnersScrubbed.split(name).join("");
+  const confidentialScope = (outsidePartners + "\n" + partnersScrubbed).toLowerCase();
 
   // Em-dash and en-dash: zero tolerance.
   const dashes = (text.match(/[—–]/g) ?? []).length;
@@ -92,7 +121,7 @@ for (const route of ROUTES) {
     if (lower.includes(cta)) fail(route, "cta-proibido", `"${cta}"`);
   }
   for (const term of CONFIDENTIAL) {
-    if (lower.includes(term)) fail(route, "confidencial", `"${term}" exposto`);
+    if (confidentialScope.includes(term)) fail(route, "confidencial", `"${term}" exposto`);
   }
 
   // First person singular. The company speaks, never a person (PRD 27).

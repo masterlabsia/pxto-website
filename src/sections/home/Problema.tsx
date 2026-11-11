@@ -7,41 +7,43 @@ import { problema } from "@/content/home";
  * O ponto único de falha da página (NARRATIVE 7.4). Se o reconhecimento não
  * acontece aqui, tudo abaixo lê como material genérico de fornecedor.
  *
- * Os 3 parágrafos de corpo saíram na deduplicação: já existiam em
- * sobrePage.porQue. O reconhecimento agora é trabalho exclusivo das 6 situações.
- *
- * O reframe deixou de dividir espaço com uma coluna de corpo à direita e passou
- * a fechar a seção sozinho, em corpo maior. É a função que a narrativa dá a ele:
- * o momento de virada, não uma nota de rodapé do heading.
+ * Composição do Stitch, em 5 e 7 colunas: à esquerda o título e o parágrafo que
+ * nomeia o problema, à direita as seis situações em lista e, fechando, o
+ * reenquadramento. O reenquadramento fica ao pé da lista porque é a virada: o
+ * leitor reconhece a situação e logo depois descobre que ela tem solução.
  *
  * COSTURA COM O POSICIONAMENTO. As duas seções são um movimento só: aqui o
- * leitor se reconhece, ali ele descobre que existe uma empresa para isso. O
- * respiro do fim daqui e o do começo de lá foram reduzidos para que a virada
- * não leia como duas paradas. O `pxto-interval` continua no topo, porque é ele
- * que marca a entrada no movimento.
+ * leitor se reconhece, ali ele descobre que existe uma empresa para isso.
  */
 export function Problema() {
   return (
     <section
       id="problema"
       aria-labelledby="problema-heading"
-      className="pxto-interval pb-10 md:pb-12 lg:pb-14"
+      className="px-4 py-24 md:px-5 md:py-32"
     >
-      <Container width="wide">
-        <div className="max-w-[30ch] lg:max-w-[38ch]">
-          <Heading level={2} size="section" id="problema-heading">
-            {problema.heading}
-          </Heading>
+      <Container width="wide" className="px-0 md:px-0 lg:px-0">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-20">
+          <div className="pxto-reveal-stagger lg:col-span-5">
+            <Heading level={2} size="display" id="problema-heading">
+              {problema.heading}
+            </Heading>
+            <p className="mt-8 max-w-prose text-base text-ink-secondary md:text-lg">
+              {problema.body}
+            </p>
+          </div>
+
+          <div className="lg:col-span-7">
+            <DefinitionList
+              items={problema.situations}
+              layout="stack"
+              className="pxto-reveal-stagger"
+            />
+            <p className="pxto-reveal mt-14 border-t border-rule pt-8 text-base font-semibold text-ink md:text-lg">
+              {problema.reframe}
+            </p>
+          </div>
         </div>
-
-        <DefinitionList
-          items={problema.situations}
-          className="pxto-reveal-stagger mt-10 lg:mt-12"
-        />
-
-        <p className="pxto-reveal mt-10 max-w-[46ch] text-lg text-ink lg:mt-12">
-          {problema.reframe}
-        </p>
       </Container>
     </section>
   );

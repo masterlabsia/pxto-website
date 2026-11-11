@@ -864,6 +864,87 @@ Requires human decision at PXTO. An AI agent must not resolve these (§52).
    Carried from Brand Foundation §15.6.
 9. **Market and language scope** — Portuguese-only or bilingual. Carried from
    Brand Foundation §15.9.
+10. **Definição comercial de "resultado"** (§18.4): como o resultado é descrito,
+    medido e aceito em contrato, e o que acontece se ele não vier.
+
+---
+
+## 18. Modelo de contratação: resultado como serviço (OaaS)
+
+`DRAFT`. Decidido com o responsável em 10/11/2026, em sessão de exploração do
+design da Home. **Ainda não aprovado formalmente**: depende do território (§14)
+e da declaração de posicionamento (§8). Esta seção foi escrita em português por
+ter sido criada agora (`CLAUDE.md` §1).
+
+### 18.1 O que é
+
+A PXTO se contrata pelo **resultado** que o cliente precisa na operação, e não
+por horas, licenças ou escopo de tecnologia. O cliente descreve o que precisa que
+aconteça. A PXTO assume o desenho, a construção e a integração necessários para
+chegar lá.
+
+É um **modelo de trabalho**. Não é uma quinta oferta: as quatro capacidades
+(integrações, automação, software, sites) continuam sendo pares permanentes, e a
+tecnologia continua sendo meio, nunca identidade.
+
+### 18.2 Como se encaixa no posicionamento atual
+
+O posicionamento define a PXTO pelo espaço em que trabalha, o problema entre os
+sistemas (§1, §14). O resultado como serviço é a forma comercial dessa mesma
+ideia: se começamos pelo problema, o que o cliente compra é o problema resolvido.
+Por isso o argumento da Home segue a ordem **problema, espaço, modelo de trabalho,
+ferramentas**. O visitante entende o problema antes de ver como a PXTO se contrata,
+e vê como se contrata antes de ver as quatro ferramentas.
+
+Isso reforça o que já era regra: competir contra a inércia (o visitante não fazer
+nada) e mostrar o custo do estado atual antes de argumentar capacidade.
+
+### 18.3 O que a PXTO pode e não pode afirmar
+
+**Pode:**
+- que o cliente descreve o resultado que precisa e a PXTO assume o caminho;
+- que a PXTO desenha, constrói e conecta o que for necessário para chegar lá.
+
+**Não pode** (`CLAUDE.md` §0.1, §0.2, §4.5):
+- prometer ou garantir resultado, prazo, economia, retorno ou índice de sucesso;
+- dizer "pague só se funcionar" ou equivalente, **até que a definição comercial
+  (§18.4) exista e seja confirmada**;
+- sugerir que resultados já foram entregues, porque nenhuma prova existe (§12);
+- usar a sigla em inglês, OaaS, em qualquer texto visível ao visitante;
+- tratar o modelo como diferencial de escala. É uma forma de contratar, não uma
+  prova de tamanho.
+
+"Resultado", no copy, nomeia **o que o cliente precisa**. Não nomeia desempenho
+garantido pela PXTO.
+
+### 18.4 Decisões em aberto
+
+Cada item é de negócio e **não pode ser resolvido por um agente** (§52 do PRD):
+
+1. **Definição comercial.** Como o resultado é descrito em contrato, medido e
+   aceito, como é precificado e o que acontece quando ele não vem.
+2. **Relação com *Evoluímos*** (§17.3). Um modelo por resultado sugere
+   responsabilidade contínua. O passo continua com o aviso ⚠ CONFIRMAR.
+3. **Encaixe com o ICP** (§2). Para quais empresas e tamanhos esse modelo faz
+   sentido, e para quais não.
+4. **Se o modelo tem nome próprio** em português, ou se aparece apenas como frase.
+
+### 18.5 Onde aparece no site
+
+- **Home**, seção Modelo de trabalho, entre Posicionamento e Soluções
+  (`../content/WEBSITE_COPY.md` §1.4).
+- **Home**, CTA final: "Conte o resultado que você precisa." (§1.8).
+- **Não aparece** no Hero (texto fixo do PRD §12), na navbar, nos metadados
+  nem em descrição da empresa.
+
+### 18.6 Riscos
+
+| Risco | Mitigação |
+| --- | --- |
+| Soar como garantia de resultado, o que a marca não pode sustentar | §18.3. Revisão de todo texto que contenha "resultado" |
+| Prometer antes de existir definição comercial | Nenhuma linha de prazo, métrica ou condição de pagamento até §18.4 |
+| Contradizer o ⚠ CONFIRMAR de *Evoluímos* | Resolver §18.4.2 junto com §17.3 |
+| Parecer uma quinta oferta e quebrar a regra de pares | §18.1: é modelo de trabalho, não serviço |
 
 ---
 

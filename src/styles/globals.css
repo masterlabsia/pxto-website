@@ -12,55 +12,68 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ---------- Light theme (default) ---------- */
+/*
+ * Direção do protótipo "H612" do Stitch, adotada em 10/11/2026 por decisão do
+ * responsável. Escuro primeiro, neutro, sem cor de marca saturada: o "acento" é
+ * a própria tinta (branco no escuro, preto no claro), que é como o protótipo faz
+ * o botão primário. O único tom de cor é o `glow`, e ele é atmosfera, não
+ * significado.
+ */
 :root {
-  --pxto-ground: #fcfcfc;
-  --pxto-ground-subtle: #f4f5f6;
+  --pxto-ground: #ffffff;
+  --pxto-ground-subtle: #f3f3f4;
   --pxto-surface: #ffffff;
-  --pxto-ink: #111214;
-  --pxto-ink-secondary: #5c6066;
-  --pxto-ink-disabled: #9aa0a6;
-  --pxto-rule: #e3e5e8;
-  --pxto-rule-strong: #c7cbd1;
-  --pxto-accent: #1b4de4;
-  --pxto-accent-hover: #1740be;
+  --pxto-ink: #1a1c1c;
+  --pxto-ink-secondary: #5e5e5e;
+  --pxto-ink-disabled: #848484;
+  --pxto-rule: #e5e5e5;
+  --pxto-rule-strong: #c6c6c6;
+  --pxto-accent: #000000;
+  --pxto-accent-hover: #1b1b1b;
   --pxto-accent-contrast: #ffffff;
   --pxto-success: #1a7f4b;
   --pxto-danger: #b42318;
+  --pxto-glow: #6366f1;
+  /* Metade da força no claro: o texto secundário não passa em AA sobre o tom
+     cheio da luz. Medido, ver GlowField. */
+  --pxto-glow-strength: 0.5;
 }
 
 /* ---------- Dark theme ---------- */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --pxto-ground: #0e0f11;
-    --pxto-ground-subtle: #141619;
-    --pxto-surface: #1a1d21;
-    --pxto-ink: #e9ebed;
-    --pxto-ink-secondary: #8e949b;
-    --pxto-ink-disabled: #5f666d;
-    --pxto-rule: #242830;
-    --pxto-rule-strong: #343a43;
-    --pxto-accent: #5b86ff;
-    --pxto-accent-hover: #7c9eff;
-    --pxto-accent-contrast: #0e0f11;
+    --pxto-ground: #141313;
+    --pxto-ground-subtle: #1c1b1b;
+    --pxto-surface: #201f1f;
+    --pxto-ink: #e5e2e1;
+    --pxto-ink-secondary: #c7c6c6;
+    --pxto-ink-disabled: #6b6b6b;
+    --pxto-rule: #333232;
+    --pxto-rule-strong: #444748;
+    --pxto-accent: #ffffff;
+    --pxto-accent-hover: #e2e2e2;
+    --pxto-accent-contrast: #141313;
     --pxto-success: #4ade80;
     --pxto-danger: #ff6b5e;
+    --pxto-glow-strength: 1;
   }
 }
 
 [data-theme="dark"] {
-  --pxto-ground: #0e0f11;
-  --pxto-ground-subtle: #141619;
-  --pxto-surface: #1a1d21;
-  --pxto-ink: #e9ebed;
-  --pxto-ink-secondary: #8e949b;
-  --pxto-ink-disabled: #5f666d;
-  --pxto-rule: #242830;
-  --pxto-rule-strong: #343a43;
-  --pxto-accent: #5b86ff;
-  --pxto-accent-hover: #7c9eff;
-  --pxto-accent-contrast: #0e0f11;
+  --pxto-ground: #141313;
+  --pxto-ground-subtle: #1c1b1b;
+  --pxto-surface: #201f1f;
+  --pxto-ink: #e5e2e1;
+  --pxto-ink-secondary: #c7c6c6;
+  --pxto-ink-disabled: #6b6b6b;
+  --pxto-rule: #333232;
+  --pxto-rule-strong: #444748;
+  --pxto-accent: #ffffff;
+  --pxto-accent-hover: #e2e2e2;
+  --pxto-accent-contrast: #141313;
   --pxto-success: #4ade80;
   --pxto-danger: #ff6b5e;
+  --pxto-glow-strength: 1;
 }
 
 @theme inline {
@@ -78,12 +91,15 @@
   --color-accent-contrast: var(--pxto-accent-contrast);
   --color-success: var(--pxto-success);
   --color-danger: var(--pxto-danger);
+  --color-glow: var(--pxto-glow);
 
-  /* Type families. CANDIDATE: Geist pairing (DESIGN_SYSTEM.md Part I.4.2). */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  /* Type families. Manrope (texto e títulos, em peso leve nos títulos) e
+     JetBrains Mono, da direção do protótipo H612. */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 
-  /* Type scale. DESIGN_SYSTEM.md Part I.5. Max heading 3.5x body. */
+  /* Type scale. DESIGN_SYSTEM.md Part I.5. Títulos de seção até 3.5x o corpo
+     (text-6xl). text-7xl é exclusivo do Hero. */
   --text-2xs: 0.6875rem;          /* 11px */
   --text-2xs--line-height: 1.45;
   --text-2xs--letter-spacing: 0.02em;
@@ -114,19 +130,26 @@
   --text-6xl: 3.5rem;             /* 56px */
   --text-6xl--line-height: 1.05;
   --text-6xl--letter-spacing: -0.03em;
+  --text-7xl: 4.5rem;             /* 72px, só a headline do Hero */
+  --text-7xl--line-height: 1.05;
+  --text-7xl--letter-spacing: -0.03em;
 
   /* Spacing. 4px base, which is the Tailwind v4 default step. */
   --spacing: 0.25rem;
 
   /* Radius. Structure is sharp, interaction is softened, nothing is round. */
+  /* Raios da direção do protótipo: 4, 8, 12 e 20px nos contêineres de seção.
+     Botão é pílula (`rounded-full`). */
   --radius-none: 0px;
-  --radius-sm: 2px;
-  --radius-md: 4px;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1.25rem;
 
   /* Containers. DESIGN_SYSTEM.md Part I.8. */
   --container-prose: 68ch;
   --container-content: 70rem;     /* 1120px */
-  --container-wide: 85rem;        /* 1360px */
+  --container-wide: 75rem;        /* 1200px, como o protótipo */
 
   /* Véu sobre foto de fundo.
      Usa a cor de fundo do próprio tema, e não uma cor fixa, para que a seção
@@ -134,9 +157,15 @@
      4.5:1 com tinta primária mesmo na pior foto possível, em ambos os temas.
      Ver DESIGN_SYSTEM.md 13.2c antes de reduzir. */
   --color-scrim: color-mix(in srgb, var(--pxto-ground) 72%, transparent);
+  /* Véu leve, SÓ para a foto do CTA da Home, que é escura e foi medida: no pior
+     pixel o texto de tinta primária dá 7,5:1 no escuro e 5,1:1 no claro. A foto do
+     Modelo de trabalho NÃO passa com 55% (3,5:1 no escuro) e usa o véu padrão.
+     Medido em 11/11/2026, ver docs/imagens.md. Não usar em foto nova sem medir. */
+  --color-scrim-soft: color-mix(in srgb, var(--pxto-ground) 55%, transparent);
 
-  /* Deslocamento da revelação de entrada. MOTION_INTENSITY 5. */
-  --reveal-shift: calc(var(--spacing) * 2);
+  /* Deslocamento da revelação de entrada. MOTION_INTENSITY 5. Era 8px e passava
+     despercebido em tela grande. 16px lê como movimento sem virar efeito. */
+  --reveal-shift: calc(var(--spacing) * 4);
 
   /* Motion. MOTION_INTENSITY 5: feedback de estado + revelação de entrada. */
   --duration-fast: 120ms;
@@ -244,6 +273,161 @@
     }
   }
 
+  /*
+   * Faixa de nomes que passa, como o "logo roll" do protótipo H612. Só `translate`.
+   *
+   * O trilho tem DOIS grupos idênticos e anda 50%, então o fim do primeiro encaixa
+   * no começo do segundo e o loop não tem emenda. Cada grupo precisa ser mais largo
+   * que a viewport, o que o componente garante repetindo os nomes.
+   *
+   * PARA no hover e no foco dentro. Não há botão de pausa (o responsável pediu para
+   * tirar em 11/11/2026), então quem usa só o teclado não consegue pará-la: lacuna
+   * de WCAG 2.2.2, registrada em docs/parcerias.md. Com reduced-motion nada anda: o
+   * trilho vira uma lista que quebra linha e o grupo duplicado some.
+   * `animation: none` ganha do bloco global de reduced-motion, que só mexe em
+   * duração e iterações.
+   */
+  .pxto-marquee {
+    overflow: hidden;
+  }
+  .pxto-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: pxto-marquee 45s linear infinite;
+  }
+  /* O ponto entre os nomes. Desenhado, e não um caractere: tem sempre o mesmo
+     tamanho e fica centrado na altura do texto. A margem dos dois lados faz o papel
+     do espaço que antes era só `padding-right`. */
+  .pxto-marquee li::after {
+    content: "";
+    flex: none;
+    width: 0.375rem;
+    height: 0.375rem;
+    margin-inline: 2rem;
+    border-radius: 9999px;
+    background-color: currentColor;
+    opacity: 0.6;
+  }
+  @media (width >= 48rem) {
+    .pxto-marquee li::after {
+      margin-inline: 2.5rem;
+    }
+  }
+  .pxto-marquee:hover .pxto-marquee-track,
+  .pxto-marquee:focus-within .pxto-marquee-track {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pxto-marquee-track {
+      animation: none;
+      width: auto;
+      padding-inline: 1rem;
+    }
+    .pxto-marquee-track > ul {
+      flex-wrap: wrap;
+      row-gap: 1rem;
+    }
+    /* Parada e quebrando linha, o ponto sobraria no fim de cada linha. */
+    .pxto-marquee li::after {
+      display: none;
+    }
+    .pxto-marquee li {
+      padding-inline-end: 2rem;
+    }
+    /* Parado, cada nome aparece uma vez: a repetição só existe para o loop não ter vão. */
+    .pxto-marquee-dup,
+    .pxto-marquee-rep {
+      display: none;
+    }
+  }
+
+  /*
+   * Item de lista com linha que cresce. Vem do protótipo H612: uma régua de 2px
+   * atravessa o topo do item no hover e no foco. É feedback de estado, então cai
+   * na regra de 120 a 180ms. `transform: scaleX`, sem animar largura.
+   */
+  .pxto-line-item {
+    position: relative;
+    border-block-start: 1px solid var(--color-rule);
+  }
+  .pxto-line-item::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: -1px;
+    height: 2px;
+    background-color: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+  .pxto-line-item:hover::before,
+  .pxto-line-item:focus-within::before {
+    transform: scaleX(1);
+  }
+
+  /*
+   * A primeira tela da Home: o Hero e a faixa de parcerias juntos, numa tela só.
+   *
+   * O bloco tem a altura da janela menos a navbar, em coluna. A faixa fica com a altura
+   * que o conteúdo pede, e o Hero (que tem `flex-1`) ocupa o que sobrar. Por isso não há
+   * altura fixa no Hero: cada máquina divide a sua tela de um jeito. `min-height`, não
+   * `height`: se o Hero precisar de mais, o bloco cresce e a faixa desce da primeira
+   * tela, em vez de o texto ser cortado. `100dvh`, não `100vh` (CLAUDE.md 9.8).
+   * Só a partir de lg. Abaixo disso o Hero volta a ter a altura do conteúdo.
+   */
+  @media (width >= 64rem) {
+    .pxto-first-screen {
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100dvh - var(--nav-height));
+    }
+  }
+
+  /*
+   * O título do Hero desce um degrau da escala quando a JANELA é baixa, para o Hero e a
+   * faixa de parcerias continuarem numa tela só. Um notebook de 768px de tela tem uns
+   * 650px de janela depois da barra do navegador, e com o título de 72px o Hero pede
+   * 458px e a faixa escapa por 10px. Só os degraus da escala (`text-6xl`, `text-5xl`),
+   * nunca um tamanho solto. Se nem assim couber, o bloco cresce e a faixa desce da
+   * primeira tela, e o texto nunca é cortado.
+   */
+  @media (width >= 64rem) and (height <= 44rem) {
+    .pxto-hero-title {
+      font-size: var(--text-6xl);
+      line-height: var(--text-6xl--line-height);
+    }
+  }
+  @media (width >= 64rem) and (height <= 38rem) {
+    .pxto-hero-title {
+      font-size: var(--text-5xl);
+      line-height: var(--text-5xl--line-height);
+    }
+    .pxto-hero-box {
+      padding-block: calc(var(--spacing) * 6);
+    }
+  }
+
+  /*
+   * Contêiner que ocupa a altura da tela do computador, como o CTA final da Home.
+   *
+   * `100dvh`, e não `100vh` (CLAUDE.md 9.8): em tela de toque a barra do navegador
+   * entra e sai, e `vh` mede a janela maior. Desconta a navbar fixa e os 2.5rem de
+   * margem da seção (20px acima e abaixo, a mesma do Hero), então o contêiner cabe
+   * inteiro na tela quando a seção está logo abaixo da navbar, com 20px de folga em
+   * cima e embaixo. A altura acompanha cada máquina: 655px num notebook de 768px,
+   * 967px num monitor de 1080px.
+   *
+   * `min-height`, não `height`: se o conteúdo for maior que a tela, o contêiner cresce.
+   * Só a partir de lg. Em telas menores o contêiner volta a ter a altura do conteúdo,
+   * e o mobile é a última etapa do projeto.
+   */
+  @media (width >= 64rem) {
+    .pxto-fill-viewport {
+      min-height: calc(100dvh - var(--nav-height) - 2.5rem);
+    }
+  }
+
   /* Optical hanging rule used by the process sequence and the record list. */
   .pxto-rule-top {
     border-block-start: 1px solid var(--color-rule);
@@ -284,7 +468,53 @@
       .pxto-reveal-stagger > * {
         animation: pxto-reveal-in both var(--ease-out);
         animation-timeline: view();
-        animation-range: entry 0% entry 45%;
+        /* Começa em 10%, e não em 0%, para a régua da seção (abaixo) se desenhar
+           primeiro e o conteúdo entrar depois dela. */
+        animation-range: entry 10% entry 55%;
+      }
+    }
+  }
+
+  /*
+   * Régua de seção que se desenha. DESIGN_SYSTEM.md 14.0.
+   *
+   * A linha no topo de cada seção é o traço de um esquema técnico: aparece
+   * conforme a seção entra na tela, da esquerda para a direita, e o conteúdo
+   * entra logo depois dela. É o que dá o ar de engenharia à rolagem sem nenhum
+   * efeito de brilho, partícula ou luz.
+   *
+   * COMO. A seção declara uma timeline de visualização e o ::before, que é a
+   * linha, a consome. O ::before não pode ter timeline própria com sentido, já
+   * que tem 1px de altura e entraria na tela em um quadro só.
+   *
+   * O QUE ANIMA. `transform: scaleX`, não `width`: não dispara layout e não conta
+   * para CLS. É a única régua que se move. As réguas dentro de listas (passos do
+   * processo) continuam estáticas, porque separam conteúdo.
+   *
+   * DEGRADAÇÃO. Sem suporte a `view()` ou sob reduced-motion a regra não é
+   * escrita, e a linha nasce inteira, que é o estado final.
+   */
+  .pxto-section-rule {
+    position: relative;
+  }
+  .pxto-section-rule::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background-color: var(--color-rule);
+    transform-origin: left center;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .pxto-section-rule {
+        view-timeline: --pxto-section block;
+      }
+      .pxto-section-rule::before {
+        animation: pxto-rule-draw both linear;
+        animation-timeline: --pxto-section;
+        animation-range: entry 0% entry 35%;
       }
     }
   }
@@ -339,6 +569,24 @@
         animation-delay: calc(300ms + var(--pxto-i) * 90ms);
       }
     }
+  }
+}
+
+@keyframes pxto-marquee {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: -50% 0;
+  }
+}
+
+@keyframes pxto-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
 

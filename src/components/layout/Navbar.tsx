@@ -35,7 +35,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-rule bg-ground/95 backdrop-blur-none">
+    <header className="sticky top-0 z-30 border-b border-rule bg-ground/80 backdrop-blur-md">
       <Container width="wide">
         <div className="flex h-16 items-center justify-between gap-6 md:h-[72px]">
           <Link

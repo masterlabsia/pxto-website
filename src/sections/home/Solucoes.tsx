@@ -7,29 +7,31 @@ import { solutions } from "@/content/solutions";
 /**
  * The four capabilities are peers, permanently (PRD 4).
  *
- * Equal cells enforce that structurally rather than by discipline: identical
- * span, identical rule, identical content depth. No icon per service, no
- * featured card, no varying description length.
+ * Grade de 4 colunas do protótipo H612, com uma linha no topo de cada célula que
+ * cresce no hover: células idênticas, sem ícone, sem card em destaque e sem
+ * descrição de tamanho diferente.
+ * A igualdade é estrutural, não por disciplina.
  *
- * Cells are separated by a top rule, not boxed as cards. Cards are reserved for
- * cases where elevation communicates real hierarchy, and here it would not.
+ * O `id` é o destino do botão "Ver soluções" do Hero.
  */
 export function Solucoes() {
   return (
     <section
+      id="solucoes"
       aria-labelledby="solucoes-heading"
-      className="pxto-interval pb-14 md:pb-16 lg:pb-20"
+      className="px-4 py-24 md:px-5 md:py-32"
     >
-      <Container width="wide">
-        <div className="max-w-[28ch]">
+      <Container width="wide" className="px-0 md:px-0 lg:px-0">
+        <div className="pxto-reveal-stagger max-w-3xl">
           <Heading level={2} size="section" id="solucoes-heading">
             {solucoes.heading}
           </Heading>
+          <p className="mt-6 text-lg text-ink-secondary">{solucoes.lead}</p>
         </div>
 
-        <ul className="pxto-reveal-stagger mt-12 grid grid-cols-1 gap-x-8 gap-y-0 md:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+        <ul className="pxto-reveal-stagger mt-16 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
           {solutions.map((solution) => (
-            <ServiceCard key={solution.slug} solution={solution} />
+            <ServiceCard key={solution.slug} solution={solution} variant="column" />
           ))}
         </ul>
       </Container>

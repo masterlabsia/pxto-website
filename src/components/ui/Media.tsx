@@ -87,7 +87,7 @@ export function Media({
     <ImageSlot ratio={ratio} label={image.brief ?? image.alt} />
   ) : (
     <div
-      className="relative w-full overflow-hidden border border-rule bg-ground-subtle"
+      className="relative w-full overflow-hidden rounded-xl border border-rule bg-ground-subtle"
       style={{ aspectRatio: ratio }}
     >
       <Image
