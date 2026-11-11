@@ -32,6 +32,10 @@
 >   altura da tela do computador (`.pxto-fill-viewport`, `100dvh`, a partir de `lg`).
 >   Exceção à regra 13.1, restrita a essas duas. O véu do CTA é leve (55%) e o do Modelo é o padrão (72%),
 >   conforme o contraste medido. Registro em `../imagens.md`.
+> - **Seções redesenhadas a partir de uma segunda exploração do Stitch** (11/11/2026,
+>   escolha do responsável, só o desenho, com o texto aprovado): lista numerada em cartão
+>   (Problema), Posicionamento centralizado, dois painéis com seta (Modelo de trabalho),
+>   cartões de solução e linha do tempo horizontal (Como trabalhamos). CTA alinhado à esquerda.
 > - **Faixa de nomes que passa**, logo abaixo do Hero e sem título (14.2), a única do site.
 > - **Hero e faixa de parcerias numa tela só** (`.pxto-first-screen`), a partir de `lg`:
 >   o Hero ocupa o que sobra de `100dvh` menos a navbar e a faixa. Em janela baixa a
@@ -722,7 +726,8 @@ outras: altera pintura, nunca layout, e por isso não contribui para CLS.
 
 ### 14.2 What does not exist
 
-- **Nenhum pinning, nenhum parallax, nenhum scroll hijack.** Scroll-scrub não
+- **Nenhum pinning, nenhum scroll hijack.** (O parallax da foto de fundo em contêiner
+  arredondado é exceção de 11/11/2026, ver 14.5.) Scroll-scrub não
   está nesta lista: ele é condicional, e quem governa é 14.4. A revelação de
   14.0 e o scrub de 14.4 são as duas únicas animações disparadas por posição,
   e ambas movem só opacidade e transform. O conteúdo continua presente quando a
@@ -739,9 +744,36 @@ outras: altera pintura, nunca layout, e por isso não contribui para CLS.
   nome uma vez. A faixa é `aria-hidden`, porque repete os nomes, e a
   lista real é lida uma vez por leitor de tela. A repetição é técnica, para o loop não
   ter vão, e não indica mais empresas do que as autorizadas.
-- No page transition.
+- **Transição entre páginas: existe desde 11/11/2026**, ver 14.5.
 - **No `window.addEventListener('scroll')`.** Hard ban. Use IntersectionObserver
   or CSS scroll-driven animation if a case ever arises.
+
+### 14.5 Movimento entre seções, navbar e páginas (11/11/2026)
+
+`SPECIFIED`, na branch `feature/transicoes`. Pedido do responsável: "mais movimento entre
+os contêineres, a luz do mouse em mais lugares, transição entre páginas e a navbar". Tudo é
+CSS, exceto a transição de página. Tudo some sob reduced-motion e sem suporte do navegador,
+e o estado sem animação é sempre o estado final.
+
+| Efeito | Onde | O que se move | Como |
+| --- | --- | --- | --- |
+| **Zoom de entrada** do contêiner | Posicionamento, Modelo de trabalho, CTA (`.pxto-container-in`) | `scale` de 94% a 100% e `opacity` de 35% a 100% | `animation-timeline: view()`, faixa `entry 0% entry 55%`. **Nunca no Hero** (LCP) |
+| **Parallax** da foto | Foto de fundo dos contêineres (`[data-media-backdrop] > img`) | `translate` de -6% a +6% da altura, foto ampliada em 15% | Linha do tempo **nomeada** no contêiner (`--pxto-photo`), porque o contêiner tem `overflow-hidden` e `view()` na própria foto ficaria parada |
+| **Cascata** do texto | Filhos de `.pxto-reveal-stagger` | `opacity` e `translate` | O 2º filho entra em `entry 8%`, do 3º em diante em `entry 14%` |
+| **Navbar** | Todas as páginas (`.pxto-navbar`) | Cor de fundo, cor da linha e desfoque, de "limpa" a vidro em 96px | `animation-timeline: scroll(root)`. **A altura não muda**, então não há CLS |
+| **Sublinhado** dos links da navbar | Links do menu | `scale-x` | Cresce da esquerda no hover e no foco, e fica inteiro no link da página atual |
+| **Luz do mouse** | Hero (cheia), Posicionamento, Modelo de trabalho e CTA (sem foto), rodapé | Posição de três círculos desfocados | `GlowField`. Fraca no Posicionamento e no rodapé (intensidade 0.6 e 0.45) para o texto passar em AA |
+| **Transição de página** | Toda navegação entre rotas | `opacity` e `translate` | `PageTransitions` (client leaf) + `::view-transition-*`. A navbar tem nome próprio e fica parada |
+
+**Contraste com o parallax.** O movimento pode levar qualquer pixel da foto para baixo do
+texto, então o pior caso é medido na imagem INTEIRA, e não só na faixa central
+(`../imagens.md`).
+
+**A transição de página não intercepta:** clique com modificador, `target` diferente de
+`_self`, `download`, link externo, mesma página (âncora `#`) e o botão voltar. Sem
+`startViewTransition` ou com reduced-motion, a navegação é o corte seco de sempre.
+
+**Removido na mesma rodada:** o fio vertical que conectava as seções.
 
 ### 14.3 Rules
 
@@ -831,7 +863,7 @@ dentro de texto corrido não se desenha.
 `animation-timeline: scroll()` ou `view()`, em CSS, pelo mesmo motivo de 14.0: o
 progresso vem do navegador, sem JavaScript, sem client component novo e sem
 biblioteca de animação. **Nenhuma biblioteca de animação entra por causa desta
-regra** (`../technical/TECHNICAL_ARCHITECTURE.md`, sete dependências de runtime),
+regra** (`../technical/TECHNICAL_ARCHITECTURE.md`, cinco dependências de runtime),
 e `window.addEventListener('scroll')` continua proibido sem exceção.
 
 Vale o mesmo portão duplo de 14.0, e pela mesma razão: sob
@@ -1138,7 +1170,7 @@ first, then composites, then page-specific.
 | **Purpose** | Present one of the four capabilities |
 | **Anatomy** | Title, PRD description, optional scope list, link to the capability page |
 | **Responsive** | Equal grid, 4 at `lg`, 2 at `md`, 1 below |
-| **Variants** | `ruled` (padrão): régua no topo e link com seta, usada em `/solucoes`. `column`: linha no topo que cresce no hover, grande respiro antes do título e link de texto sublinhado, em grade de 4 colunas, usada na Home. Uma variante é uma **disposição**, nunca uma hierarquia: as quatro instâncias de uma página usam sempre a mesma |
+| **Variants** | `ruled` (padrão): régua no topo e link com seta, usada em `/solucoes`. `column`: cartão com borda arredondada (`rounded-xl`), título, descrição e um link de texto separado por uma linha, em grade de 4 cartões, usado na Home (sem ícone e sem numeração). Uma variante é uma **disposição**, nunca uma hierarquia: as quatro instâncias de uma página usam sempre a mesma |
 | **Rules** | **All four instances are visually identical.** Equal cell size, equal content depth, equal treatment. This enforces the four-peer rule structurally |
 | **Never** | An icon per service. One service styled as featured. Different content lengths creating implied hierarchy |
 

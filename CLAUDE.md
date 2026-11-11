@@ -64,8 +64,8 @@ intersection of technology and operations.
 `/projetos`, `/projetos/[slug]`, `/sobre`, `/contato`.
 
 **Stack:** Next.js App Router, TypeScript strict, React Server Components,
-Tailwind v4, Zod. Manrope e JetBrains Mono via `next/font/google`. Seven runtime
-dependencies. See §8.
+Tailwind v4, Zod. Manrope e JetBrains Mono via `next/font/google`. **Cinco dependências
+de runtime** (`next`, `react`, `react-dom`, `zod`, `@heroicons/react`). See §8.
 
 ---
 
@@ -263,8 +263,14 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
    conectava as seções da Home foi removido em 11/11/2026.) **Exceção de 11/11/2026, e só esta: a faixa de nomes da seção Parcerias**
    (`PartnersMarquee`), que anda em `translate` e para no hover, no foco e sob
    reduced-motion. **Sem botão de pausa**, a pedido do responsável: é uma lacuna de
-   WCAG 2.2.2 para quem usa só o teclado, registrada em `docs/parcerias.md`. **Sem parallax, sem pinning, sem scroll hijack, sem marquee, sem loop
-   perpétuo.** **Scroll-scrub é condicional, não proibido** (revisão de
+   WCAG 2.2.2 para quem usa só o teclado, registrada em `docs/parcerias.md`. **Exceções de 11/11/2026 (branch `feature/transicoes`),
+   `DESIGN_SYSTEM.md` §14.5:** (a) o **parallax da foto de fundo** dentro dos contêineres
+   arredondados (`translate`, de -6% a +6%, nunca no Hero); (b) o **zoom de entrada** do
+   contêiner (`scale` de 94% a 100%); (c) a **navbar** que passa de limpa a vidro ao rolar
+   (só cor e desfoque, altura fixa); (d) a **transição entre páginas** por View
+   Transitions (`PageTransitions`, só `opacity` e `translate`). Tudo some sob
+   reduced-motion. **Sem pinning, sem scroll hijack, sem loop perpétuo fora da faixa de
+   Parcerias.** **Scroll-scrub é condicional, não proibido** (revisão de
    01/09/2026, `DESIGN_SYSTEM.md` §14.4): vale em narrativa visual, diagrama e
    visualização de sistema, quando o progresso da rolagem tem significado
    narrativo ou funcional. Nunca como decoração. Evitar no Hero, na raiz do
@@ -279,7 +285,10 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
     enough.
 12. **No section-number eyebrows.** No `01 / INDEX`, no `001 · Capabilities`. The
     five process steps are named by their verbs; the numerals appear once, only
-    where order carries meaning.
+    where order carries meaning. **Exceções de 11/11/2026, escolhidas pelo responsável:**
+    a numeração 01 a 06 das situações do Problema (marcador visual por CSS, os itens não
+    têm ordem) e os nós 01 a 05 da linha do tempo do Como trabalhamos (onde a ordem é a
+    informação). Nenhum outro uso.
 13. **No hairline rules as decoration.** Rules separate real content or they do
     not exist.
 14. **Icons:** one library, stroke width 1.5, sizes 16, 20, 24. Never hand-roll
@@ -300,10 +309,13 @@ Source: `docs/design-system/DESIGN_SYSTEM.md`.
 Source: `docs/technical/TECHNICAL_ARCHITECTURE.md`.
 
 1. **Server Components by default.** A client component is a leaf, marked
-   `'use client'`, and never wraps server content. Four, as
-   expected at launch: navbar menu, contact form, DefinedTerm, theme toggle. A luz do
-   mouse (`GlowField`) também é client leaf (adicionada em 10/11/2026). A faixa de
-   Parcerias (`PartnersMarquee`) é componente de servidor.
+   `'use client'`, and never wraps server content. Os
+   previstos no lançamento eram quatro (menu da navbar, formulário, DefinedTerm, alternador
+   de tema). **Hoje existem seis**, todos folhas: `Navbar` (menu móvel), `ContactForm`,
+   `AnalyticsListener` e `PageEvent` (eventos), `GlowField` (a luz do mouse, 10/11/2026) e
+   `PageTransitions` (transição entre páginas, 11/11/2026, não renderiza nada). A faixa de
+   Parcerias (`PartnersMarquee`) é componente de servidor. `DefinedTerm` e o alternador de
+   tema ainda não existem. Cada novo client leaf precisa ser listado aqui.
 2. **Static rendering.** Every page prerenders. The only dynamic surface is the
    contact Server Action.
 3. **`app/` composes, it does not implement.** Route files assemble sections and
@@ -318,7 +330,9 @@ Source: `docs/technical/TECHNICAL_ARCHITECTURE.md`.
 7. **Types derive from schemas** with `z.infer`. Never maintain a parallel
    interface.
 8. **One component per file.** No barrel files.
-9. **Seven runtime dependencies.** Adding one requires stating what it replaces.
+9. **Cinco dependências de runtime** (`next`, `react`, `react-dom`, `zod`,
+   `@heroicons/react`). A contagem de sete que constava antes incluía o `geist`, removido
+   em 11/11/2026 quando a fonte passou a ser a Manrope. Adding one requires stating what it replaces.
    There is deliberately no animation library, no state management library, no
    CSS-in-JS, no component library, no CMS, no database, no auth.
 10. **shadcn/ui is not used at launch.** Radix primitives are added individually,
@@ -703,6 +717,18 @@ Diferenciais saíram dela.
 Detalhes em `docs/architecture/PAGE_SPECS.md` §1 e
 `docs/content/WEBSITE_COPY.md` §1.
 
+**Movimento (branch `feature/transicoes`, 11/11/2026):** zoom de entrada dos contêineres,
+parallax da foto de fundo, navbar que passa de limpa a vidro ao rolar, transição entre
+páginas por View Transitions e a luz do mouse também no Posicionamento e no rodapé.
+Regras e limites em `docs/design-system/DESIGN_SYSTEM.md` §14.5. As seções Problema,
+Posicionamento, Modelo de trabalho, Soluções, Como trabalhamos e CTA foram redesenhadas a
+partir de uma segunda exploração do Stitch, só no desenho e com o texto aprovado.
+
+**Código que existe e hoje não tem uso, deixado de propósito:** as seções `Projetos` e
+`Diferenciais` da Home (voltam quando houver projeto liberado e conteúdo aprovado), os
+componentes `Media` e `Diagram` com o diagrama `sistemas-conectados` (plano de diagramas) e
+a foto `posicionamento.avif`. O resto que ficou sem uso foi removido.
+
 **Rascunhos sem aprovação formal do posicionamento:** a seção Modelo de trabalho,
 o CTA final "Conte o resultado que você precisa." e o corpo curto do Problema.
 Estão marcados como `DRAFT` nos documentos e no código.
@@ -766,6 +792,9 @@ docs/content/WEBSITE_COPY.md                 the words
 docs/design-system/DESIGN_SYSTEM.md          tokens and components
 docs/technical/TECHNICAL_ARCHITECTURE.md     stack and code structure
 docs/technical/definition-of-done.md         the completion checklist
+docs/imagens.md                              registro das imagens: origem, pedidos, contraste medido
+docs/parcerias.md                            registro das empresas citadas e das autorizações
+docs/content/PROPOSTA_COPY_2026-11-11.md     proposta de copy aprovada em 11/11/2026
 ```
 
 Each `docs/<area>/README.md` explains that area's role and lists its open

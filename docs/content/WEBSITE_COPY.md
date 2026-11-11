@@ -206,7 +206,11 @@ incomoda sem ser útil.
 > Nada disso é consequência de uma decisão errada. E tem solução.
 
 A versão anterior era mais longa ("É o que acontece quando a operação cresce mais
-rápido que as ferramentas que ela foi juntando pelo caminho."). A curta mantém as
+rápido que as ferramentas que ela foi juntando pelo caminho.").
+
+**Apresentação (11/11/2026):** as seis situações ficam num cartão arredondado e são
+numeradas de 01 a 06 (CSS, não é texto). O texto é o acima, e não o que o Stitch reescreveu
+em jargão. A curta mantém as
 duas funções do movimento: tira a culpa do visitante e anuncia a solução.
 
 ---
@@ -220,6 +224,10 @@ o território mudar.**
 >
 > A PXTO trabalha nesse espaço: entre as ferramentas, entre os processos, entre o
 > que o software faz e o que a sua operação realmente precisa.
+
+**Apresentação (11/11/2026):** centralizado e limpo, num contêiner arredondado, com uma linha
+curta entre o título e o parágrafo. Sem aspas (o título não é uma citação) e sem a etiqueta
+"TESE ESTRUTURAL" que o Stitch pôs (era texto novo).
 
 Só texto, sobre o fundo secundário do tema. A foto de fundo saiu em 10/11/2026:
 contrariava `CLAUDE.md` §4.8, §7.5 e §7.15.
@@ -241,6 +249,12 @@ visitante já entendeu o problema e ainda não viu as ferramentas.
 >
 > Você não precisa chegar com a solução pronta, nem saber qual tecnologia usar.
 
+**Apresentação (11/11/2026):** a primeira linha vai num painel rotulado **"Você"**, a segunda
+num painel rotulado **"PXTO"**, com uma seta entre os dois, e a terceira embaixo, centralizada.
+Os rótulos "Você" e "PXTO" são o único texto novo (`DRAFT`) e vêm do próprio título. A
+exploração do Stitch tinha inventado marcadores ("escopo estratégico", "governança",
+"sustentação contínua"), e nenhum entrou.
+
 A terceira linha foi aprovada em 11/11/2026. **Limites de redação.** Descreve um modelo de trabalho, não promete resultado. Não
 cita prazo, métrica, índice de sucesso nem garantia. "Assume o caminho" nunca vira
 "garantimos o resultado". Ver `POSITIONING.md` §18.3.
@@ -258,6 +272,11 @@ Título e as quatro descrições `FIXED`, PRD §14. Rótulos dos links `DRAFT`.
 
 A linha sob o título (`DRAFT`) é a ponte entre o Modelo de trabalho e as quatro
 soluções, aprovada em 11/11/2026.
+
+**Apresentação (11/11/2026):** quatro cartões idênticos com borda arredondada, cada um com
+título, descrição e o link separado por uma linha. Sem ícone e sem numeração (o Stitch pôs
+ambos, e numerar quatro pares sugeriria ordem). As descrições são as `FIXED`, e não as que o
+Stitch reescreveu.
 
 **Integrações**, `FIXED`
 > Conectamos sistemas, APIs e ferramentas para que informações possam circular
@@ -314,9 +333,10 @@ etapas):
 > Nem todo projeto passa por todas as etapas. O que não muda é a ordem: entender
 > antes de construir.
 
-Na Home os passos aparecem só pelo verbo, **sem numeração**. A numeração 01 a 05
-continua nas páginas que usam o componente `Processo`. As segundas linhas
-(`DRAFT`) não entram na Home.
+Na Home os passos aparecem numa **linha do tempo horizontal** (11/11/2026), num cartão
+arredondado, com cinco nós numerados 01 a 05 ligados por uma linha. A numeração tem sentido
+aqui: a ordem é a informação. Os cinco nós são iguais, e o Stitch destacava o 05, o que daria
+ênfase a "Evoluímos" (⚠ CONFIRMAR). As segundas linhas (`DRAFT`) não entram na Home.
 
 ---
 
@@ -367,6 +387,11 @@ nem faixa de logos (`NARRATIVE.md` §7.3).
 > ## Conte o resultado que você precisa.
 >
 > **[Fale com a PXTO]**
+
+**Apresentação (11/11/2026):** o texto fica **alinhado à esquerda**, na mesma coluna das outras
+seções. O Stitch acrescentava uma etiqueta, um parágrafo ("Nossa equipe técnica analisa a
+topologia...") e "confidencialidade garantida por NDA", e nada disso entrou: era texto e
+promessa inventados, e "nossa equipe" é vocabulário proibido.
 
 A versão anterior era "Descreva o problema. A solução é o nosso trabalho.", com o
 apoio "Você não precisa chegar com uma especificação pronta, nem saber qual

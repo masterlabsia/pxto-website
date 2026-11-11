@@ -42,7 +42,7 @@ navbar. Problema encerrado.
 | --- | --- | --- |
 | Logo | Verde `#308459` | ~4,0:1 |
 | Favicon | Turquesa `#009D88` | ~3,4:1 |
-| Accent do site | Azul `#1B4DE4` | passa AA |
+| Accent do site | ~~Azul `#1B4DE4`~~ **Atualizado em 11/11/2026: o acento é a própria tinta** (branco no escuro, preto no claro) | não há mais cor de acento para brigar com o logo |
 
 Na navbar as três aparecem ao mesmo tempo: logo verde à esquerda, botão azul à
 direita, e o ícone turquesa na aba do navegador.
@@ -77,7 +77,7 @@ sem cor declarada vira `currentColor`.
 O arquivo registra a fonte original: **Aeonik Medium**, agora vetorizada.
 
 Isso é informação de marca que não existia em lugar nenhum. A tipografia do site
-ainda está marcada como candidata (Geist). **Se Aeonik for a fonte da marca, é
+foi trocada em 11/11/2026 para **Manrope** (era candidata Geist), vinda do protótipo H612. **Se Aeonik for a fonte da marca, é
 um argumento forte para ser também a do site**, e a decisão pertence ao mesmo
 lote das cores.
 
@@ -199,7 +199,7 @@ Checagem visual mínima:
 | Rodapé | Wordmark a 36px |
 | Favicon | Gerado do PNG a 64px e 180px |
 | Tema escuro | Resolvido: letras em `currentColor`, "x" na cor da marca |
-| Accent do site | Azul `#1B4DE4`, candidato, **em conflito com o verde do logo** |
+| Accent do site | **Resolvido em 11/11/2026:** o acento deixou de ser uma cor (é a tinta), então o "x" verde do logo é o único tom de cor da marca no site. A luz do mouse usa um índigo, mas é atmosfera, não acento |
 | `public/favicon.png` | 457 KB servidos publicamente sem uso. Pode sair de `public/` |
 
 O pipeline de geração está em `scripts/build-logo.mjs` e o componente em
