@@ -219,7 +219,9 @@ existe na luz do mouse dos contêineres (3.3.4a) e nunca marca algo clicável.
      de um contêiner arredondado, no lugar da fotografia do protótipo. **Vive em
      três lugares da Home: o Hero (escala cheia) e o Modelo de trabalho e o CTA
      (escala 0,6 e intensidade 0,6, porque o texto de apoio deles é
-     `ink-secondary`).** É a única ocorrência de glow e de gradiente suave no
+     `ink-secondary`). Desde 11/11/2026 também nas páginas internas, só no
+     `PageHero` e no CTA com `body` de cada página, na escala 0,6 e intensidade
+     0,6, com o texto de apoio em `ink`.** É a única ocorrência de glow e de gradiente suave no
      site, e o rodapé não leva. Fica atrás do conteúdo, com metade da força no
      tema claro para o texto passar em AA. Sem ponteiro fino ou sob
      reduced-motion, a luz fica parada.
@@ -762,7 +764,7 @@ e o estado sem animação é sempre o estado final.
 | **Cascata** do texto | Filhos de `.pxto-reveal-stagger` | `opacity` e `translate` | O 2º filho entra em `entry 8%`, do 3º em diante em `entry 14%` |
 | **Navbar** | Todas as páginas (`.pxto-navbar`) | Cor de fundo, cor da linha e desfoque, de "limpa" a vidro em 96px | `animation-timeline: scroll(root)`. **A altura não muda**, então não há CLS |
 | **Sublinhado** dos links da navbar | Links do menu | `scale-x` | Cresce da esquerda no hover e no foco, e fica inteiro no link da página atual |
-| **Luz do mouse** | Hero (cheia), Posicionamento, Modelo de trabalho e CTA (sem foto), rodapé | Posição de três círculos desfocados | `GlowField`. Fraca no Posicionamento e no rodapé (intensidade 0.6 e 0.45) para o texto passar em AA |
+| **Luz do mouse** | Hero (cheia), Posicionamento, Modelo de trabalho e CTA (sem foto), rodapé, `PageHero` e CTA com `body` das páginas internas | Posição de três círculos desfocados | `GlowField`. Fraca no Posicionamento e no rodapé (intensidade 0.6 e 0.45) para o texto passar em AA |
 | **Transição de página** | Toda navegação entre rotas | `opacity` e `translate` | `PageTransitions` (client leaf) + `::view-transition-*`. A navbar tem nome próprio e fica parada |
 
 **Contraste com o parallax.** O movimento pode levar qualquer pixel da foto para baixo do
@@ -1086,11 +1088,20 @@ first, then composites, then page-specific.
 | | |
 | --- | --- |
 | **Purpose** | Own vertical rhythm and optional ground change |
-| **Variants** | `default`, `subtle` using `ground-subtle`, `interval` applying `space-32` above |
+| **Variants** | `default`, `subtle` using `ground-subtle`, `interval` applying `space-32` above. `spacing="page"`: o ritmo da Home (margem de 20px e 96/128px), usado nas páginas internas |
 | **Anatomy** | Semantic `section`, optional heading slot, content slot |
 | **Responsive** | Padding steps per Part I.17 |
 | **Rules** | The only component permitted to own page vertical spacing. Ground alternation stays within the active theme |
 | **Never** | Invert the theme. Nest sections |
+
+### PageHero
+
+| | |
+| --- | --- |
+| **Purpose** | Abrir as páginas internas no mesmo contêiner arredondado do Hero da Home, em escala menor |
+| **Anatomy** | Contêiner de 20px em largura total (margem de 20px), `GlowField` (escala 0,6, intensidade 0,6), `children` opcional acima do título, `h1` à esquerda e apoio em `ink` |
+| **Rules** | O `h1` da página vem daqui. Sem `pxto-container-in`, porque o título é candidato a LCP. Em `src/sections/shared/` |
+| **Never** | Imagem, diagrama, segundo botão, apoio em `ink-secondary` (não passa em AA sobre a luz no claro) |
 
 ### Badge
 
@@ -1212,7 +1223,7 @@ first, then composites, then page-specific.
 | --- | --- |
 | **Purpose** | Convert intent at the end of a page or major section |
 | **Anatomy** | Título, uma linha de apoio **opcional** e um botão primário |
-| **Variants** | Com `body`: título à esquerda e apoio com botão à direita (7 e 5 colunas), usada nas demais páginas. Sem `body`: contêiner arredondado (20px) com título grande centralizado e o botão logo abaixo, usada na Home desde 10/11/2026 |
+| **Variants** | Com `body`: contêiner arredondado (20px) com a luz reduzida, título à esquerda e apoio com botão à direita (7 e 5 colunas), usada nas demais páginas desde 11/11/2026. Sem `body`: contêiner arredondado (20px) com título grande centralizado e o botão logo abaixo, usada na Home desde 10/11/2026 |
 | **Responsive** | Offset left at `lg`, stacked below |
 | **Rules** | One primary action. Follows an argument, never precedes the reason to act |
 | **Never** | Two CTAs of the same intent on one page. Manufactured urgency. A secondary CTA competing at equal weight |

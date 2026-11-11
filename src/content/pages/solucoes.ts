@@ -6,7 +6,7 @@ export const solucoesPage = {
   meta: {
     title: "Soluções",
     description:
-      "Integrações, automação, software sob medida e sites. Quatro formas de resolver o mesmo tipo de problema, e o diagnóstico define qual se aplica.",
+      "Integrações, automação, software sob medida e sites. O resultado que a operação precisa define o instrumento, e o diagnóstico mostra qual dos quatro se aplica.",
   },
   hero: {
     heading: "Quatro instrumentos para chegar ao mesmo resultado.",

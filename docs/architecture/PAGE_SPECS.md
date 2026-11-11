@@ -53,6 +53,7 @@ links · SEO intent · conversion role. Constraints and open items follow.
 | Analytics | `cta_click` on every CTA (§38) |
 | Accessibility | Semantic headings, one `h1` per page, keyboard navigation, visible focus, labels, alt text, reduced-motion support (§35) |
 | Prohibited everywhere | Client logos, testimonials, counters, badges, metrics, invented proof (§53; Positioning §13) |
+| Layout das páginas internas | Decidido em 11/11/2026, a Home como referência: `PageHero` em contêiner arredondado, seções com `Section spacing="page"`, blocos de apoio em contêiner de 20px, `ComoTrabalhamos` (a linha do tempo da Home, compartilhada) no lugar do antigo `Processo`, e CTA com `body` em contêiner com luz reduzida. Só o visual mudou: o copy é o aprovado, e a ordem das seções de cada página não mudou |
 
 ---
 

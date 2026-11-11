@@ -4,7 +4,7 @@ import { Problema } from "@/sections/home/Problema";
 import { Posicionamento } from "@/sections/home/Posicionamento";
 import { ModeloDeTrabalho } from "@/sections/home/ModeloDeTrabalho";
 import { Solucoes } from "@/sections/home/Solucoes";
-import { ComoTrabalhamos } from "@/sections/home/ComoTrabalhamos";
+import { ComoTrabalhamos } from "@/sections/shared/ComoTrabalhamos";
 import { Parcerias } from "@/sections/home/Parcerias";
 import { CtaSection } from "@/sections/home/CtaSection";
 import { buildMetadata } from "@/lib/metadata";

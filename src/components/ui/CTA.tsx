@@ -14,7 +14,8 @@ import { cta as siteCta } from "@/content/site";
  * Never manufactured urgency: there is no scarcity to claim.
  *
  * Duas composições, decididas pela presença de `body`:
- * - com `body`: título à esquerda, apoio e botão à direita (7 e 5 colunas).
+ * - com `body`: contêiner arredondado com a luz reduzida, título à esquerda, apoio e
+ *   botão à direita (7 e 5 colunas). As páginas internas usam esta.
  * - sem `body`: contêiner arredondado, título grande centralizado e o botão logo
  *   abaixo, com a luz do mouse em escala reduzida (`GlowField`). É a da Home, como
  *   o fechamento do protótipo H612, onde o título já carrega o convite.
@@ -90,24 +91,26 @@ export function CTA({
     );
   }
 
+  // Com `body`: o mesmo contêiner arredondado e a luz reduzida da composição sem `body`,
+  // com o título à esquerda e o apoio e o botão à direita. Usada nas páginas internas.
   return (
-    <section
-      aria-labelledby={headingId}
-      className="pxto-section-rule bg-ground-subtle py-14 md:py-16 lg:py-20"
-    >
-      <Container width="wide">
-        <div className="pxto-reveal-stagger grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <Heading level={2} size="section" id={headingId}>
-              {heading}
-            </Heading>
+    <section aria-labelledby={headingId} className="px-4 py-5 md:px-5">
+      <div className="pxto-container-in relative isolate overflow-hidden rounded-xl border border-rule bg-ground-subtle">
+        <GlowField scale={0.6} intensity={0.6} />
+        <Container width="wide" className="relative z-10">
+          <div className="pxto-reveal-stagger grid grid-cols-1 items-end gap-8 py-20 md:py-28 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-7">
+              <Heading level={2} size="section" id={headingId}>
+                {heading}
+              </Heading>
+            </div>
+            <div className="lg:col-span-5">
+              <p className="max-w-prose text-base text-ink md:text-lg">{body}</p>
+              <div className="mt-8">{button}</div>
+            </div>
           </div>
-          <div className="lg:col-span-5">
-            <p className="max-w-prose text-base text-ink-secondary">{body}</p>
-            <div className="mt-8">{button}</div>
-          </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

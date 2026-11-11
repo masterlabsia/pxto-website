@@ -3,7 +3,9 @@ import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { ArrowLink } from "@/components/ui/TextLink";
 import { CTA } from "@/components/ui/CTA";
-import { Processo } from "@/sections/shared/Processo";
+import { Section } from "@/components/ui/Section";
+import { PageHero } from "@/sections/shared/PageHero";
+import { ComoTrabalhamos } from "@/sections/shared/ComoTrabalhamos";
 import { buildMetadata } from "@/lib/metadata";
 import { sobrePage } from "@/content/pages/sobre";
 
@@ -20,24 +22,11 @@ export default function SobrePage() {
   const p = sobrePage;
   return (
     <>
-      <section className="border-b border-rule pb-12 pt-10 md:pb-16 md:pt-14 lg:pb-20 lg:pt-16">
-        <Container width="wide">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-9">
-              <Heading level={1} size="display">
-                {p.hero.heading}
-              </Heading>
-            </div>
-            <div className="lg:col-span-6 lg:col-start-7">
-              <p className="max-w-prose text-lg text-ink-secondary">{p.hero.body}</p>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero heading={p.hero.heading} body={p.hero.body} />
 
-      <section aria-labelledby="por-que" className="pxto-interval pb-14 md:pb-16 lg:pb-20">
+      <Section spacing="page" labelledBy="por-que">
         <Container width="wide">
-          <div className="grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
+          <div className="pxto-reveal-stagger grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <Heading level={2} size="section" id="por-que">
                 {p.porQue.heading}
@@ -45,65 +34,69 @@ export default function SobrePage() {
             </div>
             <div className="space-y-4 lg:col-span-7 lg:col-start-6">
               {p.porQue.body.map((t) => (
-                <p key={t.slice(0, 24)} className="text-base text-ink-secondary">
+                <p key={t.slice(0, 24)} className="text-base text-ink-secondary md:text-lg">
                   {t}
                 </p>
               ))}
             </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
-      <section
-        aria-labelledby="como-pensamos"
-        className="border-y border-rule bg-ground-subtle py-14 md:py-16 lg:py-20"
-      >
+      <section aria-labelledby="como-pensamos" className="px-4 py-5 md:px-5">
         <Container width="wide">
-          <div className="max-w-prose">
-            <Heading level={2} size="section" id="como-pensamos">
-              {p.comoPensamos.heading}
-            </Heading>
-            <div className="mt-6 space-y-4">
-              {p.comoPensamos.body.map((t) => (
-                <p key={t.slice(0, 24)} className="text-base text-ink-secondary">
-                  {t}
-                </p>
-              ))}
+          <div className="pxto-container-in rounded-xl border border-rule bg-ground-subtle px-6 py-16 md:px-12 md:py-24">
+            <div className="pxto-reveal-stagger max-w-3xl">
+              <Heading level={2} size="section" id="como-pensamos">
+                {p.comoPensamos.heading}
+              </Heading>
+              <div className="mt-8 space-y-4">
+                {p.comoPensamos.body.map((t) => (
+                  <p key={t.slice(0, 24)} className="text-base text-ink-secondary md:text-lg">
+                    {t}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
         </Container>
       </section>
 
-      <Processo headingId="processo-sobre" />
+      <ComoTrabalhamos />
 
-      <section aria-labelledby="principios" className="pb-14 md:pb-16 lg:pb-20">
+      <Section spacing="page" labelledBy="principios" className="pt-0 md:pt-0">
         <Container width="wide">
-          <Heading level={2} size="section" id="principios">
+          <Heading level={2} size="section" id="principios" className="pxto-reveal">
             {p.principios.heading}
           </Heading>
           {/* Enforceable rules, not aspirational adjectives. */}
-          <dl className="mt-10 grid grid-cols-1 gap-x-12 md:grid-cols-2">
+          <dl className="pxto-reveal mt-12 grid grid-cols-1 overflow-hidden rounded-xl border border-rule bg-ground-subtle md:grid-cols-2">
             {p.principios.items.map((item) => (
-              <div key={item.title} className="pxto-rule-top py-6">
-                <dt className="text-lg font-medium text-ink">{item.title}</dt>
-                <dd className="mt-2 max-w-prose text-sm text-ink-secondary">{item.body}</dd>
+              <div
+                key={item.title}
+                className="border-t border-rule p-6 first:border-t-0 md:p-8 md:nth-2:border-t-0 md:even:border-l"
+              >
+                <dt className="text-xl font-medium text-ink">{item.title}</dt>
+                <dd className="mt-3 max-w-prose text-base text-ink-secondary">{item.body}</dd>
               </div>
             ))}
           </dl>
         </Container>
-      </section>
+      </Section>
 
       {/* Link rule R2: every non-project page reaches a project. */}
-      <section aria-labelledby="ver-projetos" className="pb-14 md:pb-16 lg:pb-20">
+      <Section spacing="page" labelledBy="ver-projetos" className="pt-0 md:pt-0">
         <Container width="wide">
-          <Heading level={2} size="sub" id="ver-projetos">
-            A forma mais direta de entender como trabalhamos é ver o que já foi construído.
-          </Heading>
-          <div className="mt-6">
-            <ArrowLink href="/projetos">Ver projetos</ArrowLink>
+          <div className="pxto-reveal-stagger max-w-3xl">
+            <Heading level={2} size="sub" id="ver-projetos">
+              A forma mais direta de entender como trabalhamos é ver o que já foi construído.
+            </Heading>
+            <div className="mt-6">
+              <ArrowLink href="/projetos">Ver projetos</ArrowLink>
+            </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
       <CTA headingId="cta-sobre" heading={p.cta.heading} body={p.cta.body} />
     </>
