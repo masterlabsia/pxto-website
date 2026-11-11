@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Manrope, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
+import { PageTransitions } from "@/components/layout/PageTransitions";
 import { LogoSymbol } from "@/components/ui/Logo";
 import { AnalyticsListener } from "@/components/analytics/AnalyticsListener";
 import { JsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/jsonld";
@@ -11,10 +11,18 @@ import { site } from "@/content/site";
 import "@/styles/globals.css";
 
 /**
- * CANDIDATE typefaces: Geist Sans and Geist Mono (DESIGN_SYSTEM.md I.4.2).
- * Self-hosted through the package, so no Google Fonts link tag ships.
- * Swapping the family is an edit to this file plus the token block.
+ * Manrope e JetBrains Mono, da direção do protótipo H612 do Stitch. `next/font/google` baixa os
+ * arquivos no build e os serve do próprio domínio: nenhum link para o Google
+ * Fonts vai ao navegador e nenhuma dependência nova entra. Subset latin, com
+ * ajuste de métrica automático para evitar salto de layout.
+ * Trocar a família é editar este arquivo e o bloco de tokens.
  */
+const sans = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -24,8 +32,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fcfcfc" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e0f11" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#141313" },
   ],
 };
 
@@ -35,13 +43,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang="pt-BR" className={`${sans.variable} ${mono.variable}`}>
       <body>
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         <LogoSymbol />
         <AnalyticsListener />
         <SkipLink />
+        <PageTransitions />
         <Navbar />
         <main id="conteudo">{children}</main>
         <Footer />

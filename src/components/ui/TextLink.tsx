@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { cn } from "@/lib/cn";
 
 /**
@@ -47,7 +48,7 @@ export function ArrowLink({
         ? { "data-analytics": "cta", "data-analytics-location": analyticsLocation }
         : {})}
       className={cn(
-        "group inline-flex items-baseline gap-2 py-1 text-sm font-medium text-ink",
+        "group inline-flex items-center gap-2 py-1 text-sm font-medium text-ink",
         "transition-colors duration-fast hover:text-accent",
         className,
       )}
@@ -55,9 +56,10 @@ export function ArrowLink({
       <span className="underline decoration-rule decoration-1 underline-offset-4 group-hover:decoration-accent">
         {children}
       </span>
-      <span aria-hidden="true" className="font-mono text-2xs">
-        &rarr;
-      </span>
+      <ArrowRightIcon
+        aria-hidden="true"
+        className="size-4 shrink-0 transition-transform duration-fast group-hover:translate-x-0.5"
+      />
     </Link>
   );
 }

@@ -12,55 +12,68 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ---------- Light theme (default) ---------- */
+/*
+ * Direção do protótipo "H612" do Stitch, adotada em 10/11/2026 por decisão do
+ * responsável. Escuro primeiro, neutro, sem cor de marca saturada: o "acento" é
+ * a própria tinta (branco no escuro, preto no claro), que é como o protótipo faz
+ * o botão primário. O único tom de cor é o `glow`, e ele é atmosfera, não
+ * significado.
+ */
 :root {
-  --pxto-ground: #fcfcfc;
-  --pxto-ground-subtle: #f4f5f6;
+  --pxto-ground: #ffffff;
+  --pxto-ground-subtle: #f3f3f4;
   --pxto-surface: #ffffff;
-  --pxto-ink: #111214;
-  --pxto-ink-secondary: #5c6066;
-  --pxto-ink-disabled: #9aa0a6;
-  --pxto-rule: #e3e5e8;
-  --pxto-rule-strong: #c7cbd1;
-  --pxto-accent: #1b4de4;
-  --pxto-accent-hover: #1740be;
+  --pxto-ink: #1a1c1c;
+  --pxto-ink-secondary: #5e5e5e;
+  --pxto-ink-disabled: #848484;
+  --pxto-rule: #e5e5e5;
+  --pxto-rule-strong: #c6c6c6;
+  --pxto-accent: #000000;
+  --pxto-accent-hover: #1b1b1b;
   --pxto-accent-contrast: #ffffff;
   --pxto-success: #1a7f4b;
   --pxto-danger: #b42318;
+  --pxto-glow: #6366f1;
+  /* Metade da força no claro: o texto secundário não passa em AA sobre o tom
+     cheio da luz. Medido, ver GlowField. */
+  --pxto-glow-strength: 0.5;
 }
 
 /* ---------- Dark theme ---------- */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --pxto-ground: #0e0f11;
-    --pxto-ground-subtle: #141619;
-    --pxto-surface: #1a1d21;
-    --pxto-ink: #e9ebed;
-    --pxto-ink-secondary: #8e949b;
-    --pxto-ink-disabled: #5f666d;
-    --pxto-rule: #242830;
-    --pxto-rule-strong: #343a43;
-    --pxto-accent: #5b86ff;
-    --pxto-accent-hover: #7c9eff;
-    --pxto-accent-contrast: #0e0f11;
+    --pxto-ground: #141313;
+    --pxto-ground-subtle: #1c1b1b;
+    --pxto-surface: #201f1f;
+    --pxto-ink: #e5e2e1;
+    --pxto-ink-secondary: #c7c6c6;
+    --pxto-ink-disabled: #6b6b6b;
+    --pxto-rule: #333232;
+    --pxto-rule-strong: #444748;
+    --pxto-accent: #ffffff;
+    --pxto-accent-hover: #e2e2e2;
+    --pxto-accent-contrast: #141313;
     --pxto-success: #4ade80;
     --pxto-danger: #ff6b5e;
+    --pxto-glow-strength: 1;
   }
 }
 
 [data-theme="dark"] {
-  --pxto-ground: #0e0f11;
-  --pxto-ground-subtle: #141619;
-  --pxto-surface: #1a1d21;
-  --pxto-ink: #e9ebed;
-  --pxto-ink-secondary: #8e949b;
-  --pxto-ink-disabled: #5f666d;
-  --pxto-rule: #242830;
-  --pxto-rule-strong: #343a43;
-  --pxto-accent: #5b86ff;
-  --pxto-accent-hover: #7c9eff;
-  --pxto-accent-contrast: #0e0f11;
+  --pxto-ground: #141313;
+  --pxto-ground-subtle: #1c1b1b;
+  --pxto-surface: #201f1f;
+  --pxto-ink: #e5e2e1;
+  --pxto-ink-secondary: #c7c6c6;
+  --pxto-ink-disabled: #6b6b6b;
+  --pxto-rule: #333232;
+  --pxto-rule-strong: #444748;
+  --pxto-accent: #ffffff;
+  --pxto-accent-hover: #e2e2e2;
+  --pxto-accent-contrast: #141313;
   --pxto-success: #4ade80;
   --pxto-danger: #ff6b5e;
+  --pxto-glow-strength: 1;
 }
 
 @theme inline {
@@ -78,12 +91,15 @@
   --color-accent-contrast: var(--pxto-accent-contrast);
   --color-success: var(--pxto-success);
   --color-danger: var(--pxto-danger);
+  --color-glow: var(--pxto-glow);
 
-  /* Type families. CANDIDATE: Geist pairing (DESIGN_SYSTEM.md Part I.4.2). */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  /* Type families. Manrope (texto e títulos, em peso leve nos títulos) e
+     JetBrains Mono, da direção do protótipo H612. */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 
-  /* Type scale. DESIGN_SYSTEM.md Part I.5. Max heading 3.5x body. */
+  /* Type scale. DESIGN_SYSTEM.md Part I.5. Títulos de seção até 3.5x o corpo
+     (text-6xl). text-7xl é exclusivo do Hero. */
   --text-2xs: 0.6875rem;          /* 11px */
   --text-2xs--line-height: 1.45;
   --text-2xs--letter-spacing: 0.02em;
@@ -114,21 +130,44 @@
   --text-6xl: 3.5rem;             /* 56px */
   --text-6xl--line-height: 1.05;
   --text-6xl--letter-spacing: -0.03em;
+  --text-7xl: 4.5rem;             /* 72px, só a headline do Hero */
+  --text-7xl--line-height: 1.05;
+  --text-7xl--letter-spacing: -0.03em;
 
   /* Spacing. 4px base, which is the Tailwind v4 default step. */
   --spacing: 0.25rem;
 
   /* Radius. Structure is sharp, interaction is softened, nothing is round. */
+  /* Raios da direção do protótipo: 4, 8, 12 e 20px nos contêineres de seção.
+     Botão é pílula (`rounded-full`). */
   --radius-none: 0px;
-  --radius-sm: 2px;
-  --radius-md: 4px;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1.25rem;
 
   /* Containers. DESIGN_SYSTEM.md Part I.8. */
   --container-prose: 68ch;
   --container-content: 70rem;     /* 1120px */
-  --container-wide: 85rem;        /* 1360px */
+  --container-wide: 75rem;        /* 1200px, como o protótipo */
 
-  /* Motion. MOTION_INTENSITY 3: state feedback only. */
+  /* Véu sobre foto de fundo.
+     Usa a cor de fundo do próprio tema, e não uma cor fixa, para que a seção
+     não inverta o tema no meio da página. 72% é o valor verificado: garante
+     4.5:1 com tinta primária mesmo na pior foto possível, em ambos os temas.
+     Ver DESIGN_SYSTEM.md 13.2c antes de reduzir. */
+  --color-scrim: color-mix(in srgb, var(--pxto-ground) 72%, transparent);
+  /* Véu leve, SÓ para a foto do CTA da Home, que é escura e foi medida: no pior
+     pixel o texto de tinta primária dá 7,5:1 no escuro e 5,1:1 no claro. A foto do
+     Modelo de trabalho NÃO passa com 55% (3,5:1 no escuro) e usa o véu padrão.
+     Medido em 11/11/2026, ver docs/imagens.md. Não usar em foto nova sem medir. */
+  --color-scrim-soft: color-mix(in srgb, var(--pxto-ground) 55%, transparent);
+
+  /* Deslocamento da revelação de entrada. MOTION_INTENSITY 5. Era 8px e passava
+     despercebido em tela grande. 16px lê como movimento sem virar efeito. */
+  --reveal-shift: calc(var(--spacing) * 4);
+
+  /* Motion. MOTION_INTENSITY 5: feedback de estado + revelação de entrada. */
   --duration-fast: 120ms;
   --duration-base: 160ms;
   --duration-slow: 180ms;
@@ -187,6 +226,24 @@
   }
 }
 
+/*
+ * Altura da navbar, para o Hero de viewport cheia descontar.
+ *
+ * A navbar e `sticky top-0`, entao ocupa espaco no fluxo. Um Hero de 100dvh
+ * cheios empurraria os CTAs para fora da tela exatamente pela altura dela.
+ *
+ * Os valores acompanham `h-16 md:h-[72px]` em Navbar.tsx, mais 1px da borda
+ * inferior. Medidos no browser: 65px e 73px.
+ */
+:root {
+  --nav-height: 65px;
+}
+@media (width >= 48rem) {
+  :root {
+    --nav-height: 73px;
+  }
+}
+
 @layer utilities {
   /* The interval: one oversized vertical gap between major argument movements.
      DESIGN_SYSTEM.md Part I.6. Used at most three times per page. */
@@ -199,8 +256,524 @@
     }
   }
 
+  /*
+   * Hero de altura de viewport.
+   *
+   * `100dvh` e nao `100vh`: DESIGN_SYSTEM.md 321 e CLAUDE.md 9.8. Em mobile a
+   * barra do navegador entra e sai, e `vh` mede a viewport maior, entao o
+   * conteudo do fim do Hero fica cortado sob a barra. `dvh` acompanha.
+   *
+   * So a partir de lg. Abaixo disso o Hero empilha texto e imagem, e forcar
+   * altura de viewport abriria um vazio entre os dois, com a imagem jogada
+   * para fora da tela.
+   */
+  @media (width >= 64rem) {
+    .pxto-hero-viewport {
+      min-height: calc(100dvh - var(--nav-height));
+    }
+  }
+
+  /*
+   * Faixa de nomes que passa, como o "logo roll" do protótipo H612. Só `translate`.
+   *
+   * O trilho tem DOIS grupos idênticos e anda 50%, então o fim do primeiro encaixa
+   * no começo do segundo e o loop não tem emenda. Cada grupo precisa ser mais largo
+   * que a viewport, o que o componente garante repetindo os nomes.
+   *
+   * PARA no hover e no foco dentro. Não há botão de pausa (o responsável pediu para
+   * tirar em 11/11/2026), então quem usa só o teclado não consegue pará-la: lacuna
+   * de WCAG 2.2.2, registrada em docs/parcerias.md. Com reduced-motion nada anda: o
+   * trilho vira uma lista que quebra linha e o grupo duplicado some.
+   * `animation: none` ganha do bloco global de reduced-motion, que só mexe em
+   * duração e iterações.
+   */
+  .pxto-marquee {
+    overflow: hidden;
+  }
+  .pxto-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: pxto-marquee 45s linear infinite;
+  }
+  /* O ponto entre os nomes. Desenhado, e não um caractere: tem sempre o mesmo
+     tamanho e fica centrado na altura do texto. A margem dos dois lados faz o papel
+     do espaço que antes era só `padding-right`. */
+  .pxto-marquee li::after {
+    content: "";
+    flex: none;
+    width: 0.375rem;
+    height: 0.375rem;
+    margin-inline: 2rem;
+    border-radius: 9999px;
+    background-color: currentColor;
+    opacity: 0.6;
+  }
+  @media (width >= 48rem) {
+    .pxto-marquee li::after {
+      margin-inline: 2.5rem;
+    }
+  }
+  .pxto-marquee:hover .pxto-marquee-track,
+  .pxto-marquee:focus-within .pxto-marquee-track {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pxto-marquee-track {
+      animation: none;
+      width: auto;
+      padding-inline: 1rem;
+    }
+    .pxto-marquee-track > ul {
+      flex-wrap: wrap;
+      row-gap: 1rem;
+    }
+    /* Parada e quebrando linha, o ponto sobraria no fim de cada linha. */
+    .pxto-marquee li::after {
+      display: none;
+    }
+    .pxto-marquee li {
+      padding-inline-end: 2rem;
+    }
+    /* Parado, cada nome aparece uma vez: a repetição só existe para o loop não ter vão. */
+    .pxto-marquee-dup,
+    .pxto-marquee-rep {
+      display: none;
+    }
+  }
+
+  /*
+   * Numeração 01, 02... à esquerda de cada item, por contador de CSS. É decoração
+   * marcadora, e não conteúdo: não entra em `innerText` nem na leitura de tela. Os itens
+   * não têm ordem, então o número é só uma referência visual (CLAUDE.md 7.12).
+   */
+  .pxto-numbered {
+    counter-reset: pxto-n;
+  }
+  .pxto-numbered > div {
+    position: relative;
+    counter-increment: pxto-n;
+  }
+  .pxto-numbered > div::before {
+    content: counter(pxto-n, decimal-leading-zero);
+    position: absolute;
+    left: 1.5rem;
+    top: 1.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-secondary);
+  }
+  @media (width >= 48rem) {
+    .pxto-numbered > div::before {
+      left: 2rem;
+      top: 2rem;
+    }
+  }
+
+  /*
+   * Item de lista com linha que cresce. Vem do protótipo H612: uma régua de 2px
+   * atravessa o topo do item no hover e no foco. É feedback de estado, então cai
+   * na regra de 120 a 180ms. `transform: scaleX`, sem animar largura.
+   */
+  .pxto-line-item {
+    position: relative;
+    border-block-start: 1px solid var(--color-rule);
+  }
+  .pxto-line-item::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: -1px;
+    height: 2px;
+    background-color: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+  .pxto-line-item:hover::before,
+  .pxto-line-item:focus-within::before {
+    transform: scaleX(1);
+  }
+
+  /*
+   * Navbar que muda ao rolar, decidida pelo responsável em 11/11/2026.
+   *
+   * O estado BASE é o vidro (fundo a 80%, desfoque, linha embaixo), que é o que
+   * aparece sem suporte ou sob reduced-motion. Onde há suporte, a animação parte do
+   * topo da página "limpa" (transparente, sem linha, sem desfoque) e chega ao vidro
+   * em 96px de rolagem, por `animation-timeline: scroll()`. Só cor e desfoque: a
+   * ALTURA não muda, então nada abaixo da navbar se desloca (CLS zero).
+   */
+  .pxto-navbar {
+    border-block-end: 1px solid var(--color-rule);
+    background-color: color-mix(in srgb, var(--pxto-ground) 80%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .pxto-navbar {
+        animation: pxto-navbar-solidify linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 96px;
+      }
+    }
+  }
+
+  /*
+   * A primeira tela da Home: o Hero e a faixa de parcerias juntos, numa tela só.
+   *
+   * O bloco tem a altura da janela menos a navbar, em coluna. A faixa fica com a altura
+   * que o conteúdo pede, e o Hero (que tem `flex-1`) ocupa o que sobrar. Por isso não há
+   * altura fixa no Hero: cada máquina divide a sua tela de um jeito. `min-height`, não
+   * `height`: se o Hero precisar de mais, o bloco cresce e a faixa desce da primeira
+   * tela, em vez de o texto ser cortado. `100dvh`, não `100vh` (CLAUDE.md 9.8).
+   * Só a partir de lg. Abaixo disso o Hero volta a ter a altura do conteúdo.
+   */
+  @media (width >= 64rem) {
+    .pxto-first-screen {
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100dvh - var(--nav-height));
+    }
+  }
+
+  /*
+   * O título do Hero desce um degrau da escala quando a JANELA é baixa, para o Hero e a
+   * faixa de parcerias continuarem numa tela só. Um notebook de 768px de tela tem uns
+   * 650px de janela depois da barra do navegador, e com o título de 72px o Hero pede
+   * 458px e a faixa escapa por 10px. Só os degraus da escala (`text-6xl`, `text-5xl`),
+   * nunca um tamanho solto. Se nem assim couber, o bloco cresce e a faixa desce da
+   * primeira tela, e o texto nunca é cortado.
+   */
+  @media (width >= 64rem) and (height <= 44rem) {
+    .pxto-hero-title {
+      font-size: var(--text-6xl);
+      line-height: var(--text-6xl--line-height);
+    }
+  }
+  @media (width >= 64rem) and (height <= 38rem) {
+    .pxto-hero-title {
+      font-size: var(--text-5xl);
+      line-height: var(--text-5xl--line-height);
+    }
+    .pxto-hero-box {
+      padding-block: calc(var(--spacing) * 6);
+    }
+  }
+
+  /*
+   * Contêiner que ocupa a altura da tela do computador, como o CTA final da Home.
+   *
+   * `100dvh`, e não `100vh` (CLAUDE.md 9.8): em tela de toque a barra do navegador
+   * entra e sai, e `vh` mede a janela maior. Desconta a navbar fixa e os 2.5rem de
+   * margem da seção (20px acima e abaixo, a mesma do Hero), então o contêiner cabe
+   * inteiro na tela quando a seção está logo abaixo da navbar, com 20px de folga em
+   * cima e embaixo. A altura acompanha cada máquina: 655px num notebook de 768px,
+   * 967px num monitor de 1080px.
+   *
+   * `min-height`, não `height`: se o conteúdo for maior que a tela, o contêiner cresce.
+   * Só a partir de lg. Em telas menores o contêiner volta a ter a altura do conteúdo,
+   * e o mobile é a última etapa do projeto.
+   */
+  @media (width >= 64rem) {
+    .pxto-fill-viewport {
+      min-height: calc(100dvh - var(--nav-height) - 2.5rem);
+    }
+  }
+
   /* Optical hanging rule used by the process sequence and the record list. */
   .pxto-rule-top {
     border-block-start: 1px solid var(--color-rule);
+  }
+
+  /*
+   * Revelação de entrada. MOTION_INTENSITY 5.
+   *
+   * Por que CSS e não IntersectionObserver: o argumento decisivo é o modo de
+   * falha, não os bytes. IO exige que o estado inicial seja "escondido", e
+   * esconder conteúdo até um script rodar contradiz a regra de que o conteúdo
+   * está presente quando a página está. Aqui, navegador sem suporte a view()
+   * simplesmente ignora a regra e entrega a página estática.
+   *
+   * DUPLO PORTÃO, e a ordem importa:
+   *   prefers-reduced-motion: no-preference  a regra nem é escrita
+   *   @supports (animation-timeline: view()) sem suporte, nada é aplicado
+   *
+   * O portão de reduced-motion NÃO é redundante com o bloco !important lá
+   * embaixo. Animação por timeline é progress-based: a duração é ignorada, o
+   * progresso vem da posição de rolagem. Zerar animation-duration não desliga
+   * nada. A defesa correta é não escrever a regra.
+   *
+   * animation-range usa `entry`, não `cover`: um elemento mais alto que a
+   * viewport nunca completaria a faixa e ficaria travado em opacidade parcial,
+   * que é falha de contraste e não detalhe estético.
+   *
+   * fill-mode both faz o que já está visível no carregamento renderizar em
+   * opacidade 1 de imediato, então a primeira dobra se protege sozinha.
+   *
+   * Sem will-change: com mais de dez elementos animados, promover todos a
+   * camada custa mais do que economiza. Opacidade e translate já são
+   * compositados.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .pxto-reveal,
+      .pxto-reveal-stagger > * {
+        animation: pxto-reveal-in both var(--ease-out);
+        animation-timeline: view();
+        /* Começa em 10%, e não em 0%, para a régua da seção (abaixo) se desenhar
+           primeiro e o conteúdo entrar depois dela. */
+        animation-range: entry 10% entry 55%;
+      }
+      /* Cascata: o título entra primeiro e o resto vem logo depois, cada filho
+         numa faixa um pouco mais adiante. Continua sendo só opacity e translate. */
+      .pxto-reveal-stagger > :nth-child(2) {
+        animation-range: entry 8% entry 62%;
+      }
+      .pxto-reveal-stagger > :nth-child(n + 3) {
+        animation-range: entry 14% entry 68%;
+      }
+
+      /*
+       * Movimento entre as seções, decidido pelo responsável em 11/11/2026.
+       *
+       * 1. O contêiner arredondado entra com um zoom leve (de 94% a 100%) e sai
+       *    de uma opacidade parcial. Só `scale` e `opacity`. Nunca no Hero: é o
+       *    candidato a LCP e o Chrome atrasa LCP em elemento com opacidade < 1.
+       * 2. A foto de fundo anda mais devagar que a página (parallax): fica ampliada
+       *    em 15% e se desloca de -6% a +6% da própria altura enquanto o contêiner
+       *    cruza a tela. Só `translate` e `scale`. O contraste foi medido na imagem
+       *    INTEIRA, porque o movimento pode levar qualquer pixel para baixo do texto
+       *    (docs/imagens.md).
+       */
+      .pxto-container-in {
+        animation: pxto-container-in both var(--ease-out);
+        animation-timeline: view();
+        animation-range: entry 0% entry 55%;
+      }
+      /* A linha do tempo é do CONTÊINER, e a foto a usa pelo nome. Com `view()` na
+         própria foto, o "scroller" mais próximo seria o contêiner, que tem
+         overflow-hidden e não rola, e a animação ficaria parada em 0%. */
+      [data-media-backdrop] {
+        view-timeline: --pxto-photo block;
+      }
+      [data-media-backdrop] > img {
+        scale: 1.15;
+        animation: pxto-parallax linear both;
+        animation-timeline: --pxto-photo;
+        animation-range: cover 0% cover 100%;
+      }
+    }
+  }
+
+  /*
+   * Régua de seção que se desenha. DESIGN_SYSTEM.md 14.0.
+   *
+   * A linha no topo de cada seção é o traço de um esquema técnico: aparece
+   * conforme a seção entra na tela, da esquerda para a direita, e o conteúdo
+   * entra logo depois dela. É o que dá o ar de engenharia à rolagem sem nenhum
+   * efeito de brilho, partícula ou luz.
+   *
+   * COMO. A seção declara uma timeline de visualização e o ::before, que é a
+   * linha, a consome. O ::before não pode ter timeline própria com sentido, já
+   * que tem 1px de altura e entraria na tela em um quadro só.
+   *
+   * O QUE ANIMA. `transform: scaleX`, não `width`: não dispara layout e não conta
+   * para CLS. É a única régua que se move. As réguas dentro de listas (passos do
+   * processo) continuam estáticas, porque separam conteúdo.
+   *
+   * DEGRADAÇÃO. Sem suporte a `view()` ou sob reduced-motion a regra não é
+   * escrita, e a linha nasce inteira, que é o estado final.
+   */
+  .pxto-section-rule {
+    position: relative;
+  }
+  .pxto-section-rule::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background-color: var(--color-rule);
+    transform-origin: left center;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .pxto-section-rule {
+        view-timeline: --pxto-section block;
+      }
+      .pxto-section-rule::before {
+        animation: pxto-rule-draw both linear;
+        animation-timeline: --pxto-section;
+        animation-range: entry 0% entry 35%;
+      }
+    }
+  }
+
+  /*
+   * Desenho único do diagrama. DESIGN_SYSTEM.md 14.4.
+   *
+   * Uma vez, no carregamento, por tempo e não por rolagem. Não é scroll-scrub:
+   * é a animação de entrada que 14.4 permite no Hero, e passa o teste de lá
+   * porque só traço se move. Retângulo, rótulo e o resto da página estão no
+   * estado final desde o primeiro quadro, e SVG inline não é candidato a LCP.
+   *
+   * POR QUE `cqw` E NÃO O COMPRIMENTO EM UNIDADES DO viewBox. As formas usam
+   * `vector-effect: non-scaling-stroke`, e sob ele o tracejado é medido no
+   * espaço da tela, não no do viewBox. O diagrama renderiza entre 0.81 e 1.45
+   * de escala, então um dasharray fixo em unidades do viewBox abriria um vão
+   * no meio do traço em telas grandes. `100cqw` é a largura real do quadro, e
+   * `--pxto-draw / --pxto-vb` é a fração dessa largura que o traço ocupa, o
+   * que dá o comprimento em pixels de tela em qualquer escala.
+   *
+   * AS TRÊS FOLGAS, e todas foram medidas, não estimadas.
+   *
+   * 1. O traço leva 1.02 para que arredondamento de subpixel nunca deixe um
+   *    vão na ponta quando o desenho termina.
+   * 2. O vão do padrão é o triplo do traço. Com `stroke-dasharray` de valor
+   *    único o vão é igual ao traço, e o padrão se repete: o traço seguinte
+   *    reentra pelo fim do caminho e desenha um cotoco no quadro inicial.
+   *    Verificado em tela antes desta linha existir.
+   * 3. O offset inicial leva 1.04 para que o traço comece inteiramente fora do
+   *    caminho. Com `stroke-linecap: square`, um segmento de comprimento zero
+   *    desenharia um quadradinho visível.
+   *
+   * DEGRADAÇÃO. Sem suporte a container query o `calc` é inválido, o dasharray
+   * volta a `none` e a linha nasce sólida. Sob reduced-motion a regra não é
+   * escrita. Nos dois casos o que aparece é o estado final, nunca o inicial,
+   * que é o que 14.4 exige.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (container-type: inline-size) {
+      [data-draw] [data-edge] {
+        --pxto-dash: calc(var(--pxto-draw) / var(--pxto-vb) * 102cqw);
+        stroke-dasharray: var(--pxto-dash) calc(var(--pxto-dash) * 3);
+        stroke-dashoffset: calc(var(--pxto-dash) * 1.04);
+        animation: pxto-draw-edge 300ms var(--ease-out) both;
+        animation-delay: calc(var(--pxto-i) * 110ms);
+      }
+
+      /* A junção acende quando o barramento chega nela. Só opacidade: o ponto
+         é conteúdo não textual, e nada nele se desloca. */
+      [data-draw] [data-junction] {
+        animation: pxto-draw-junction 180ms var(--ease-out) both;
+        animation-delay: calc(300ms + var(--pxto-i) * 90ms);
+      }
+    }
+  }
+}
+
+@keyframes pxto-navbar-solidify {
+  from {
+    border-block-end-color: transparent;
+    background-color: transparent;
+    backdrop-filter: blur(0);
+  }
+}
+
+/*
+ * Transição entre páginas, pela API nativa de View Transitions. É o `PageTransitions`
+ * (client leaf) quem dispara; aqui só o visual. A página que sai some subindo 8px, e a
+ * que entra sobe 14px e aparece. Só `opacity` e `translate`.
+ *
+ * A navbar tem nome próprio e fica parada: sem isso ela piscaria a cada navegação.
+ * Sem suporte ao navegador, ou sob reduced-motion, a navegação é o corte seco de sempre.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .pxto-navbar {
+    view-transition-name: pxto-navbar;
+  }
+  ::view-transition-group(pxto-navbar) {
+    animation: none;
+  }
+  ::view-transition-old(root) {
+    animation: pxto-page-out 180ms var(--ease-out) both;
+  }
+  ::view-transition-new(root) {
+    animation: pxto-page-in 320ms var(--ease-out) both;
+  }
+}
+
+@keyframes pxto-page-out {
+  to {
+    opacity: 0;
+    translate: 0 -8px;
+  }
+}
+
+@keyframes pxto-page-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+
+@keyframes pxto-container-in {
+  from {
+    opacity: 0.35;
+    scale: 0.94;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes pxto-parallax {
+  from {
+    translate: 0 -6%;
+  }
+  to {
+    translate: 0 6%;
+  }
+}
+
+@keyframes pxto-marquee {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: -50% 0;
+  }
+}
+
+@keyframes pxto-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pxto-draw-edge {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pxto-draw-junction {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*
+ * Só opacity e translate. `translate` é propriedade independente, escolhida
+ * para não conflitar com nenhum transform de hover.
+ * Movimento por transform não conta para CLS, então a contribuição é zero.
+ */
+@keyframes pxto-reveal-in {
+  from {
+    opacity: 0;
+    translate: 0 var(--reveal-shift);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }

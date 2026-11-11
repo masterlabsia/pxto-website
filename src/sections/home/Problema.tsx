@@ -4,46 +4,48 @@ import { DefinitionList } from "@/components/content/DefinitionList";
 import { problema } from "@/content/home";
 
 /**
- * The single point of failure of the page (NARRATIVE 7.4). If recognition does
- * not land here, everything below reads as generic vendor material.
+ * O ponto único de falha da página (NARRATIVE 7.4). Se o reconhecimento não
+ * acontece aqui, tudo abaixo lê como material genérico de fornecedor.
  *
- * Three moves, in order: recognition, naming, reframe. The reframe paragraph is
- * load-bearing and must not be cut. It sits directly under the heading rather
- * than trailing the section, so the left column carries weight instead of
- * leaving a void.
+ * Composição do Stitch, em 5 e 7 colunas: à esquerda o título e o parágrafo que
+ * nomeia o problema, à direita as seis situações e, fechando, o reenquadramento. As
+ * situações ficam num cartão arredondado, numeradas de 01 a 06 (11/11/2026, escolha do
+ * responsável a partir da segunda exploração do Stitch). Sem os ícones que ele pôs, e
+ * com as descrições aprovadas, e não as que ele reescreveu em jargão. O reenquadramento fica ao pé da lista porque é a virada: o
+ * leitor reconhece a situação e logo depois descobre que ela tem solução.
  *
- * The six situations are a definition list, not a card grid. A card grid would
- * repeat the layout family used by Soluções, and the skill bans a default
- * divide-y list above five items.
+ * COSTURA COM O POSICIONAMENTO. As duas seções são um movimento só: aqui o
+ * leitor se reconhece, ali ele descobre que existe uma empresa para isso.
  */
 export function Problema() {
   return (
     <section
       id="problema"
       aria-labelledby="problema-heading"
-      className="pxto-interval pb-14 md:pb-16 lg:pb-20"
+      className="px-4 py-24 md:px-5 md:py-32"
     >
-      <Container width="wide">
-        <div className="grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <Heading level={2} size="section" id="problema-heading">
+      <Container width="wide" className="px-0 md:px-0 lg:px-0">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-20">
+          <div className="pxto-reveal-stagger lg:col-span-5">
+            <Heading level={2} size="display" id="problema-heading">
               {problema.heading}
             </Heading>
-            <p className="mt-6 max-w-[46ch] text-lg text-ink">
-              {problema.reframe}
+            <p className="mt-8 max-w-prose text-base text-ink-secondary md:text-lg">
+              {problema.body}
             </p>
           </div>
 
-          <div className="space-y-4 lg:col-span-5">
-            {problema.body.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} className="text-base text-ink-secondary">
-                {paragraph}
-              </p>
-            ))}
+          <div className="lg:col-span-7">
+            <DefinitionList
+              items={problema.situations}
+              layout="card"
+              className="pxto-reveal"
+            />
+            <p className="pxto-reveal mt-14 border-t border-rule pt-8 text-base font-semibold text-ink md:text-lg">
+              {problema.reframe}
+            </p>
           </div>
         </div>
-
-        <DefinitionList items={problema.situations} className="mt-12 lg:mt-14" />
       </Container>
     </section>
   );

@@ -17,7 +17,7 @@ export const furnitureVisualization: Project = {
   category: "AI / Web App / Image Generation",
   solutions: ["software"],
   summary:
-    "Aplicação web que combina a foto de um móvel e a foto de um ambiente para gerar uma visualização realista do móvel naquele espaço.",
+    "Duas fotos viram a visualização do móvel dentro do ambiente.",
 
   problem:
     "Permitir que usuários visualizem de maneira mais concreta como determinado móvel pode se encaixar em um ambiente. Ver o produto isolado e imaginar o produto no lugar são coisas diferentes.",

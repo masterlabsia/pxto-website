@@ -80,7 +80,7 @@ See `DESIGN_SYSTEM.md` Part V for the full list. Highest priority:
 - [ ] **The six blocked assets** (`DESIGN_SYSTEM.md` Part IV): logo, palette,
       typefaces, photography, contact channels and legal copy, term definitions
 - [ ] Typeface selection, including whether Inter is acceptable
-- [ ] Icon library choice from the permitted set
+- [x] ~~Icon library~~ **Decidido em 29/08/2026: Heroicons `24/outline`.** Ver `DESIGN_SYSTEM.md` Part I.12 para o porquê da saída da lista herdada
 - [ ] Whether dark mode ships at launch — the specification assumes both themes
       ship together; the PRD is silent
 - [ ] Whether `shadcn/ui` is adopted as the component base, and how far its

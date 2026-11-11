@@ -131,45 +131,63 @@ Per-page titles and descriptions appear with each page below.
 
 # PART II — Pages
 
-# 1. Homepage — `/`
+# 1. Homepage: `/`
 
-**Metadata** — `DRAFT`
-Title: `PXTO — Integração de sistemas, automação de processos e software sob medida`
-Meta description: `A PXTO conecta sistemas, automatiza processos e constrói software sob medida. Tecnologia aplicada aos problemas reais da operação da sua empresa.`
+> **Revisão de 10/11/2026, feita em sessão com o responsável.** A Home passou a
+> seguir o protótipo H612 do Stitch e a comunicar o modelo de contratação
+> **resultado como serviço** (`../strategy/POSITIONING.md` §18). Esta parte do
+> documento foi reescrita em português por ter sido tocada (`CLAUDE.md` §1).
+>
+> O que mudou em relação à versão anterior:
+>
+> - O secundário do Hero passou de "Ver projetos" para **"Ver soluções"**, que
+>   rola até a seção Soluções. Nenhum projeto está liberado.
+> - O corpo do Problema voltou em versão curta, e o reenquadramento ficou em
+>   duas frases.
+> - Entrou a seção **Modelo de trabalho** (1.4), com o copy de OaaS.
+> - **Projetos e Diferenciais saíram da Home.** Projetos volta quando houver ao
+>   menos um projeto liberado. Diferenciais não tem conteúdo aprovado.
+> - O processo na Home não tem numeração.
+> - O CTA final passou a ser só título e botão.
+>
+> Rótulos: `FIXED` é texto do PRD. `DRAFT` é texto escrito neste projeto e ainda
+> sem aprovação formal do posicionamento. O PRD §12 foi revisado na mesma data.
+
+**Metadata**, `DRAFT`
+Title: `PXTO. Integração de sistemas, automação de processos e software sob medida`
+Meta description: `A PXTO conecta sistemas, automatiza processos e constrói software sob medida. Você descreve o resultado que precisa na operação, e a PXTO cuida do caminho até ele.` (revisada em 11/11/2026)
 
 ---
 
 ## 1.1 Hero
 
-`FIXED` — §12
+`FIXED`, PRD §12, exceto o secundário, revisado em 10/11/2026.
 
 > # Conectamos sistemas. Automatizamos processos. Construímos soluções.
 >
 > Tecnologia aplicada aos desafios reais das empresas.
 >
-> **[Fale com a PXTO]**  **[Ver projetos]**
+> **[Fale com a PXTO]**  **[Ver soluções]**
+
+O Hero é só texto, centralizado num contêiner arredondado, sem imagem nem
+diagrama. A luz do mouse (`GlowField`) é atmosfera e não tem texto. O secundário
+aponta para `#solucoes`, na própria página.
 
 ---
 
 ## 1.2 Problema
 
-Heading `FIXED` — §13. Body `DRAFT`.
+Título `FIXED`, PRD §13. Corpo e reenquadramento `DRAFT`.
 
 > ## Sua empresa já tem tecnologia. O problema é quando ela não conversa.
 >
 > Cada ferramenta foi contratada para resolver um problema específico. Nenhuma
-> delas foi feita para conversar com as outras.
->
-> O espaço entre elas acaba sendo preenchido por pessoas: digitando de novo o que
-> um sistema já sabe, mantendo planilhas que só existem para transportar dados,
-> lembrando de executar um processo que deveria rodar sozinho.
->
-> Esse trabalho não aparece em nenhum relatório. Aparece na equipe que nunca dá
-> conta e na operação que só cresce contratando mais gente.
+> delas foi feita para conversar com as outras. O espaço entre elas acaba sendo
+> preenchido por pessoas.
 
-### The six situations
+### As seis situações
 
-`DRAFT` — the six are `FIXED` by §13; the descriptions are drafted.
+Os seis títulos são `FIXED` (PRD §13). As descrições são `DRAFT`.
 
 | Situação | Descrição |
 | --- | --- |
@@ -180,167 +198,204 @@ Heading `FIXED` — §13. Body `DRAFT`.
 | **Tarefas repetitivas** | Pessoas qualificadas executando trabalho mecânico. |
 | **Ferramentas que não atendem** | O software resolve o caso geral. O seu caso é exatamente o que sobra. |
 
-### Reframe
+### Reenquadramento
 
-`DRAFT` — Narrative §3.2, move 3. **Do not cut this paragraph** — without it the
-section is uncomfortable rather than useful.
+`DRAFT`, `NARRATIVE.md` §3.2, movimento 3. **Não cortar.** Sem ele a seção
+incomoda sem ser útil.
 
-> Nada disso é consequência de uma decisão errada. É o que acontece quando a
-> operação cresce mais rápido do que as ferramentas que ela foi juntando pelo
-> caminho. E tem solução.
+> Nada disso é consequência de uma decisão errada. E tem solução.
+
+A versão anterior era mais longa ("É o que acontece quando a operação cresce mais
+rápido que as ferramentas que ela foi juntando pelo caminho.").
+
+**Apresentação (11/11/2026):** as seis situações ficam num cartão arredondado e são
+numeradas de 01 a 06 (CSS, não é texto). O texto é o acima, e não o que o Stitch reescreveu
+em jargão. A curta mantém as
+duas funções do movimento: tira a culpa do visitante e anuncia a solução.
 
 ---
 
 ## 1.3 Posicionamento
 
-`DRAFT` — depends on the territory decision (Positioning §14). **Rewrite if the
-territory changes.**
+`DRAFT`. Depende da decisão de território (`POSITIONING.md` §14). **Reescrever se
+o território mudar.**
 
 > ## O problema não está nos seus sistemas. Está entre eles.
 >
 > A PXTO trabalha nesse espaço: entre as ferramentas, entre os processos, entre o
 > que o software faz e o que a sua operação realmente precisa.
->
-> Começamos entendendo o problema. Depois conectamos sistemas, automatizamos
-> processos, construímos software ou colocamos no ar a presença digital que
-> faltava — o que for necessário para resolver o caso.
+
+**Apresentação (11/11/2026):** centralizado e limpo, num contêiner arredondado, com uma linha
+curta entre o título e o parágrafo. Sem aspas (o título não é uma citação) e sem a etiqueta
+"TESE ESTRUTURAL" que o Stitch pôs (era texto novo).
+
+Só texto, sobre o fundo secundário do tema. A foto de fundo saiu em 10/11/2026:
+contrariava `CLAUDE.md` §4.8, §7.5 e §7.15.
 
 ---
 
-## 1.4 Soluções
+## 1.4 Modelo de trabalho
 
-Heading and the four descriptions `FIXED` — §14. Intro and CTAs `DRAFT`.
+`DRAFT`. **Seção nova**, de 10/11/2026. Comunica resultado como serviço
+(`POSITIONING.md` §18). **Fica entre Posicionamento e Soluções**, porque o
+visitante já entendeu o problema e ainda não viu as ferramentas.
+
+> ## Você define o resultado. A PXTO assume o caminho até ele.
+>
+> Em vez de comprar horas ou ferramentas, você descreve o que precisa que
+> aconteça na operação.
+>
+> A PXTO desenha, constrói e conecta o que for necessário para chegar lá.
+>
+> Você não precisa chegar com a solução pronta, nem saber qual tecnologia usar.
+
+**Apresentação (11/11/2026):** a primeira linha vai num painel rotulado **"Você"**, a segunda
+num painel rotulado **"PXTO"**, com uma seta entre os dois, e a terceira embaixo, centralizada.
+Os rótulos "Você" e "PXTO" são o único texto novo (`DRAFT`) e vêm do próprio título. A
+exploração do Stitch tinha inventado marcadores ("escopo estratégico", "governança",
+"sustentação contínua"), e nenhum entrou.
+
+A terceira linha foi aprovada em 11/11/2026. **Limites de redação.** Descreve um modelo de trabalho, não promete resultado. Não
+cita prazo, métrica, índice de sucesso nem garantia. "Assume o caminho" nunca vira
+"garantimos o resultado". Ver `POSITIONING.md` §18.3.
+
+---
+
+## 1.5 Soluções
+
+Título e as quatro descrições `FIXED`, PRD §14. Rótulos dos links `DRAFT`.
 
 > ## Tecnologia para resolver problemas reais.
 >
-> Quatro formas de resolver o mesmo tipo de problema. Qual delas se aplica ao seu
-> caso é uma conclusão do diagnóstico — não uma escolha que você precisa fazer
-> antes de conversar.
+> O resultado define o instrumento. Qual deles se aplica é uma conclusão do
+> diagnóstico.
 
-**Integrações** — `FIXED`
+A linha sob o título (`DRAFT`) é a ponte entre o Modelo de trabalho e as quatro
+soluções, aprovada em 11/11/2026.
+
+**Apresentação (11/11/2026):** quatro cartões idênticos com borda arredondada, cada um com
+título, descrição e o link separado por uma linha. Sem ícone e sem numeração (o Stitch pôs
+ambos, e numerar quatro pares sugeriria ordem). As descrições são as `FIXED`, e não as que o
+Stitch reescreveu.
+
+**Integrações**, `FIXED`
 > Conectamos sistemas, APIs e ferramentas para que informações possam circular
 > automaticamente entre diferentes plataformas.
 > **[Ver integrações]**
 
-**Automação** — `FIXED`
+**Automação**, `FIXED`
 > Transformamos processos repetitivos em fluxos automatizados, reduzindo trabalho
 > manual e aumentando eficiência.
 > **[Ver automação]**
 
-**Software** — `FIXED`
+**Software**, `FIXED`
 > Desenvolvemos aplicações e sistemas sob medida para necessidades específicas de
 > negócio.
 > **[Ver software]**
 
-**Sites** — `FIXED`
+**Sites**, `FIXED`
 > Criamos sites modernos, rápidos e responsivos para empresas que precisam
 > estabelecer ou fortalecer sua presença digital.
 > **[Ver sites]**
 
+A introdução ("Quatro formas de resolver o mesmo tipo de problema...") saiu da
+Home, porque repete `solucoesPage.overview`. Continua em `/solucoes`.
+
 ---
 
-## 1.5 Como trabalhamos
+## 1.6 Como trabalhamos
 
-Step names and first lines `FIXED` — §15. Second lines `DRAFT`.
+Nome e primeira linha de cada passo `FIXED`, PRD §15.
 
 > ## Como trabalhamos
 >
 > Não começamos pela tecnologia. Começamos pelo problema.
 
-**01 · Entendemos**
-> Mapeamos o problema, contexto e objetivo. `FIXED`
-> Antes de propor qualquer coisa, precisamos entender como a operação funciona
-> hoje — inclusive as partes que ninguém documentou. `DRAFT`
+**Entendemos**: Mapeamos o problema, contexto e objetivo.
 
-**02 · Desenhamos**
-> Definimos a melhor abordagem para transformar a necessidade em solução. `FIXED`
-> É aqui que decidimos o que construir, o que conectar e o que simplesmente não
-> precisa existir. `DRAFT`
+**Desenhamos**: Definimos a melhor abordagem para transformar a necessidade em
+solução.
 
-**03 · Construímos**
-> Desenvolvemos a solução utilizando as tecnologias mais adequadas ao problema.
-> `FIXED`
-> A tecnologia é escolhida pelo problema — não o contrário. `DRAFT`
+**Construímos**: Desenvolvemos a solução utilizando as tecnologias mais adequadas
+ao problema.
 
-**04 · Integramos**
-> Conectamos a solução ao ecossistema existente do cliente quando necessário.
-> `FIXED`
-> Uma solução que não conversa com o resto da operação vira mais um sistema
-> isolado. `DRAFT`
+**Integramos**: Conectamos a solução ao ecossistema existente do cliente quando
+necessário.
 
-**05 · Evoluímos**
-> Monitoramos, ajustamos e evoluímos a solução conforme novas necessidades.
-> `FIXED`
-> ⚠ **CONFIRMAR** — this step implies a post-delivery commitment that has not
-> been commercially defined (Positioning §17.3). Keep the PRD line; **do not add
-> any further promise of continuity** until the service model is decided.
+**Evoluímos**: Monitoramos, ajustamos e evoluímos a solução conforme novas
+necessidades. ⚠ **CONFIRMAR**: este passo sugere um compromisso depois da entrega
+que ainda não foi definido comercialmente (`POSITIONING.md` §17.3). Manter a linha
+do PRD e **não acrescentar nenhuma promessa de continuidade**.
 
-**Closing** — `DRAFT`. Required by §15: never claim every project passes through
-all five steps.
+Fechamento, exigido pelo PRD §15 (nunca dizer que todo projeto passa pelas cinco
+etapas):
+
 > Nem todo projeto passa por todas as etapas. O que não muda é a ordem: entender
 > antes de construir.
 
+Na Home os passos aparecem numa **linha do tempo horizontal** (11/11/2026), num cartão
+arredondado, com cinco nós numerados 01 a 05 ligados por uma linha. A numeração tem sentido
+aqui: a ordem é a informação. Os cinco nós são iguais, e o Stitch destacava o 05, o que daria
+ênfase a "Evoluímos" (⚠ CONFIRMAR). As segundas linhas (`DRAFT`) não entram na Home.
+
 ---
 
-## 1.6 Projetos
+## 1.6b Parcerias
 
-Heading and subtitle `FIXED` — §16.
+`DRAFT`. **Seção nova**, de 11/11/2026. Fica **logo abaixo do Hero**.
+
+> - Play9ContentGroup
+> - Casaeaser
+
+**Sem título visível** (decidido em 11/11/2026). Existe um `h2` "Parcerias" só para leitor de
+tela. Os nomes passam numa faixa contínua, como o "logo roll" do protótipo, **logo abaixo do
+Hero**. Não há botão de pausa, e a lista real fica disponível uma vez só para leitor de tela.
+
+**Limites.** Só o nome, em texto, e a repetição na faixa é técnica. Sem logo, número, depoimento, descrição, setor ou
+resultado atribuído. Nenhuma relação além de "parceria" é afirmada, e "cliente" não é usado.
+Os nomes estão como o responsável informou, e a grafia oficial a confirmar. A autorização é
+declarada, com o comprovante escrito a anexar (`../parcerias.md`). **Se nenhuma empresa
+estiver autorizada, a seção inteira é omitida.** Vocabulário proibido: "nossos clientes",
+"empresas que confiam", e qualquer número de empresas.
+
+---
+
+## 1.7 Projetos e Diferenciais: fora da Home
+
+**Projetos** saiu da Home em 10/11/2026. Nenhum projeto está liberado
+(`CLAUDE.md` §0.5), e uma seção sem conteúdo se omite. **Volta quando houver ao
+menos um projeto com liberação assinada.** Título e subtítulo continuam `FIXED`
+(PRD §16):
 
 > ## O que construímos.
 >
 > Soluções desenvolvidas para transformar ideias e problemas em produtos digitais
 > funcionais.
 
-Project cards — see §7.2 for card copy.
-
-> **[Ver todos os projetos]**
-
-> **Blocked:** this section requires at least one project with §20 clearance.
-> If none is cleared, **omit the section** — do not publish placeholders
-> (Project Framework §19.4).
+**Diferenciais** saiu da Home na mesma data. O PRD §11.2 lista o bloco sem
+definir conteúdo, e o texto proposto (`PROPOSAL`) nunca foi aprovado. O texto
+continua no código, em `diferenciais` (`src/content/home.ts`), e é usado em
+`/sobre`. Se o bloco voltar, não pode virar barra de números, fileira de selos
+nem faixa de logos (`NARRATIVE.md` §7.3).
 
 ---
 
-## 1.7 Diferenciais
+## 1.8 CTA final
 
-`PROPOSAL` + `DRAFT` — the PRD lists this block (§11.2) but defines no content.
-Written strictly from the structural differentiators in Positioning §11.1, each
-of which is true today and requires no evidence of scale.
+`DRAFT`. Alinhado ao modelo de trabalho. Só título e botão.
 
-> ## Por que a PXTO
->
-> **Começamos pelo problema**
-> Antes de propor qualquer solução, entendemos o que está acontecendo. Diagnóstico
-> primeiro, tecnologia depois.
->
-> **Um só responsável pelo caminho inteiro**
-> Entender, desenhar, construir, integrar e evoluir. Sem repassar o problema de
-> um fornecedor para outro no meio do caminho.
->
-> **A tecnologia é escolhida pelo problema**
-> Não temos plataforma para defender nem produto para empurrar. A ferramenta
-> certa é a que resolve o seu caso.
->
-> **Construímos o que o problema exige**
-> Nem mais, nem menos. Solução superdimensionada custa caro para construir e mais
-> caro ainda para manter.
-
-> **Prohibited here** (Narrative §7.3): stats bar, badge row, logo strip,
-> counters, or a list of adjectives. No slot that only makes sense once filled
-> with proof PXTO does not have.
-
----
-
-## 1.8 CTA
-
-`DRAFT`
-
-> ## Descreva o problema. A solução é o nosso trabalho.
->
-> Você não precisa chegar com uma especificação pronta, nem saber qual tecnologia
-> usar. Conte o que não está funcionando — o resto é conversa.
+> ## Conte o resultado que você precisa.
 >
 > **[Fale com a PXTO]**
+
+**Apresentação (11/11/2026):** o texto fica **alinhado à esquerda**, na mesma coluna das outras
+seções. O Stitch acrescentava uma etiqueta, um parágrafo ("Nossa equipe técnica analisa a
+topologia...") e "confidencialidade garantida por NDA", e nada disso entrou: era texto e
+promessa inventados, e "nossa equipe" é vocabulário proibido.
+
+A versão anterior era "Descreva o problema. A solução é o nosso trabalho.", com o
+apoio "Você não precisa chegar com uma especificação pronta, nem saber qual
+tecnologia usar." Esse apoio é aproveitável, e pode voltar em outra página.
 
 ---
 
@@ -356,10 +411,12 @@ Meta description: `Integrações, automação, software sob medida e sites. Quat
 
 `DRAFT`
 
-> # Quatro formas de resolver o mesmo problema.
+> # Quatro instrumentos para chegar ao mesmo resultado.
 >
-> Integrações, automação, software e sites. O que muda é o instrumento, não a
-> forma de trabalhar.
+> Integrações, automação, software e sites. O resultado define o instrumento.
+
+(Revisado em 11/11/2026. Antes: "Quatro formas de resolver o mesmo problema." e
+"O que muda é o instrumento, não a forma de trabalhar.")
 
 ## 2.2 Visão geral
 
@@ -1198,6 +1255,11 @@ Meta description: `A PXTO é uma empresa de tecnologia que trabalha no espaço e
 >
 > As ferramentas vão mudar. A capacidade de entender um problema e construir a
 > solução, não.
+>
+> Por isso o trabalho se organiza em torno do resultado que a operação precisa, e
+> não em torno de horas ou de ferramentas.
+
+(Último parágrafo acrescentado em 11/11/2026.)
 
 ## 10.4 Como trabalhamos
 
@@ -1312,7 +1374,7 @@ Fields `FIXED` — §28. Labels, placeholders and helper text `DRAFT`.
 | E-mail | `E-mail` | `seu@email.com` | Sim |
 | Telefone | `Telefone / WhatsApp` | `(00) 00000-0000` | Não |
 | Necessidade | `O que você precisa?` | `Selecione` | Não |
-| Mensagem | `Sua mensagem` | `Descreva o problema que precisa resolver` | Sim |
+| Mensagem | `Sua mensagem` | `Descreva o resultado que você precisa ou o problema que quer resolver` | Sim |
 
 **Select options** — `FIXED` §28:
 `Integração` · `Automação` · `Software` · `Site` · `Outro`
@@ -1322,8 +1384,10 @@ Fields `FIXED` — §28. Labels, placeholders and helper text `DRAFT`.
 > trabalho.
 
 **Helper text under the message field** — `DRAFT`
-> Não precisa ser formal nem detalhado. O essencial é entender o que está
-> acontecendo hoje.
+> Não precisa ser formal nem detalhado. O essencial é entender o que precisa
+> acontecer na sua operação.
+
+(Revisado em 11/11/2026. Antes: "...entender o que está acontecendo hoje.")
 
 **Submit label** — `DRAFT`, per §29
 > **[Enviar mensagem]**

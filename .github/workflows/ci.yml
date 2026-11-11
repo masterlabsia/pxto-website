@@ -1,0 +1,99 @@
+# Verificação de todo PR e de todo push em main e develop.
+#
+# Roda o mesmo que `npm run check` mais as seis auditorias de `scripts/`, contra um
+# build de produção servido localmente. Nada do que está aqui é novo: são os comandos
+# que o projeto já tinha e que antes dependiam de alguém lembrar de rodar.
+#
+# PARA ISTO BARRAR UM PUBLICAR, não basta existir: nas configurações do repositório,
+# em Branches, a proteção da main precisa exigir o check "verificar". Sem isso um PR
+# com a CI vermelha ainda pode ser mesclado. Essa configuração é manual.
+#
+# Build em `.next-audit` (`audit:build`), como manda o CLAUDE.md 18.1.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+
+# Um push novo no mesmo ramo cancela a execução anterior.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    name: verificar
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      # O hook do Husky é para a máquina de quem commita, não para a CI.
+      HUSKY: "0"
+      NEXT_TELEMETRY_DISABLED: "1"
+      # Obrigatória no build (.env.example). Fora de produção, o valor local basta.
+      NEXT_PUBLIC_SITE_URL: "http://localhost:7500"
+      AUDIT_URL: "http://localhost:7500"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node 22, o mesmo em que as auditorias foram escritas e medidas.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Instalação travada no package-lock.json.
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Tipos
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Assets
+        run: npm run check:assets
+
+      - name: Build de produção
+        run: npm run audit:build
+
+      - name: Instalar o Chromium do Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Subir o site
+        run: |
+          nohup npm run audit:start -- -p 7500 > server.log 2>&1 &
+          for i in $(seq 1 40); do
+            if curl -sf -o /dev/null "$AUDIT_URL/"; then echo "site no ar"; exit 0; fi
+            sleep 2
+          done
+          echo "o site não subiu em 80s"; cat server.log; exit 1
+
+      # Um passo por auditoria, para a falha dizer qual regra quebrou.
+      - name: Auditoria funcional (links, navegação, formulário, 404)
+        run: node scripts/audit-functional.mjs "$AUDIT_URL"
+
+      - name: Auditoria responsiva (8 rotas, 6 tamanhos de tela)
+        run: node scripts/audit-responsive.mjs "$AUDIT_URL"
+
+      - name: Auditoria de acessibilidade (axe, claro e escuro)
+        run: node scripts/audit-a11y.mjs "$AUDIT_URL"
+
+      - name: Auditoria de conteúdo (copy fixa, vocabulário, confidencialidade)
+        run: node scripts/audit-content.mjs "$AUDIT_URL"
+
+      - name: Auditoria de segurança (cabeçalhos, CSP, formulário)
+        run: node scripts/audit-security.mjs "$AUDIT_URL"
+
+      - name: Auditoria de performance (orçamentos)
+        run: node scripts/audit-perf.mjs "$AUDIT_URL"
+
+      # Só quando algo falhou: o log do servidor costuma explicar o motivo.
+      - name: Log do servidor
+        if: failure()
+        run: cat server.log || true

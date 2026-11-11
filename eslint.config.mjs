@@ -9,7 +9,10 @@ const compat = new FlatCompat({
 const config = [
   ...compat.extends("next/core-web-vitals", "next/typescript", "plugin:jsx-a11y/recommended"),
   {
-    ignores: [".next/**", "node_modules/**", "next-env.d.ts"],
+    // .next-audit e a saida do build de auditoria, que roda num distDir
+    // separado para nao derrubar o dev server. Sem ele aqui, `npm run lint`
+    // varre codigo gerado e devolve milhares de problemas falsos.
+    ignores: [".next/**", ".next-audit/**", "node_modules/**", "next-env.d.ts"],
   },
   {
     rules: {

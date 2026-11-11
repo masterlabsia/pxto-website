@@ -13,6 +13,7 @@ privacy), §45 (domain), §46 (environments), §47 (Git workflow), §48 (CI/CD),
 | --- | --- |
 | `TECHNICAL_ARCHITECTURE.md` | **Exists.** Stack evaluation, framework, language, styling, component architecture, routing, content architecture, project data model, images, SEO, metadata, analytics, contact form, environment variables, security, performance, accessibility, testing, deployment, Git, CI/CD, CMS migration, plus AI-assisted development conventions and build order |
 | `definition-of-done.md` | The per-feature completion checklist |
+| `RUNBOOK.md` | **Exists.** Day to day operation: startup order, ports and build directories, the failures whose symptom points at the wrong cause, what the gates do not cover, git hooks, generated files |
 
 Information architecture and content models belong in `../architecture/`.
 

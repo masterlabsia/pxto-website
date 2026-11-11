@@ -1,0 +1,11 @@
+# Gates do CLAUDE.md 18, menos o build.
+#
+# `next build` esta fora de proposito aqui: ele escreve em .next/ e derrubaria
+# um `next dev` no ar, que e a falha documentada em CLAUDE.md 18.1. O build
+# continua sendo verificado por `npm run check` e pelo CI, com a arvore limpa.
+#
+# Custo medido: cerca de 3s.
+npm run verify:staged
+npm run typecheck
+npm run lint
+npm run check:assets

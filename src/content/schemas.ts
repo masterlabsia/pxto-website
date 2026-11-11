@@ -34,8 +34,89 @@ export const ImageSchema = z.object({
    * pending asset as an outstanding deliverable.
    */
   pending: z.boolean().optional(),
+  /**
+   * O que precisa ser produzido. Aparece SOMENTE no slot do estado pendente,
+   * como briefing para a PXTO, e nunca como texto acessível.
+   *
+   * Existe porque `alt` e briefing são coisas diferentes: "Imagem principal,
+   * 1600x1200" é um briefing útil e um alt péssimo. Sem separar, um dos dois
+   * fica errado.
+   */
+  brief: z.string().optional(),
 });
 export type PxtoImage = z.infer<typeof ImageSchema>;
+
+/**
+ * Diagrama. Geometria declarada como DADO, nunca como path solto.
+ *
+ * POR QUE NÓS E ARESTAS, e não uma string de path. Um `d="M..."` livre seria
+ * indistinguível de ilustração decorativa, que a regra 7.15 proíbe. Declarando
+ * a topologia, três coisas passam a ser verdade por construção:
+ *
+ *   1. Não existe onde encaixar um traço inventado. Decoração fica impossível
+ *      estruturalmente, não por disciplina.
+ *   2. Os rótulos são dados, então o gate de conteúdo os enxerga. Rótulo dentro
+ *      de <text> escapa de `innerText`, que é como audit-content varre a página.
+ *   3. O diagrama vira conteúdo de verdade: tem alt, valida no build e migra
+ *      para um CMS junto com o resto.
+ *
+ * Sem cor no dado. A cor vem do componente, via currentColor, senão o diagrama
+ * não acompanha os dois temas.
+ */
+const DiagramNode = z.object({
+  id: z.string().min(1),
+  x: z.number(),
+  y: z.number(),
+  w: z.number().positive(),
+  h: z.number().positive(),
+  /** Texto real, em português. Varrido pelo gate de conteúdo. */
+  label: z.string().min(1),
+});
+
+const DiagramEdge = z.object({
+  /**
+   * Pontos do traçado, em coordenadas do viewBox. Ortogonal por convenção:
+   * roteamento em 90 graus lê como esquema de engenharia, enquanto curva
+   * orgânica lê como grafo de rede neural, que é o visual banido pela 4.8.
+   */
+  points: z.array(z.tuple([z.number(), z.number()])).min(2),
+});
+
+export const DiagramSchema = z.object({
+  kind: z.literal("diagram"),
+  /** Obrigatório. Descreve o que o diagrama mostra, não que ele é um diagrama. */
+  alt: z.string().min(1),
+  viewBox: z.string().regex(/^0 0 \d+ \d+$/, "viewBox precisa ser '0 0 w h'"),
+  nodes: z.array(DiagramNode).min(1),
+  edges: z.array(DiagramEdge).min(1),
+  /** Pontos de junção, onde uma aresta encosta no barramento. */
+  junctions: z.array(z.tuple([z.number(), z.number()])).default([]),
+});
+export type PxtoDiagram = z.infer<typeof DiagramSchema>;
+
+/**
+ * O que um slot de mídia aceita. `Media` despacha por aqui, e nenhuma seção
+ * precisa saber se o beat carrega foto ou diagrama.
+ *
+ * PxtoImage não tem `kind`, então `"kind" in asset` já discrimina os dois em
+ * TypeScript sem precisar tocar em nenhum conteúdo existente.
+ */
+export type PxtoAsset = PxtoImage | PxtoDiagram;
+
+/**
+ * Uma empresa citada na seção Parcerias.
+ *
+ * `authorized` é a autorização por escrito para citar a empresa (CLAUDE.md 16.1).
+ * A evidência dela, o tipo de relação e qualquer raciocínio de divulgação ficam
+ * em docs/parcerias.md e NUNCA aqui: se está no dado de runtime, está publicável
+ * (CLAUDE.md 16.6). Sem logo, sem descrição, sem número, sem depoimento.
+ */
+export const PartnerSchema = z.object({
+  /** Exatamente como o responsável informou. */
+  name: z.string().min(1),
+  authorized: z.boolean(),
+});
+export type Partner = z.infer<typeof PartnerSchema>;
 
 export const SolutionSchema = z.object({
   slug: SolutionSlug,

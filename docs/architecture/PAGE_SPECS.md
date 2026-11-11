@@ -90,68 +90,78 @@ The visitor's systems do not talk to each other, and that is solvable
 
 ### Sections in order
 
-`DERIVED` — §11.2.
+> **Revisado em 10/11/2026**, em sessão com o responsável. A Home passou a
+> seguir o protótipo H612 do Stitch e a comunicar resultado como serviço
+> (`../strategy/POSITIONING.md` §18). Esta parte foi reescrita em português por
+> ter sido tocada. A ordem de seções deixou de ser fixa pelo PRD §11.2, que também
+> foi revisado.
 
 | # | Section | Purpose | Required content |
 | --- | --- | --- | --- |
-| 1 | **Navbar** | Orientation and permanent access to the CTA | Site-wide constant |
-| 2 | **Hero** | Answer "what does PXTO do" in seconds (§12) | Headline *Conectamos sistemas. Automatizamos processos. Construímos soluções.* · subheadline *Tecnologia aplicada aos desafios reais das empresas.* · two CTAs (§12) — `DERIVED — fixed copy` |
-| 3 | **Problema** | Recognition → naming → reframe (Narrative §3.2). **The page's single point of failure** (Narrative §7.4) | The framing *Sua empresa já tem tecnologia. O problema é quando ela não conversa.* plus recognisable situations: disconnected systems, manual processes, duplicated data, scattered information, repetitive tasks, tools that do not fit (§13) |
-| 4 | **Posicionamento** | Name the space PXTO works in; convert recognition into "there is a company for this" | A statement of where PXTO operates. Content depends on the territory decision (Positioning §14) |
-| 5 | **Soluções** | Present four instruments of one capability (Narrative §4.3) | Title *Tecnologia para resolver problemas reais.* · the four solutions with their PRD descriptions · **a CTA per solution to its own page** (§14) — `DERIVED — fixed copy` |
-| 6 | **Como trabalhamos** | Method as evidence; relieve "I can't write a brief" (Narrative §4.2) | Five steps with descriptions: Entendemos · Desenhamos · Construímos · Integramos · Evoluímos (§15) |
-| 7 | **Projetos** | Prove capability through real work (§16) | Featured projects with cover image, title, category, summary · link to `/projetos` |
-| 8 | **Diferenciais** | Answer "why PXTO" without claiming scale | **Content undefined** (§11.2 lists the block; nothing defines it). Narrative role proposed in Narrative §7.3 |
-| 9 | **CTA** | Convert intent into a low-friction first step | Invitation to describe a problem · primary CTA (§29) |
-| 10 | **Footer** | Secondary navigation and identity | Site-wide constant |
+| 1 | **Navbar** | Orientação e acesso permanente ao CTA | Constante do site |
+| 2 | **Hero** | Responder "o que a PXTO faz" em segundos (§12) | Headline *Conectamos sistemas. Automatizamos processos. Construímos soluções.* · subheadline *Tecnologia aplicada aos desafios reais das empresas.* · CTA primário *Fale com a PXTO* · CTA secundário *Ver soluções* (rola até a seção 6). **Contêiner arredondado em largura total da página (margem de 20px), texto centralizado**, com a luz do mouse (`GlowField`) no lugar da fotografia do protótipo. Sem imagem nem diagrama. Headline em peso leve e `text-7xl` a partir de `lg`. **O Hero e a faixa de parcerias cabem juntos numa tela só** em computador: o Hero não tem altura fixa e ocupa o que sobra de `100dvh` menos a navbar e a faixa. Em janela baixa (até 704px) a headline desce para `text-6xl`, e até 608px para `text-5xl` |
+| 3 | **Problema** | Reconhecimento, nome, reenquadramento (`NARRATIVE.md` §3.2). **Ponto único de falha da página** (§7.4) | Título *Sua empresa já tem tecnologia. O problema é quando ela não conversa.* · parágrafo curto · as seis situações em lista · reenquadramento em duas frases. Título e parágrafo à esquerda, **as seis situações à direita num cartão arredondado, numeradas de 01 a 06** (sem ícone). **Sem imagem** (uma foi testada e retirada em 11/11/2026) |
+| 4 | **Posicionamento** | Nomear o espaço onde a PXTO atua | Título e um parágrafo, **num contêiner arredondado em largura total da página (margem de 20px)** com a luz do mouse em escala reduzida, **texto centralizado** com uma linha curta de respiro entre o título e o parágrafo. Sem foto |
+| 5 | **Modelo de trabalho** | Dizer como a PXTO se contrata: resultado como serviço | *Você define o resultado. A PXTO assume o caminho até ele.* e duas linhas de apoio, **centralizadas num contêiner arredondado** (o "interstitial" do protótipo) **com a imagem do painel de cabos organizados ao fundo** (ilustrativa, gerada por IA). **Dois painéis ligados por uma seta**, "Você" à esquerda e "PXTO" à direita, cada um com a sua linha aprovada, e a nota "você não precisa chegar com a solução pronta" embaixo. Peso por escala e espaço, **nunca por inversão de tema** |
+| 6 | **Soluções** | Apresentar quatro instrumentos de uma capacidade | Título *Tecnologia para resolver problemas reais.* · as quatro soluções com a descrição do PRD, **em grade de 4 cartões idênticos com borda arredondada**, cada um com título, descrição e um link separado por uma linha. Sem ícone e sem numeração · um link por solução para a sua página. É o destino de `#solucoes` |
+| 7 | **Como trabalhamos** | O método como evidência | **Linha do tempo horizontal** num cartão arredondado: cinco nós numerados 01 a 05 ligados por uma linha, cada passo com o verbo e a primeira linha aprovada · fechamento exigido pelo §15 |
+| 2b | **Parcerias** | Mostrar com quem a PXTO já trabalhou, sem inventar escala | Título *Parcerias* e os nomes das empresas autorizadas, **só em texto, com peso igual, numa faixa que passa na tela, logo abaixo do Hero e sem título visível** (como o "logo roll" do protótipo). Sem botão de pausa. Sem logo, número, depoimento ou descrição. **Omitida por inteiro se nenhuma estiver autorizada.** Registro em `../parcerias.md`. **Entre o Hero e o Problema** |
+| 8 | **CTA** | Converter intenção em um primeiro passo de baixo atrito | *Conte o resultado que você precisa.* e o botão primário, **num contêiner arredondado em largura total da página (margem de 20px) e com a altura da tela do computador, com o texto alinhado à esquerda** (`100dvh` menos a navbar e as margens de 20px, a partir de `lg`), centralizado, com a imagem da fachada ao fundo (ilustrativa, gerada por IA). Sem parágrafo de apoio |
+| 9 | **Footer** | Navegação secundária e identidade | Constante do site. **Cartão arredondado em largura total** (margem de 20px), no espírito do rodapé da Apple: logo pequeno e descritor, colunas Soluções e Navegação com títulos pequenos, e uma barra legal com a linha de copyright. Sem links de privacidade, seletor de país nem redes sociais, que não existem |
+
+**Fora da Home desde 10/11/2026:**
+
+- **Projetos.** Nenhum projeto está liberado. Volta quando houver ao menos um com
+  liberação assinada, entre Como trabalhamos e CTA (§20 do PRD).
+- **Diferenciais.** Sem conteúdo aprovado. O texto proposto está no código e é
+  usado em `/sobre`.
 
 ### Required content
-Logo · hero copy (fixed, §12) · problem situations (§13) · four solution
-descriptions (§14) · five process steps (§15) · at least one cleared project
-with cover image · Diferenciais content (**undefined**) · CTA block copy.
+Logo · copy do Hero (fixo, §12) · situações do problema (§13) · quatro descrições
+de solução (§14) · cinco passos (§15) · copy do Modelo de trabalho (`DRAFT`) · CTA.
 
-**Blocked:** the Projetos section requires at least one project with disclosure
-clearance (§20). Neither currently has it.
+**Bloqueado:** a seção Projetos precisa de um projeto liberado (§20). Enquanto
+isso ela não existe na Home.
 
 ### Primary CTA
-*Fale com a PXTO* → `/contato`. Appears in hero, in the CTA block, and in the
-navbar.
+*Fale com a PXTO* → `/contato`. Aparece no Hero, no bloco de CTA e na navbar.
 
 ### Secondary CTA
-*Ver projetos* → `/projetos` (§12). Plus one CTA per solution → its solution page
+*Ver soluções* → `#solucoes` (Hero). Mais um link por solução para a sua página
 (§14).
 
 ### Internal links
-**Out:** 4 solution pages (§14) · `/projetos` · featured project pages ·
-`/contato` · footer links.
-**In:** logo from every page · direct traffic.
+**Out:** 4 páginas de solução (§14) · `/contato` · links do footer.
+**In:** logo de todas as páginas · tráfego direto.
 
 ### SEO intent
-The site's primary entry point. Should be findable for the company name and for
-problem-shaped queries about disconnected systems, manual processes and bespoke
-software. Title carries the company name and its core capability; meta
-description states the problem PXTO solves in business terms, not technology
-terms. `Organization` + `WebSite` structured data (`SITEMAP.md` §6.3). Canonical
-self. Only `h1` on the site's most important page — the hero headline.
+Ponto de entrada principal do site. Deve ser encontrável pelo nome da empresa e
+por buscas em forma de problema sobre sistemas desconectados, processos manuais e
+software sob medida. O título leva o nome e a capacidade central, e a descrição
+enuncia o problema em termos de negócio, não de tecnologia. Dados estruturados
+`Organization` e `WebSite` (`SITEMAP.md` §6.3). Canônica própria. Único `h1` do
+site na página mais importante: a headline do Hero.
 
 ### Conversion role
-**Top of funnel and primary router.** Fires Page View; carries the most
-`cta_click` volume; routes to `service_view` (solution pages), `project_view`
-(projects) and `/contato`. Success is measured by onward engagement, not by
-direct submission.
+**Topo de funil e roteador principal.** Dispara Page View e concentra o volume de
+`cta_click`. Roteia para `service_view` (páginas de solução) e `/contato`. O
+sucesso se mede por engajamento adiante, não por envio direto.
 
 ### Constraints
-- The Problema section decides the page. If recognition fails, everything below
-  it reads as generic vendor material (Narrative §7.4)
-- Solutions appear in a fixed order with equal weight. No visual or ordinal
-  primacy (§4)
-- Diferenciais must not become a stats bar, badge row or logo strip (Narrative
-  §7.3; Positioning §13.6)
-- No AI vocabulary anywhere on this page (Narrative §4.5)
+- A seção Problema decide a página. Se o reconhecimento falha, tudo abaixo lê como
+  material genérico de fornecedor (`NARRATIVE.md` §7.4)
+- As soluções aparecem em ordem fixa e com peso igual. Nenhuma tem primazia visual
+  ou ordinal (§4)
+- **Um tema por página.** Nenhuma seção inverte para claro ou escuro no meio
+  (`CLAUDE.md` §7.7). Destaque se faz por escala e espaço
+- O Modelo de trabalho descreve um modelo, não promete resultado. Sem prazo,
+  métrica, índice de sucesso nem garantia (`POSITIONING.md` §18.3)
+- Sem vocabulário de IA em nenhum ponto da página (`NARRATIVE.md` §4.5)
 
 ### Open items
-Diferenciais content · Posicionamento section content, pending the territory
-decision · which projects are `featured`.
+Território de posicionamento, que ainda depende de decisão (`POSITIONING.md` §14) ·
+definição comercial de "resultado" (`POSITIONING.md` §18.4) · quais projetos serão
+destaque, quando houver algum liberado · se Diferenciais volta à Home.
 
 ---
 

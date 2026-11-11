@@ -261,6 +261,12 @@ CTA
 Footer
 ```
 
+> Revisado em 10/11/2026. A Home implementada tem esta ordem: Navbar, Hero,
+> Problema, Posicionamento, **Modelo de trabalho** (novo, resultado como serviço),
+> Soluções, Como trabalhamos, CTA, Footer. **Projetos** sai até haver projeto
+> liberado e **Diferenciais** sai por não ter conteúdo aprovado. Ver
+> `architecture/PAGE_SPECS.md` §1.
+
 ---
 
 # 12. Hero
@@ -285,7 +291,9 @@ CTA primário:
 
 CTA secundário:
 
-> Ver projetos
+> Ver soluções
+
+> Revisado em 10/11/2026. Era "Ver projetos". O botão rola até a seção Soluções, porque nenhum projeto está liberado. Voltar a "Ver projetos" quando houver ao menos um.
 
 O Hero deve ser visualmente forte, mas não excessivamente carregado.
 

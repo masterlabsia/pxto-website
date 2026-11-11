@@ -25,6 +25,8 @@ export const navigation = [
 export const cta = {
   primary: { label: "Fale com a PXTO", href: "/contato" },
   projects: { label: "Ver projetos", href: "/projetos" },
+  /** Secundário do Hero da Home: rola até a seção, não troca de página. */
+  solutions: { label: "Ver soluções", href: "#solucoes" },
   allProjects: { label: "Ver todos os projetos", href: "/projetos" },
 } as const;
 

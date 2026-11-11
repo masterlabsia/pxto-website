@@ -426,10 +426,27 @@ the story runs on belief and stance alone, which is sufficient.
 The Home page is a single argument, not a set of sections. Each block has one
 narrative job and one transition it must earn.
 
+> **Revisado em 10/11/2026 e 11/11/2026.** A Home agora é: Navbar, Hero, **Parcerias**
+> (só nomes autorizados, numa faixa logo abaixo do Hero, sem título, omitida se vazia),
+> Problema, Posicionamento, **Modelo de trabalho**, Soluções, Como trabalhamos, CTA,
+> Footer. **Projetos** e **Diferenciais** saíram (ver `PAGE_SPECS.md` §1). Os blocos 6 e 7
+> da tabela abaixo ficam como referência para quando voltarem. A tabela segue em
+> inglês, por ainda não ter sido reescrita.
+
 ```text
-Navbar → Hero → Problema → Posicionamento → Soluções → Como trabalhamos
-       → Projetos → Diferenciais → CTA → Footer
+Navbar → Hero → Parcerias → Problema → Posicionamento → Modelo de trabalho
+       → Soluções → Como trabalhamos → CTA → Footer
 ```
+
+**O bloco novo, Modelo de trabalho.** Função narrativa: dizer como a PXTO se
+contrata, resultado como serviço (`POSITIONING.md` §18). **Entra no leitor:**
+reconheceu o problema e sabe que existe uma empresa para ele, mas ainda não sabe
+o que comprar. **Sai do leitor:** "Eu descrevo o resultado que preciso e eles
+cuidam do caminho". A transição Posicionamento → Modelo de trabalho precisa ter
+sido ganha: o leitor aceitou que o espaço entre os sistemas é um problema real.
+A transição Modelo de trabalho → Soluções responde "e com o que eles fazem isso?".
+**Cuidado:** o bloco descreve um modelo e nunca promete resultado
+(`POSITIONING.md` §18.3).
 
 ### 7.1 The arc, block by block
 

@@ -8,9 +8,9 @@ type Size = "display" | "section" | "sub" | "card";
  * chosen for how big it looks. DESIGN_SYSTEM.md Part II.
  */
 const sizes: Record<Size, string> = {
-  display: "text-4xl md:text-5xl font-semibold text-balance",
-  section: "text-3xl md:text-4xl font-semibold text-balance",
-  sub: "text-xl md:text-2xl font-semibold",
+  display: "text-4xl md:text-5xl font-light text-balance",
+  section: "text-3xl md:text-4xl font-light text-balance",
+  sub: "text-xl md:text-2xl font-normal",
   card: "text-lg font-medium",
 };
 

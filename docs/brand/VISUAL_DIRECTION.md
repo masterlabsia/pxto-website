@@ -11,6 +11,27 @@
 
 ---
 
+> **Revisão de 10/11/2026.** A direção visual implementada difere do que este
+> documento especifica, por decisão do responsável em sessão de exploração:
+>
+> - **Hero em contêiner arredondado, com uma luz que segue o mouse** (a luz também
+>   aparece, em escala menor, no Modelo de trabalho e no CTA). A seção 9,
+>   que pede fotografia no slot do Hero, não vale mais. O diagrama
+>   `sistemas-conectados`, que ocupou o slot por um tempo, também saiu. A
+>   divergência entre foto e diagrama (issue #4) fica **resolvida**: o Hero não
+>   leva mídia, e a luz faz o papel de atmosfera.
+> - **Direção H612.** Escuro primeiro, neutro, título em peso leve, contêineres
+>   de 20px, botão de vidro em pílula. Veio de um protótipo público do Stitch, sem
+>   as fotografias, o painel de métricas falsas e a faixa de logos dele.
+> - **Posicionamento sem foto.** O globo com rede de luz saiu, por contrariar
+>   `CLAUDE.md` §4.8, §7.5 e §7.15.
+> - **Paleta e fonte:** neutros, Manrope e JetBrains Mono. Valores em
+>   `../design-system/DESIGN_SYSTEM.md` §3.2 e §4.2.
+>
+> O restante deste documento segue como proposta, em inglês, e não foi reescrito.
+
+---
+
 ## Note on the skill, corrected
 
 **v1.0 of this document was produced without the requested skill.** I searched

@@ -25,6 +25,7 @@ export const sobrePage = {
     body: [
       "A maior parte das empresas não tem um problema de tecnologia. Tem um problema entre tecnologias.",
       "As ferramentas foram compradas uma a uma, cada uma resolvendo o seu próprio problema. O espaço entre elas não é responsabilidade de ninguém, e é a operação que acaba preenchendo esse espaço, com trabalho manual que ninguém planejou e ninguém mede.",
+      "Esse trabalho não aparece em nenhum relatório. Aparece na equipe que nunca dá conta e na operação que só cresce contratando mais gente.",
       "A PXTO existe porque esse espaço merece ser levado a sério. É onde a operação realmente acontece.",
     ],
   },
@@ -34,6 +35,7 @@ export const sobrePage = {
       "Tecnologia é meio, não fim. Nenhuma ferramenta tem valor por si só: o valor aparece quando ela resolve um problema concreto de quem trabalha com ela todos os dias.",
       "Por isso não começamos escolhendo tecnologia. Começamos entendendo o problema, e a escolha técnica passa a ser uma consequência, não um ponto de partida.",
       "As ferramentas vão mudar. A capacidade de entender um problema e construir a solução, não.",
+      "Por isso o trabalho se organiza em torno do resultado que a operação precisa, e não em torno de horas ou de ferramentas.",
     ],
   },
   principios: {
@@ -62,6 +64,14 @@ export const sobrePage = {
       {
         title: "Durabilidade",
         body: "Construímos para ser mantido e evoluído, não para ser refeito.",
+      },
+      {
+        // Sétimo princípio. Criado aqui antes de o corpo correspondente ser
+        // removido do bloco Diferenciais da home. É o único item da migração
+        // que não tinha destino existente: sem ele, o corte na home seria a
+        // única perda real de substância do trabalho.
+        title: "Um só responsável pelo caminho inteiro",
+        body: "Entender, desenhar, construir, integrar e evoluir. Sem repassar o problema de um fornecedor para outro no meio do caminho.",
       },
     ],
   },

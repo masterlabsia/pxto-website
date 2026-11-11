@@ -162,6 +162,12 @@ Source: PRD §36–§40, §41 (repository), §44 (security), §45 (domain), §46
 
 **Contains:** `definition-of-done.md`.
 
+### Registros na raiz de `docs/` (11/11/2026)
+- `imagens.md`: origem, pedidos, tratamento e contraste medido das imagens geradas por IA
+  usadas no Modelo de trabalho e no CTA da Home.
+- `parcerias.md`: empresas citadas na seção Parcerias e o estado de cada autorização.
+- `content/PROPOSTA_COPY_2026-11-11.md`: proposta de copy aprovada e aplicada em 11/11/2026.
+
 ## Conventions
 
 - **Language.** The PRD and all user-facing site copy are in Portuguese.
