@@ -62,8 +62,20 @@ jobs:
       - name: Build de produção
         run: npm run audit:build
 
+      # Os espelhos do apt às vezes falham ao resolver DNS no runner (visto em 11/11/2026,
+      # `Temporary failure resolving 'archive.ubuntu.com'`, código 100). Não é erro do
+      # projeto, então o passo tolera: o apt tenta cada pacote 5 vezes e o passo todo
+      # repete até 3. A lista de pacotes continua sendo a do próprio Playwright
+      # (`--with-deps`), que muda a cada versão e não deve ser copiada para cá.
       - name: Instalar o Chromium do Playwright
-        run: npx playwright install --with-deps chromium
+        run: |
+          echo 'Acquire::Retries "5";' | sudo tee /etc/apt/apt.conf.d/80-retries > /dev/null
+          for tentativa in 1 2 3; do
+            if npx playwright install --with-deps chromium; then exit 0; fi
+            echo "tentativa $tentativa falhou, aguardando antes de repetir"
+            sleep $((tentativa * 15))
+          done
+          echo "o Chromium não instalou em 3 tentativas"; exit 1
 
       - name: Subir o site
         run: |
