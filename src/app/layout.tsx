@@ -3,6 +3,7 @@ import { Manrope, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SkipLink } from "@/components/layout/SkipLink";
+import { PageTransitions } from "@/components/layout/PageTransitions";
 import { LogoSymbol } from "@/components/ui/Logo";
 import { AnalyticsListener } from "@/components/analytics/AnalyticsListener";
 import { JsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/jsonld";
@@ -49,6 +50,7 @@ export default function RootLayout({
         <LogoSymbol />
         <AnalyticsListener />
         <SkipLink />
+        <PageTransitions />
         <Navbar />
         <main id="conteudo">{children}</main>
         <Footer />

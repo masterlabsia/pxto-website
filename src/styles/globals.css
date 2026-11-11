@@ -342,6 +342,36 @@
   }
 
   /*
+   * Numeração 01, 02... à esquerda de cada item, por contador de CSS. É decoração
+   * marcadora, e não conteúdo: não entra em `innerText` nem na leitura de tela. Os itens
+   * não têm ordem, então o número é só uma referência visual (CLAUDE.md 7.12).
+   */
+  .pxto-numbered {
+    counter-reset: pxto-n;
+  }
+  .pxto-numbered > div {
+    position: relative;
+    counter-increment: pxto-n;
+  }
+  .pxto-numbered > div::before {
+    content: counter(pxto-n, decimal-leading-zero);
+    position: absolute;
+    left: 1.5rem;
+    top: 1.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-secondary);
+  }
+  @media (width >= 48rem) {
+    .pxto-numbered > div::before {
+      left: 2rem;
+      top: 2rem;
+    }
+  }
+
+  /*
    * Item de lista com linha que cresce. Vem do protótipo H612: uma régua de 2px
    * atravessa o topo do item no hover e no foco. É feedback de estado, então cai
    * na regra de 120 a 180ms. `transform: scaleX`, sem animar largura.
@@ -364,6 +394,30 @@
   .pxto-line-item:hover::before,
   .pxto-line-item:focus-within::before {
     transform: scaleX(1);
+  }
+
+  /*
+   * Navbar que muda ao rolar, decidida pelo responsável em 11/11/2026.
+   *
+   * O estado BASE é o vidro (fundo a 80%, desfoque, linha embaixo), que é o que
+   * aparece sem suporte ou sob reduced-motion. Onde há suporte, a animação parte do
+   * topo da página "limpa" (transparente, sem linha, sem desfoque) e chega ao vidro
+   * em 96px de rolagem, por `animation-timeline: scroll()`. Só cor e desfoque: a
+   * ALTURA não muda, então nada abaixo da navbar se desloca (CLS zero).
+   */
+  .pxto-navbar {
+    border-block-end: 1px solid var(--color-rule);
+    background-color: color-mix(in srgb, var(--pxto-ground) 80%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .pxto-navbar {
+        animation: pxto-navbar-solidify linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 96px;
+      }
+    }
   }
 
   /*
@@ -472,6 +526,44 @@
            primeiro e o conteúdo entrar depois dela. */
         animation-range: entry 10% entry 55%;
       }
+      /* Cascata: o título entra primeiro e o resto vem logo depois, cada filho
+         numa faixa um pouco mais adiante. Continua sendo só opacity e translate. */
+      .pxto-reveal-stagger > :nth-child(2) {
+        animation-range: entry 8% entry 62%;
+      }
+      .pxto-reveal-stagger > :nth-child(n + 3) {
+        animation-range: entry 14% entry 68%;
+      }
+
+      /*
+       * Movimento entre as seções, decidido pelo responsável em 11/11/2026.
+       *
+       * 1. O contêiner arredondado entra com um zoom leve (de 94% a 100%) e sai
+       *    de uma opacidade parcial. Só `scale` e `opacity`. Nunca no Hero: é o
+       *    candidato a LCP e o Chrome atrasa LCP em elemento com opacidade < 1.
+       * 2. A foto de fundo anda mais devagar que a página (parallax): fica ampliada
+       *    em 15% e se desloca de -6% a +6% da própria altura enquanto o contêiner
+       *    cruza a tela. Só `translate` e `scale`. O contraste foi medido na imagem
+       *    INTEIRA, porque o movimento pode levar qualquer pixel para baixo do texto
+       *    (docs/imagens.md).
+       */
+      .pxto-container-in {
+        animation: pxto-container-in both var(--ease-out);
+        animation-timeline: view();
+        animation-range: entry 0% entry 55%;
+      }
+      /* A linha do tempo é do CONTÊINER, e a foto a usa pelo nome. Com `view()` na
+         própria foto, o "scroller" mais próximo seria o contêiner, que tem
+         overflow-hidden e não rola, e a animação ficaria parada em 0%. */
+      [data-media-backdrop] {
+        view-timeline: --pxto-photo block;
+      }
+      [data-media-backdrop] > img {
+        scale: 1.15;
+        animation: pxto-parallax linear both;
+        animation-timeline: --pxto-photo;
+        animation-range: cover 0% cover 100%;
+      }
     }
   }
 
@@ -569,6 +661,71 @@
         animation-delay: calc(300ms + var(--pxto-i) * 90ms);
       }
     }
+  }
+}
+
+@keyframes pxto-navbar-solidify {
+  from {
+    border-block-end-color: transparent;
+    background-color: transparent;
+    backdrop-filter: blur(0);
+  }
+}
+
+/*
+ * Transição entre páginas, pela API nativa de View Transitions. É o `PageTransitions`
+ * (client leaf) quem dispara; aqui só o visual. A página que sai some subindo 8px, e a
+ * que entra sobe 14px e aparece. Só `opacity` e `translate`.
+ *
+ * A navbar tem nome próprio e fica parada: sem isso ela piscaria a cada navegação.
+ * Sem suporte ao navegador, ou sob reduced-motion, a navegação é o corte seco de sempre.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .pxto-navbar {
+    view-transition-name: pxto-navbar;
+  }
+  ::view-transition-group(pxto-navbar) {
+    animation: none;
+  }
+  ::view-transition-old(root) {
+    animation: pxto-page-out 180ms var(--ease-out) both;
+  }
+  ::view-transition-new(root) {
+    animation: pxto-page-in 320ms var(--ease-out) both;
+  }
+}
+
+@keyframes pxto-page-out {
+  to {
+    opacity: 0;
+    translate: 0 -8px;
+  }
+}
+
+@keyframes pxto-page-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+
+@keyframes pxto-container-in {
+  from {
+    opacity: 0.35;
+    scale: 0.94;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes pxto-parallax {
+  from {
+    translate: 0 -6%;
+  }
+  to {
+    translate: 0 6%;
   }
 }
 

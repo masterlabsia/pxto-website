@@ -103,11 +103,22 @@ export const posicionamento = {
  */
 export const modeloDeTrabalho = {
   heading: "Você define o resultado. A PXTO assume o caminho até ele.",
-  body: [
-    "Em vez de comprar horas ou ferramentas, você descreve o que precisa que aconteça na operação.",
-    "A PXTO desenha, constrói e conecta o que for necessário para chegar lá.",
-    "Você não precisa chegar com a solução pronta, nem saber qual tecnologia usar.",
-  ],
+  /**
+   * Os dois painéis ligados por uma seta, vindos da exploração do Stitch (11/11/2026). O
+   * texto de cada painel é a linha JÁ APROVADA do modelo de trabalho. Os rótulos "Você"
+   * e "PXTO" são o único texto novo, e vêm do próprio título. O Stitch tinha inventado
+   * marcadores ("escopo estratégico", "governança", "sustentação contínua"), e nenhum
+   * deles entrou: prometeriam o que a PXTO não definiu.
+   */
+  voce: {
+    label: "Você",
+    text: "Em vez de comprar horas ou ferramentas, você descreve o que precisa que aconteça na operação.",
+  },
+  pxto: {
+    label: "PXTO",
+    text: "A PXTO desenha, constrói e conecta o que for necessário para chegar lá.",
+  },
+  note: "Você não precisa chegar com a solução pronta, nem saber qual tecnologia usar.",
 } as const;
 
 export const solucoes = {

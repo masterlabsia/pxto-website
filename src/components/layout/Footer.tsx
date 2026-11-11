@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
+import { GlowField } from "@/components/ui/GlowField";
 import { navigation, site, contactChannels } from "@/content/site";
 import { solutions } from "@/content/solutions";
 
@@ -14,6 +15,10 @@ import { solutions } from "@/content/solutions";
  * seletor de país, redes sociais e qualquer selo. A coluna de contato é omitida
  * por inteiro enquanto os canais não existem, e não renderizada vazia.
  *
+ * A luz do mouse (`GlowField`) também vive aqui, fraca (intensidade 0.45), a pedido do
+ * responsável em 11/11/2026. Os links usam a tinta secundária, que passa em AA com a luz
+ * fraca no tema claro.
+ *
  * No social proof of any kind, no placeholder social icons, no version stamp
  * (POSITIONING 13.6).
  */
@@ -25,8 +30,9 @@ export function Footer() {
 
   return (
     <footer className="px-4 pb-5 pt-2 md:px-5">
-      <div className="rounded-xl border border-rule bg-ground-subtle p-6 md:p-10">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-12">
+      <div className="relative isolate overflow-hidden rounded-xl border border-rule bg-ground-subtle p-6 md:p-10">
+        <GlowField scale={0.7} intensity={0.45} />
+        <div className="relative z-10 grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-12">
           <div className="md:col-span-4">
             <Logo label={site.name} className="h-10 w-auto" />
             <p className="mt-5 max-w-xs text-sm text-ink-secondary">
@@ -71,7 +77,7 @@ export function Footer() {
           ) : null}
         </div>
 
-        <div className="mt-12 border-t border-rule pt-6">
+        <div className="relative z-10 mt-12 border-t border-rule pt-6">
           <p className="text-xs text-ink-secondary">
             &copy; {new Date().getFullYear()} {site.name}
           </p>

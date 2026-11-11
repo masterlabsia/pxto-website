@@ -58,34 +58,32 @@ export function CTA({
             image={image}
             scrim="soft"
             sizes="100vw"
-            className="pxto-fill-viewport flex flex-col justify-center overflow-hidden rounded-xl border border-rule bg-ground-subtle"
+            className="pxto-container-in pxto-fill-viewport flex flex-col justify-center overflow-hidden rounded-xl border border-rule bg-ground-subtle"
           >
-            <div className="pxto-reveal-stagger w-full px-6 py-24 text-center md:py-32">
-              <Heading
-                level={2}
-                size="display"
-                id={headingId}
-                className="mx-auto max-w-3xl lg:text-6xl"
-              >
-                {heading}
-              </Heading>
-              <div className="mt-10">{button}</div>
-            </div>
+            {/* Alinhado à ESQUERDA, na mesma coluna das outras seções (11/11/2026, escolha
+                do responsável a partir do Stitch). Só o título e o botão: a etiqueta, o
+                parágrafo e o "confidencialidade garantida por NDA" do Stitch eram
+                texto e promessa inventados. */}
+            <Container width="wide" className="w-full">
+              <div className="pxto-reveal-stagger max-w-3xl py-24 text-left md:py-32">
+                <Heading level={2} size="display" id={headingId} className="lg:text-6xl">
+                  {heading}
+                </Heading>
+                <div className="mt-10">{button}</div>
+              </div>
+            </Container>
           </MediaBackdrop>
         ) : (
-          <div className="relative isolate overflow-hidden rounded-xl border border-rule bg-ground-subtle px-6 py-24 text-center md:py-32">
+          <div className="relative isolate overflow-hidden rounded-xl border border-rule bg-ground-subtle">
             <GlowField scale={0.6} intensity={0.6} />
-            <div className="pxto-reveal-stagger relative z-10">
-              <Heading
-                level={2}
-                size="display"
-                id={headingId}
-                className="mx-auto max-w-3xl lg:text-6xl"
-              >
-                {heading}
-              </Heading>
-              <div className="mt-10">{button}</div>
-            </div>
+            <Container width="wide" className="relative z-10">
+              <div className="pxto-reveal-stagger max-w-3xl py-24 text-left md:py-32">
+                <Heading level={2} size="display" id={headingId} className="lg:text-6xl">
+                  {heading}
+                </Heading>
+                <div className="mt-10">{button}</div>
+              </div>
+            </Container>
           </div>
         )}
       </section>

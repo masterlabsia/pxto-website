@@ -22,8 +22,10 @@ import type { Solution } from "@/content/schemas";
  * `variant` é uma disposição, nunca uma hierarquia: as quatro instâncias de uma
  * mesma página sempre usam a mesma.
  * - `ruled` (padrão): régua no topo e link com seta, em /solucoes.
- * - `column`: linha no topo que cresce no hover, grande respiro antes do título e
- *   link de texto, em grade de 4 colunas, usada na Home (protótipo H612).
+ * - `column`: cartão com borda arredondada, título, descrição e um link de texto separado
+ *   por uma linha, em grade de 4 colunas, usado na Home. Veio da exploração do Stitch
+ *   (11/11/2026), SEM o ícone e SEM a numeração dele: ícone por solução é proibido, e
+ *   numerar quatro pares sugeriria ordem entre eles. Os quatro cartões são idênticos.
  */
 export function ServiceCard({
   solution,
@@ -36,10 +38,10 @@ export function ServiceCard({
 
   if (variant === "column") {
     return (
-      <li className="pxto-line-item flex flex-col pt-16">
-        <h3 className="text-xl font-medium text-ink">{solution.name}</h3>
-        <p className="mt-3 flex-1 text-base text-ink-secondary">{solution.description}</p>
-        <div className="mt-8">
+      <li className="flex flex-col rounded-xl border border-rule bg-ground-subtle p-6 transition-colors duration-fast hover:border-rule-strong md:p-8">
+        <h3 className="text-2xl font-medium text-ink">{solution.name}</h3>
+        <p className="mt-4 flex-1 text-base text-ink-secondary">{solution.description}</p>
+        <div className="mt-8 border-t border-rule pt-5">
           <Link
             href={href}
             data-analytics="cta"

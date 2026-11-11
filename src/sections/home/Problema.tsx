@@ -8,8 +8,10 @@ import { problema } from "@/content/home";
  * acontece aqui, tudo abaixo lê como material genérico de fornecedor.
  *
  * Composição do Stitch, em 5 e 7 colunas: à esquerda o título e o parágrafo que
- * nomeia o problema, à direita as seis situações em lista e, fechando, o
- * reenquadramento. O reenquadramento fica ao pé da lista porque é a virada: o
+ * nomeia o problema, à direita as seis situações e, fechando, o reenquadramento. As
+ * situações ficam num cartão arredondado, numeradas de 01 a 06 (11/11/2026, escolha do
+ * responsável a partir da segunda exploração do Stitch). Sem os ícones que ele pôs, e
+ * com as descrições aprovadas, e não as que ele reescreveu em jargão. O reenquadramento fica ao pé da lista porque é a virada: o
  * leitor reconhece a situação e logo depois descobre que ela tem solução.
  *
  * COSTURA COM O POSICIONAMENTO. As duas seções são um movimento só: aqui o
@@ -36,8 +38,8 @@ export function Problema() {
           <div className="lg:col-span-7">
             <DefinitionList
               items={problema.situations}
-              layout="stack"
-              className="pxto-reveal-stagger"
+              layout="card"
+              className="pxto-reveal"
             />
             <p className="pxto-reveal mt-14 border-t border-rule pt-8 text-base font-semibold text-ink md:text-lg">
               {problema.reframe}

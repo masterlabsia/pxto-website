@@ -35,7 +35,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-rule bg-ground/80 backdrop-blur-md">
+    <header className="pxto-navbar sticky top-0 z-30">
       <Container width="wide">
         <div className="flex h-16 items-center justify-between gap-6 md:h-[72px]">
           <Link
@@ -57,8 +57,15 @@ export function Navbar() {
                       aria-current={active ? "page" : undefined}
                       className={cn(
                         // py-2 lifts the target past the 24px minimum (WCAG 2.5.8).
-                        "inline-block py-2 text-sm transition-colors duration-fast",
-                        active ? "text-ink" : "text-ink-secondary hover:text-ink",
+                        // O sublinhado cresce da esquerda no hover e no foco, e fica
+                        // inteiro no link da página atual. `scale-x`, não largura.
+                        "relative inline-block py-2 text-sm transition-colors duration-fast",
+                        "after:absolute after:inset-x-0 after:bottom-1 after:h-px after:origin-left after:bg-ink",
+                        "after:transition-transform after:duration-slow after:ease-out",
+                        "hover:after:scale-x-100 focus-visible:after:scale-x-100",
+                        active
+                          ? "text-ink after:scale-x-100"
+                          : "text-ink-secondary hover:text-ink after:scale-x-0",
                       )}
                     >
                       {item.label}

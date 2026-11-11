@@ -1,34 +1,40 @@
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
+import { GlowField } from "@/components/ui/GlowField";
 import { posicionamento } from "@/content/home";
 
 /**
  * O pivô da página: o reconhecimento vira "existe uma empresa para isso".
  *
- * Só texto, sobre `ground-subtle`, como no Stitch. A foto de fundo saiu: o
- * globo com rede de luz contrariava 4.8, 7.5 e 7.15. Sem foto, o corpo usa a
- * tinta secundária, que passa em AA sobre o fundo liso.
+ * Centralizado e limpo, da exploração do Stitch (11/11/2026): o título, uma linha curta
+ * como respiro e o parágrafo. As aspas e a etiqueta "TESE ESTRUTURAL" do Stitch não
+ * entraram: o título não é uma citação, e a etiqueta era texto novo.
+ *
+ * Contêiner arredondado em LARGURA TOTAL da página (20px de margem), como o Hero e o CTA,
+ * com a luz do mouse em escala reduzida (`GlowField`). O corpo usa a tinta secundária, que
+ * passa em AA com a luz fraca (intensidade 0.6).
  */
 export function Posicionamento() {
   return (
-    <section
-      aria-labelledby="posicionamento-heading"
-      className="px-4 py-24 md:px-5 md:py-32"
-    >
-      <Container width="wide" className="px-0 md:px-0 lg:px-0">
-        <div className="pxto-reveal-stagger max-w-4xl">
-          <Heading level={2} size="display" id="posicionamento-heading">
-            {posicionamento.heading}
-          </Heading>
-          <div className="mt-8 space-y-4">
-            {posicionamento.body.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)} className="max-w-3xl text-lg text-ink-secondary md:text-xl">
-                {paragraph}
-              </p>
-            ))}
+    <section aria-labelledby="posicionamento-heading" className="px-4 py-12 md:px-5">
+      <div className="pxto-container-in relative isolate overflow-hidden rounded-xl border border-rule bg-ground-subtle py-24 md:py-32">
+        <GlowField scale={0.6} intensity={0.6} />
+        <Container width="wide" className="relative z-10">
+          <div className="pxto-reveal-stagger mx-auto max-w-4xl text-center">
+            <Heading level={2} size="display" id="posicionamento-heading">
+              {posicionamento.heading}
+            </Heading>
+            <div aria-hidden="true" className="mx-auto mt-10 h-px w-12 bg-rule-strong" />
+            <div className="mx-auto mt-10 max-w-2xl space-y-4">
+              {posicionamento.body.map((paragraph) => (
+                <p key={paragraph.slice(0, 24)} className="text-lg text-ink-secondary md:text-xl">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

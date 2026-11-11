@@ -7,9 +7,9 @@ import { solutions } from "@/content/solutions";
 /**
  * The four capabilities are peers, permanently (PRD 4).
  *
- * Grade de 4 colunas do protótipo H612, com uma linha no topo de cada célula que
- * cresce no hover: células idênticas, sem ícone, sem card em destaque e sem
- * descrição de tamanho diferente.
+ * Grade de 4 cartões com borda arredondada (11/11/2026, escolha do responsável a partir
+ * do Stitch): idênticos, sem ícone, sem numeração, sem cartão em destaque e sem descrição
+ * de tamanho diferente.
  * A igualdade é estrutural, não por disciplina.
  *
  * O `id` é o destino do botão "Ver soluções" do Hero.
@@ -29,7 +29,7 @@ export function Solucoes() {
           <p className="mt-6 text-lg text-ink-secondary">{solucoes.lead}</p>
         </div>
 
-        <ul className="pxto-reveal-stagger mt-16 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
+        <ul className="pxto-reveal-stagger mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {solutions.map((solution) => (
             <ServiceCard key={solution.slug} solution={solution} variant="column" />
           ))}
