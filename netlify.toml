@@ -1,0 +1,19 @@
+# Netlify build settings. TECHNICAL_ARCHITECTURE.md 19.
+#
+# O Netlify detecta o Next.js e aplica o adaptador sozinho, entao nao ha
+# `publish` nem plugin aqui. O Node e fixado porque a CI usa 22 e o build nao
+# deve depender do padrao da plataforma.
+#
+# O noindex dos previews NAO esta aqui: fica no next.config.ts, a partir da
+# variavel CONTEXT que o Netlify define em cada build.
+
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # O scanner de segredos do Netlify falha o build se o valor de uma variavel
+  # marcada como secreta aparecer no HTML gerado. NEXT_PUBLIC_SITE_URL e publica
+  # por definicao (canonical, sitemap, Open Graph), entao aparecer na saida e
+  # esperado. As chaves reais (NOTION_API_KEY) continuam sob varredura.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SITE_URL"

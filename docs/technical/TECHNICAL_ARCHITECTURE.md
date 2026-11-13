@@ -55,7 +55,7 @@ individually in Part V.
 # PART I. STACK EVALUATION
 
 PRD §40 proposes Next.js, TypeScript, React, Tailwind, shadcn/ui, GitHub and
-Vercel, and states explicitly that this is an initial recommendation which may be
+Netlify, and states explicitly that this is an initial recommendation which may be
 adjusted if later requirements justify another choice. What follows is that
 evaluation rather than an acceptance.
 
@@ -71,7 +71,7 @@ evaluation rather than an acceptance.
 | **Tailwind CSS** | **Accept**, version 4 | §4 |
 | **shadcn/ui** | **Reject at launch** | The one real disagreement. See §1.2 |
 | **GitHub** | **Accept** | §20 |
-| **Vercel** | **Accept** | §19 |
+| **Netlify** | **Accept** | §19 |
 
 **Final stack:**
 
@@ -82,9 +82,9 @@ React 19 (RSC default)     rendering
 Tailwind CSS v4            styling
 Zod                        content and input validation
 Radix UI primitives        added per component, only when needed
-Resend or equivalent       transactional email, BLOCKED on PXTO decision
+Notion API                 lead destination, plain fetch, no SDK
 GitHub + GitHub Actions    source control and checks
-Vercel                     hosting, previews, production
+Netlify                    hosting, previews, production
 ```
 
 **Five runtime dependencies today** (was seven at launch, see the 11/11/2026 note above). No animation library, no state
@@ -103,7 +103,7 @@ narrow technical question.
 | Content collections with type safety | Manual, and simple | **Built in** |
 | Image pipeline | Excellent | Excellent |
 | Form handling | **Server Actions, no API layer** | Needs an adapter or an endpoint |
-| Vercel integration | **First party** | Good |
+| Netlify integration | Good, Netlify detects and builds Next.js on its own | Good |
 | Future CMS, integrations, dynamic features | **Excellent** | Good, more friction |
 | AI-assisted development | **Largest convention corpus by a wide margin** | Smaller |
 | Named in the PRD | **Yes**, §40 | No |
@@ -493,12 +493,13 @@ buildMetadata({ title, description, path, image? }): Metadata
 
 `RECOMMENDED`, provider `BLOCKED` per PRD §38.
 
-**Recommendation: Vercel Web Analytics plus Speed Insights at launch.**
+**Recommendation: Plausible or Fathom at launch. Vercel Web Analytics no longer
+applies, because the host is Netlify.**
 
 | Option | Assessment |
 | --- | --- |
-| **Vercel Web Analytics** | **Recommended.** No cookies, no personal data collected, so no consent banner is required under LGPD. First party on the named host. Custom events cover the §38 funnel. Zero configuration |
-| Plausible or Fathom | Equivalent privacy posture, small recurring cost, one more vendor |
+| **Plausible or Fathom** | **Recommended.** No cookies, no personal data collected, so no consent banner is required under LGPD. Custom events cover the §38 funnel. Small recurring cost, one more vendor, and one third-party script that counts against the §13 budget |
+| Netlify Analytics | Server-side, no script and no cookies. It reads traffic logs and does not record custom events, so it cannot measure the §38 funnel steps after Page View |
 | GA4 | Most capable, and it brings a consent banner, a cookie policy and an LGPD obligation to a site whose entire conversion path is one form. The cost is disproportionate |
 
 **Events**, per §38:
@@ -548,10 +549,45 @@ trusts the client parse.
    privacy-respecting and invisible, but it is a third-party script and should not
    be added preemptively
 
-**Delivery.** `BLOCKED`. §39.7 says "the defined destination" and does not define
-it. Candidates: transactional email through Resend, a CRM webhook, or both. The
-Server Action calls one `deliverLead()` function so the destination is a single
-implementation detail.
+**Delivery.** `RECOMMENDED`, decided by PXTO: the lead goes to a **Notion
+database**. The Server Action calls one `deliverLead()` function, which posts to
+`https://api.notion.com/v1/pages` with plain `fetch`. No SDK, so no new runtime
+dependency.
+
+Destination: the existing PXTO **CRM** database in Notion (decided by PXTO).
+Columns the action writes, names and Notion types must match exactly:
+
+| Column | Notion type | Value |
+| --- | --- | --- |
+| Nome | Title | `nome` |
+| Empresa | Text | `empresa` |
+| Email | Email | `email` |
+| Telefone | Phone | `telefone`, empty when not given |
+| Necessidade | Select | `necessidade`, empty when not given |
+| Mensagem | Text | `mensagem` |
+| Status | Status | `Lead`. Not a visitor field |
+| Origem do Lead | Select | `Site`. Not a visitor field. Notion creates the option on first use |
+| Recebido em | Date | Submission time |
+| Data de entrada | Date | Submission time |
+
+The CRM has other columns (contact history, address, attachments). The action
+never touches them.
+
+Setup: create an internal integration, copy its secret into
+`NOTION_API_KEY`, share the CRM database with the integration, and copy the database
+id (the 32 characters before `?v=` in its URL) into `NOTION_DATABASE_ID`.
+
+Known limits, stated so they are not discovered in production:
+
+- **Notion does not notify by default.** A lead that nobody opens is a lost
+  lead. The database needs a Notion automation or notification rule on new rows.
+  This is an operational requirement, not a code one.
+- **A Notion outage loses the submission.** The visitor gets the error state and
+  the cause goes to the function log. Nothing is queued.
+- **Rich text is capped at 2000 characters per block.** `deliverLead` splits
+  longer messages into chunks.
+- **LGPD.** The lead is forwarded to Notion, a processor outside Brazil. The
+  privacy notice (`BLOCKED`) must say so.
 
 **Required states**, per §39 and the design system: validation, loading, success,
 error, invalid-submission blocking. The success message promises no response time
@@ -567,9 +603,8 @@ itself. The privacy notice wording is `BLOCKED`.
 | Variable | Scope | Required | Purpose |
 | --- | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | client | yes | Canonical URLs, sitemap, OG |
-| `CONTACT_TO_EMAIL` | server | yes | Lead destination. `BLOCKED` |
-| `RESEND_API_KEY` | server | if email | Transactional email. `BLOCKED` |
-| `CONTACT_WEBHOOK_URL` | server | if CRM | Alternative destination |
+| `NOTION_API_KEY` | server | yes in production | Internal integration secret |
+| `NOTION_DATABASE_ID` | server | yes in production | Leads database |
 | `TURNSTILE_SECRET_KEY` | server | if used | Anti-spam verification |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | client | if used | Anti-spam widget |
 
@@ -693,11 +728,18 @@ A broken form loses a lead with no error anywhere.
 | Environment | Trigger | URL |
 | --- | --- | --- |
 | Development | local | `localhost:3000` |
-| Preview | every pull request | Vercel preview URL |
+| Preview | every pull request | Netlify Deploy Preview URL |
 | Production | merge to `main` | `pxto.co` |
 
-- **Vercel**, named in §40 and §46. First-party Next.js support, preview
-  deployments per PR which §48 requires, and edge caching by default.
+- **Netlify**, named in §40 and §46. The site instance already exists there, so
+  the earlier Vercel proposal was dropped. Next.js App Router and Server Actions
+  run through the adapter Netlify detects on its own. Deploy Previews per PR,
+  which §48 requires, and CDN caching by default.
+- **Serverless, not a VPS.** The only dynamic surface is one Server Action, and
+  the rest is static. A VPS would add patching, process supervision and TLS
+  upkeep for no benefit, and a crashed process would lose leads with no error.
+- **Preview `noindex` is configured in `netlify.toml`**, keyed on the deploy
+  context, because Netlify does not add it by default.
 - **Static output.** Every page prerendered. The only dynamic surface is the
   Server Action.
 - **Preview deployments carry `X-Robots-Tag: noindex`**, so a preview URL never
@@ -739,13 +781,13 @@ divergence is a defect rather than a follow-up.**
 ```
 Push to a branch
   ↓ GitHub Actions: typecheck, lint, content validation, build
-  ↓ Vercel: preview deployment
+  ↓ Netlify: Deploy Preview
 Pull request
   ↓ the above, plus Playwright E2E and axe against the preview URL
   ↓ Lighthouse CI against the preview URL, budgets enforced
   ↓ human review
 Merge to main
-  ↓ Vercel production deployment
+  ↓ Netlify production deploy
 ```
 
 **Two workflows, no more:**
@@ -755,7 +797,7 @@ Merge to main
 | `ci.yml` | push, pull request | typecheck, lint, validate content, build |
 | `e2e.yml` | pull request | Playwright plus axe plus Lighthouse against the preview |
 
-Deployment itself is Vercel's, not a GitHub Action. Duplicating it in Actions adds
+Deployment itself is Netlify's, not a GitHub Action. Duplicating it in Actions adds
 a second thing that can break for no benefit.
 
 **Required checks before merge:** typecheck, lint, build, E2E, axe, Lighthouse
@@ -874,10 +916,10 @@ An agent must not resolve these (§52).
 1. **shadcn/ui**, §1.2. Recommendation is to reject it at launch and add Radix
    primitives individually. This overrides a PRD §40 recommendation and needs
    PXTO's agreement
-2. **Analytics provider**, §12. Vercel Web Analytics recommended
+2. **Analytics provider**, §12. Open: Vercel Web Analytics no longer applies
 3. **Anti-spam ceiling**, §13. Whether Turnstile is added preemptively or only if
    needed
-4. **Transactional email provider**, §13
+4. ~~Transactional email provider~~. Replaced by the Notion destination, §13
 5. **Whether dark mode ships at launch**, carried from `DESIGN_SYSTEM.md` Part V.6
 6. **Node version and package manager.** Recommendation: Node 22 LTS, pnpm
 7. **CMS timing and choice**, §22. Not now. Keystatic leaning

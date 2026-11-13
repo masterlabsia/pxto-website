@@ -77,6 +77,17 @@ const securityHeaders = [
  */
 const distDir = process.env.NEXT_DIST_DIR ?? ".next";
 
+/**
+ * Previews nunca competem com producao na busca (TECHNICAL_ARCHITECTURE 19).
+ *
+ * O Netlify define CONTEXT em build ("production", "deploy-preview",
+ * "branch-deploy"). Tudo que nao for producao recebe noindex. Fora do Netlify a
+ * variavel nao existe e nada e aplicado, o que mantem o dev local intacto.
+ */
+const netlifyContext = process.env.CONTEXT;
+const isNonProductionDeploy =
+  netlifyContext !== undefined && netlifyContext !== "production";
+
 const nextConfig: NextConfig = {
   distDir,
   reactStrictMode: true,
@@ -84,7 +95,10 @@ const nextConfig: NextConfig = {
   trailingSlash: false,
   images: { formats: ["image/avif", "image/webp"] },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    const headers = isNonProductionDeploy
+      ? [...securityHeaders, { key: "X-Robots-Tag", value: "noindex" }]
+      : securityHeaders;
+    return [{ source: "/:path*", headers }];
   },
 };
 
