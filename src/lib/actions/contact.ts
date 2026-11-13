@@ -1,6 +1,7 @@
 "use server";
 
 import { ContactSchema, contactCopy, type ContactInput } from "@/content/contact";
+import { serverEnv } from "@/lib/env";
 
 export type ContactState =
   | { status: "idle" }
@@ -59,29 +60,79 @@ export async function submitContact(
     return { status: "error", message: contactCopy.error.generic, fieldErrors };
   }
 
-  const destination = process.env.CONTACT_TO_EMAIL;
-  if (!destination) {
+  const { NOTION_API_KEY: apiKey, NOTION_DATABASE_ID: databaseId } = serverEnv;
+  if (!apiKey || !databaseId) {
     return { status: "error", message: contactCopy.error.notConfigured };
   }
 
   try {
-    await deliverLead(parsed.data, destination);
+    await deliverLead(parsed.data, apiKey, databaseId);
     return { status: "success" };
-  } catch {
+  } catch (error) {
+    // The visitor sees a generic message. The cause goes to the function log,
+    // which is the only place a failed delivery is visible. The submitted
+    // fields are never logged (PRD 44).
+    console.error("Lead delivery failed:", error instanceof Error ? error.message : "unknown");
     return { status: "error", message: contactCopy.error.generic };
   }
 }
 
+/** Notion rejects a single rich_text object longer than 2000 characters. */
+const NOTION_TEXT_LIMIT = 2000;
+
+function richText(value: string) {
+  const chunks: string[] = [];
+  for (let i = 0; i < value.length; i += NOTION_TEXT_LIMIT) {
+    chunks.push(value.slice(i, i + NOTION_TEXT_LIMIT));
+  }
+  return chunks.map((content) => ({ text: { content } }));
+}
+
 /**
- * Single delivery seam. Email, CRM webhook, or both. Swapping the destination
- * is a change to this function only.
- * BLOCKED: no provider chosen (TECHNICAL_ARCHITECTURE.md Part IV.1).
+ * Single delivery seam (TECHNICAL_ARCHITECTURE.md 13). Creates one row in the
+ * Notion leads database. Plain `fetch` against the REST API: no SDK, so no new
+ * runtime dependency.
+ *
+ * Property names and types must match the database exactly, including the
+ * Notion type: `Status` is a Notion "status" property, not a select. The
+ * expected schema is documented in TECHNICAL_ARCHITECTURE.md 13.
  */
 async function deliverLead(
   input: ContactInput,
-  destination: string,
+  apiKey: string,
+  databaseId: string,
 ): Promise<void> {
-  throw new Error(
-    `Lead delivery is not implemented. Would deliver a ${input.necessidade ?? "geral"} enquiry to ${destination}: no provider configured.`,
-  );
+  const receivedAt = new Date().toISOString();
+  const response = await fetch("https://api.notion.com/v1/pages", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "Notion-Version": "2022-06-28",
+    },
+    body: JSON.stringify({
+      parent: { database_id: databaseId },
+      properties: {
+        Nome: { title: richText(input.nome) },
+        Empresa: { rich_text: richText(input.empresa) },
+        Email: { email: input.email },
+        Telefone: { phone_number: input.telefone === "" ? null : input.telefone },
+        Necessidade: input.necessidade
+          ? { select: { name: input.necessidade } }
+          : { select: null },
+        Mensagem: { rich_text: richText(input.mensagem) },
+        Status: { status: { name: "Lead" } },
+        "Origem do Lead": { select: { name: "Site" } },
+        "Recebido em": { date: { start: receivedAt } },
+        "Data de entrada": { date: { start: receivedAt } },
+      },
+    }),
+    signal: AbortSignal.timeout(8000),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    // Status code only. The response body can echo submitted content.
+    throw new Error(`Notion responded ${response.status}`);
+  }
 }
