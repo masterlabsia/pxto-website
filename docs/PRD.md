@@ -1039,7 +1039,7 @@ React
 Tailwind CSS
 shadcn/ui
 GitHub
-Vercel
+Netlify
 ```
 
 Essa stack deve ser tratada como recomendação inicial e pode ser ajustada caso requisitos técnicos posteriores justifiquem outra escolha.
@@ -1169,7 +1169,7 @@ localhost
 Durante staging/preview:
 
 ```text
-Vercel Preview URL
+Netlify Deploy Preview URL
 ```
 
 Produção:

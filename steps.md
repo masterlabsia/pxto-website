@@ -20,5 +20,5 @@ PRD
 [  ] 18  Projects
 [  ] 19  SEO / Performance / A11y
 [  ] 20  QA
-[  ] 21  Vercel
+[  ] 21  Netlify
 [  ] 22  pxto.co
