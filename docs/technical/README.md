@@ -20,7 +20,7 @@ Information architecture and content models belong in `../architecture/`.
 ## Recommended stack (§40)
 
 ```text
-Next.js · TypeScript · React · Tailwind CSS · shadcn/ui · GitHub · Vercel
+Next.js · TypeScript · React · Tailwind CSS · shadcn/ui · GitHub · Netlify
 ```
 
 The PRD explicitly treats this as an **initial recommendation** that may be
@@ -47,7 +47,7 @@ pxto-website/
 | Environment | Host |
 | --- | --- |
 | Development | `localhost` |
-| Preview | Vercel preview URL |
+| Preview | Netlify Deploy Preview URL |
 | Production | `pxto.co` |
 
 Development must not depend on the domain existing. The domain is connected to
@@ -125,10 +125,11 @@ See `TECHNICAL_ARCHITECTURE.md` Part IV for the full list. Highest priority:
       Radix primitives per component instead (§1.2)
 - [ ] **Lead destination** for the contact form (§39.7). Blocks the form entirely
 - [ ] **Privacy notice wording** if LGPD applies (§44). Blocks the form and footer
-- [ ] Analytics provider (§38). Vercel Web Analytics recommended, no consent
-      banner required
+- [ ] Analytics provider (§38). Plausible or Fathom recommended, no consent
+      banner required. Vercel Web Analytics no longer applies
 - [ ] Anti-spam ceiling: whether Turnstile is added preemptively or only if the
       cheaper layers prove insufficient
-- [ ] Transactional email provider, if the form sends email
+- [x] Lead destination decided: Notion database (§13). Still open: the privacy
+      notice wording and a new-row notification rule in Notion
 - [ ] Hosting and DNS account ownership for `pxto.co` (§45)
 - [ ] Node version and package manager. Node 22 LTS and pnpm recommended
