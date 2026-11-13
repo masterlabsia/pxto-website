@@ -12,3 +12,8 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # O scanner de segredos do Netlify falha o build se o valor de uma variavel
+  # marcada como secreta aparecer no HTML gerado. NEXT_PUBLIC_SITE_URL e publica
+  # por definicao (canonical, sitemap, Open Graph), entao aparecer na saida e
+  # esperado. As chaves reais (NOTION_API_KEY) continuam sob varredura.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SITE_URL"
