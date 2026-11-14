@@ -425,23 +425,48 @@ Target: **WCAG 2.2 AA** where technically applicable. Full detail in
 
 ---
 
-## 13. Performance requirements
+## 13. Requisitos de performance
 
-| Metric | Target |
-| --- | --- |
-| LCP | under 2.0s on mobile |
-| INP | under 200ms |
-| CLS | under 0.05 |
-| First-load JS, static pages | **under 90KB gzipped** |
-| First-load JS, contact page | under 120KB gzipped |
-| Lighthouse Performance, mobile | 95 or above |
-| Lighthouse Accessibility | 100 |
+**Revisado em 14/11/2026** (issue #6). O orçamento anterior de 90 KB de JS no
+primeiro carregamento era inatingível: um app Next.js 15 vazio já entrega 102 KB
+gzip, e o site mede 112 KB nas páginas estáticas. Um portão que ninguém consegue
+passar deixa de ser lido. O portão agora é o que o orçamento sempre protegeu, a
+velocidade percebida, e o JS passou a ser uma guarda contra regressão.
 
-**The budget is a gate, not an aspiration.** If a change pushes first-load JS
-over 90KB, the change is wrong until proven otherwise.
+**Portões.** Falham a mesclagem.
 
-Fonts self-hosted and subset, with metric overrides. Images AVIF with explicit
-dimensions and correct `sizes`. No third-party script other than analytics.
+| Métrica | Alvo | Como se mede |
+| --- | --- | --- |
+| LCP | abaixo de 2,0s no mobile | Lighthouse mobile com limitação **aplicada** (`--throttling-method=devtools`) |
+| CLS | abaixo de 0,05 | Lighthouse |
+| TBT | abaixo de 200ms | Lighthouse, como substituto de laboratório do INP |
+| INP | abaixo de 200ms | Métrica de campo. Não existe em laboratório, então só se acompanha quando houver analytics |
+| Lighthouse Performance, mobile | 95 ou mais | Lighthouse |
+| Lighthouse Accessibility | 100 | Lighthouse |
+| First-load JS, **todas** as páginas | **abaixo de 120 KB gzip** | Saída do build, ou `audit-perf.mjs` (470 KB brutos) |
+
+**Por que o LCP aplicado e não o simulado.** O Lighthouse simula a rede por padrão,
+e o resultado oscila com o TTFB do Netlify, que variou de 177 ms a 1311 ms entre
+execuções seguidas. A limitação aplicada é estável. O LCP simulado continua sendo
+registrado, como informação, e não como portão.
+
+**Sobre o limite de JS.** O piso do framework é 102 KB, medido em um app Next.js
+15.5 vazio. O limite de 120 KB deixa cerca de 8 KB de folga sobre o site atual
+(112 KB nas páginas estáticas, 110 KB em `/contato`), o bastante para barrar uma
+regressão do tamanho de uma biblioteca inteira, como o Zod no cliente (13 KB), e
+pequeno o bastante para continuar significando algo. **É um portão, não uma
+aspiração.** Se uma mudança passar de 120 KB, ela está errada até provar o
+contrário, e o que se justifica é a mudança, não um número maior.
+
+**Estado da medição.** A CI mede o JS e as métricas de página pela Performance API
+(`audit-perf.mjs`, ver §18.0). **O Lighthouse ainda não roda na CI.** Até ele
+entrar, o LCP aplicado e a nota se conferem à mão no Deploy Preview. Medido em
+14/11/2026 no preview: LCP aplicado 1,7s, Performance 98 a 99, Acessibilidade 100,
+CLS 0.
+
+Fontes self-hosted e com subconjunto, com sobrescrita de métricas. Imagens AVIF
+com dimensões explícitas e `sizes` correto. Nenhum script de terceiros além de
+analytics.
 
 ---
 
