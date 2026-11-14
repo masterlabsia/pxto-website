@@ -395,6 +395,15 @@ Monitoramos, ajustamos e evoluímos a solução conforme novas necessidades.
 
 Não afirmar que todos os projetos necessariamente passam exatamente por todas as etapas.
 
+> **Revisão de 13/11/2026, por decisão do responsável.** A frase de fechamento
+> "Nem todo projeto passa por todas as etapas. O que não muda é a ordem: entender
+> antes de construir." foi retirada da Home, de `/solucoes` e de `/sobre`. A regra
+> acima continua valendo: nenhum texto do site pode afirmar que todo projeto
+> passa por todas as etapas. Com a frase fora, essa garantia deixa de ser dita
+> ao visitante e passa a depender de a copy dos passos não prometer isso. Os
+> cinco passos seguem numerados de 01 a 05 na Home. O texto retirado está
+> preservado em `docs/content/WEBSITE_COPY.md`.
+
 ---
 
 # 16. Seção Projetos
