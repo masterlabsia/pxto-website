@@ -674,32 +674,43 @@ X-Frame-Options               DENY
 The CSP is achievable here precisely because the stack is small. No inline
 scripts beyond the JSON-LD block, which gets a nonce.
 
-## 16. Performance requirements
+## 16. Requisitos de performance
 
-`DERIVED` from PRD §37, with numbers attached so they are testable.
+`DERIVED` do PRD §37, com números anexados para que sejam testáveis. **Revisado em
+14/11/2026** (issue #6): o orçamento de 90 KB de JS era inatingível, porque um app
+Next.js 15 vazio já entrega 102 KB gzip. A tabela e a justificativa completa estão em
+`CLAUDE.md` §13, que é a fonte desta seção.
 
-| Metric | Target | Enforcement |
+| Métrica | Alvo | Aplicação |
 | --- | --- | --- |
-| LCP | under 2.0s on mobile 4G | Lighthouse CI budget |
-| INP | under 200ms | Speed Insights |
-| CLS | under 0.05 | Explicit image dimensions, font metric overrides |
-| First-load JS, static pages | **under 90KB gzipped** | CI budget, fails the build |
-| First-load JS, contact page | under 120KB gzipped | CI budget |
-| Lighthouse Performance, mobile | 95 or above | CI |
-| Lighthouse Accessibility | 100 | CI |
+| LCP | abaixo de 2,0s no mobile | Lighthouse mobile, limitação aplicada |
+| INP | abaixo de 200ms | Métrica de campo. TBT abaixo de 200ms como substituto em laboratório |
+| CLS | abaixo de 0,05 | Dimensões explícitas nas imagens, sobrescrita de métricas nas fontes |
+| First-load JS, todas as páginas | **abaixo de 120 KB gzip** | Orçamento na CI, falha o build |
+| Lighthouse Performance, mobile | 95 ou mais | Lighthouse |
+| Lighthouse Accessibility | 100 | Lighthouse |
 
-**How the budget is met:**
+**Medição de referência** (14/11/2026, Deploy Preview, Lighthouse 12 mobile): LCP
+aplicado 1,7s, LCP simulado 1,95s a 2,16s, Performance 98 a 99, Acessibilidade 100,
+CLS 0, TBT 18 a 24 ms. First-load JS: 112 KB nas páginas estáticas e 110 KB em
+`/contato`. O LCP simulado varia com o TTFB do Netlify, por isso o aplicado é o portão.
 
-- Server Components by default. Four client leaves at launch
-- No animation library. CSS transitions only
-- Fonts self-hosted, subset to Latin plus the Portuguese diacritics, `swap`, with
-  `size-adjust` metric overrides to remove layout shift
-- AVIF images, correct `sizes`, lazy below the fold
-- No third-party script other than analytics
-- `@next/bundle-analyzer` available, run before each release
+**Como o orçamento é cumprido:**
 
-**The budget is a gate, not an aspiration.** If a change pushes first-load JS
-over 90KB, the change is wrong until proven otherwise.
+- Server Components por padrão. Componentes de cliente só como folhas (hoje seis,
+  ver `CLAUDE.md` §8.1)
+- Nenhuma biblioteca de animação. Só transições CSS
+- Fontes self-hosted, com subconjunto de latim mais os diacríticos do português,
+  `swap`, e sobrescrita de métricas por `size-adjust` para remover deslocamento de
+  layout
+- Imagens AVIF, `sizes` correto, lazy abaixo da dobra
+- Nenhum script de terceiros além de analytics
+- Nada que só o servidor usa entra num módulo importado por componente de cliente
+  (o schema Zod do formulário ficou de fora do navegador por isso)
+- `@next/bundle-analyzer` disponível, rodar antes de cada release
+
+**O orçamento é um portão, não uma aspiração.** Se uma mudança passar de 120 KB de
+JS no primeiro carregamento, ela está errada até provar o contrário.
 
 ## 17. Accessibility
 
