@@ -94,6 +94,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   trailingSlash: false,
   images: { formats: ["image/avif", "image/webp"] },
+  // The form carries at most ~5 KB of text (see contactLimits). The default
+  // Server Action body limit is 1 MB, which only helps someone sending junk.
+  experimental: { serverActions: { bodySizeLimit: "32kb" } },
   async headers() {
     const headers = isNonProductionDeploy
       ? [...securityHeaders, { key: "X-Robots-Tag", value: "noindex" }]

@@ -1,7 +1,9 @@
 "use server";
 
 import { ContactSchema, contactCopy, type ContactInput } from "@/content/contact";
+import { headers } from "next/headers";
 import { serverEnv } from "@/lib/env";
+import { isRateLimited } from "@/lib/rateLimit";
 
 export type ContactState =
   | { status: "idle" }
@@ -58,6 +60,13 @@ export async function submitContact(
       }
     }
     return { status: "error", message: contactCopy.error.generic, fieldErrors };
+  }
+
+  // Netlify sets this header itself, so the visitor cannot forge it the way
+  // they can x-forwarded-for.
+  const clientIp = (await headers()).get("x-nf-client-connection-ip");
+  if (await isRateLimited(clientIp)) {
+    return { status: "error", message: contactCopy.error.rateLimited };
   }
 
   const { NOTION_API_KEY: apiKey, NOTION_DATABASE_ID: databaseId } = serverEnv;

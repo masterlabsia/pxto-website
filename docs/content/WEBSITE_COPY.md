@@ -1432,6 +1432,12 @@ Fields `FIXED` — §28. Labels, placeholders and helper text `DRAFT`.
 | Telefone inválido | `Esse número parece incompleto.` |
 | Mensagem vazia | `Descreva brevemente o que precisa resolver.` |
 | Mensagem curta | `Escreva um pouco mais para entendermos o contexto.` |
+| Nome longo demais | `Use até 120 caracteres no nome.` |
+| Empresa longa demais | `Use até 160 caracteres no nome da empresa.` |
+| E-mail longo demais | `Esse e-mail é longo demais.` |
+| Telefone longo demais | `Esse número parece longo demais.` |
+| Mensagem longa demais | `Use até 4000 caracteres. O restante a gente combina na conversa.` |
+| Limite de envios atingido | `Recebemos várias mensagens deste dispositivo em pouco tempo. Tente novamente mais tarde.` |
 
 > Tone rule: validation messages instruct, never scold. No "Erro!", no "Campo
 > obrigatório!" in isolation, no exclamation marks.

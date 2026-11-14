@@ -544,10 +544,27 @@ trusts the client parse.
 1. **Honeypot field**, hidden from users and from assistive technology, rejected
    silently if filled
 2. **Timing check**, reject submissions faster than roughly two seconds
-3. **Rate limit** by IP, a small fixed window
-4. **Cloudflare Turnstile** only if the first three prove insufficient. It is
+3. **Field and body caps**, `contactLimits` in `src/content/contact.ts`
+   (message 4000 characters) enforced by the Zod schema, plus
+   `serverActions.bodySizeLimit` of 32 KB in `next.config.ts`
+4. **Rate limit** per client, 5 submissions per hour, a fixed window kept in
+   Upstash Redis through its REST API with plain `fetch`. The client is the
+   `x-nf-client-connection-ip` header, which Netlify sets and the visitor cannot
+   forge, and only a hash of it is stored. It **fails open**: if Upstash is
+   unconfigured or down, the submission goes through, because losing a real
+   lead is worse than letting a spam message in
+5. **Cloudflare Turnstile** only if the first four prove insufficient. It is
    privacy-respecting and invisible, but it is a third-party script and should not
    be added preemptively
+
+**What these layers do not do.** Every one of them runs inside the function, so
+the invocation is already billed. On the Netlify Free plan the credit cap is
+fixed (300 per month) and the projects pause when it is exceeded, so a flood of
+submissions can take the whole site down, not just the form. Stopping that needs
+a limit in front of the platform, such as Cloudflare proxying a custom domain.
+That is not possible while the site is on the generic `netlify.app` URL. Revisit
+it when `pxto.co` is connected, and enable Netlify's usage alerts in the
+meantime.
 
 **Delivery.** `RECOMMENDED`, decided by PXTO: the lead goes to a **Notion
 database**. The Server Action calls one `deliverLead()` function, which posts to
@@ -605,6 +622,8 @@ itself. The privacy notice wording is `BLOCKED`.
 | `NEXT_PUBLIC_SITE_URL` | client | yes | Canonical URLs, sitemap, OG |
 | `NOTION_API_KEY` | server | yes in production | Internal integration secret |
 | `NOTION_DATABASE_ID` | server | yes in production | Leads database |
+| `UPSTASH_REDIS_REST_URL` | server | recommended | Rate limit counters. Optional: unset skips the limit |
+| `UPSTASH_REDIS_REST_TOKEN` | server | recommended | Same |
 | `TURNSTILE_SECRET_KEY` | server | if used | Anti-spam verification |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | client | if used | Anti-spam widget |
 
