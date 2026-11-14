@@ -70,14 +70,8 @@ export const problema = {
         "O software resolve o caso geral. O seu caso é exatamente o que sobra.",
     },
   ],
-  /**
-   * Narrative 3.2 move 3. Versão curta, como no Stitch, decidida em 10/11/2026.
-   * A versão longa, em WEBSITE_COPY.md, acrescentava "É o que acontece quando a
-   * operação cresce mais rápido que as ferramentas que ela foi juntando pelo
-   * caminho." O reenquadramento continua aqui: a frase nega a culpa e anuncia
-   * a solução.
-   */
-  reframe: "Nada disso é consequência de uma decisão errada. E tem solução.",
+  // O reenquadramento (Narrative 3.2 move 3) saiu da Home em 13/11/2026, por
+  // decisao do responsavel. O texto fica preservado em WEBSITE_COPY.md.
 } as const;
 
 export const posicionamento = {

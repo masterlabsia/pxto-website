@@ -41,9 +41,6 @@ export function Problema() {
               layout="card"
               className="pxto-reveal"
             />
-            <p className="pxto-reveal mt-14 border-t border-rule pt-8 text-base font-semibold text-ink md:text-lg">
-              {problema.reframe}
-            </p>
           </div>
         </div>
       </Container>

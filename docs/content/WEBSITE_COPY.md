@@ -200,8 +200,9 @@ Os seis títulos são `FIXED` (PRD §13). As descrições são `DRAFT`.
 
 ### Reenquadramento
 
-`DRAFT`, `NARRATIVE.md` §3.2, movimento 3. **Não cortar.** Sem ele a seção
-incomoda sem ser útil.
+`DRAFT`, `NARRATIVE.md` §3.2, movimento 3. **Retirado da Home em 13/11/2026, por
+decisão do responsável.** A frase abaixo fica preservada aqui e não é renderizada.
+`NARRATIVE.md` §3.2 ainda lista o movimento 3 e precisa ser atualizado por um humano.
 
 > Nada disso é consequência de uma decisão errada. E tem solução.
 
