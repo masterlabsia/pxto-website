@@ -204,6 +204,12 @@ This move is what makes PXTO credible. Diagnosis precedes any claim of capabilit
 The problem is structural, not a consequence of bad decisions — and it has a
 resolution. Without this move the section is merely uncomfortable.
 
+> **Revisão de 13/11/2026, por decisão do responsável.** O movimento 3 foi
+> retirado da Home: a frase "Nada disso é consequência de uma decisão errada. E
+> tem solução." deixou de ser renderizada. Os movimentos 1 e 2 permanecem, e o
+> argumento acima descreve a intenção original, que não vale mais para a Home. O
+> texto retirado está preservado em `docs/content/WEBSITE_COPY.md`.
+
 ### 3.3 What the problem narrative must not do
 
 - Not exaggerate into crisis language. The reader has lived with this for years;
@@ -453,7 +459,7 @@ A transição Modelo de trabalho → Soluções responde "e com o que eles fazem
 | # | Block | Narrative job | Reader state entering | Reader state leaving |
 | --- | --- | --- | --- | --- |
 | 1 | **Hero** | Answer "what is this company" in seconds (§12) | Unknown company, low patience | "A technology company that connects, automates and builds" |
-| 2 | **Problema** | Recognition, naming, reframe (§3.2) | Interested but detached | "This is about my company" |
+| 2 | **Problema** | Recognition, naming. O reframe saiu em 13/11/2026 (§3.2) | Interested but detached | "This is about my company" |
 | 3 | **Posicionamento** | Name the space PXTO works in | Problem recognised, no solution shape | "There is a company for this specific gap" |
 | 4 | **Soluções** | Show four instruments, one capability (§4.3) | Wants to know what is offered | "They can address my case, whichever it is" |
 | 5 | **Como trabalhamos** | Method as evidence; relieve the "I can't brief it" fear (§4.2) | Interested, uncertain how to start | "I don't need a spec. I need to describe the problem" |
