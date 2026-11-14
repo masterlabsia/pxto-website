@@ -154,9 +154,8 @@ export const comoTrabalhamos = {
 
     },
   ],
-  /** Required by PRD 15: never claim every project passes through all five. */
-  closing:
-    "Nem todo projeto passa por todas as etapas. O que não muda é a ordem: entender antes de construir.",
+  // O fechamento "Nem todo projeto passa por todas as etapas" saiu em
+  // 13/11/2026, por decisao do responsavel. O texto fica em WEBSITE_COPY.md.
 } as const;
 
 export const projetos = {

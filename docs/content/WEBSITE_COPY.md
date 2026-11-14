@@ -328,8 +328,11 @@ necessidades. ⚠ **CONFIRMAR**: este passo sugere um compromisso depois da entr
 que ainda não foi definido comercialmente (`POSITIONING.md` §17.3). Manter a linha
 do PRD e **não acrescentar nenhuma promessa de continuidade**.
 
-Fechamento, exigido pelo PRD §15 (nunca dizer que todo projeto passa pelas cinco
-etapas):
+Fechamento, que cumpria o PRD §15 (nunca dizer que todo projeto passa pelas cinco
+etapas). **Retirado da Home, de `/solucoes` e de `/sobre` em 13/11/2026, por decisão
+do responsável.** O texto fica preservado aqui e não é renderizado. Sem ele, a
+numeração 01 a 05 é a única indicação de ordem, e nada na página diz que um projeto
+pode pular etapas: o PRD §15 deve ser reavaliado por um humano.
 
 > Nem todo projeto passa por todas as etapas. O que não muda é a ordem: entender
 > antes de construir.

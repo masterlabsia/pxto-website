@@ -58,8 +58,6 @@ export function ComoTrabalhamos() {
             ))}
           </ol>
         </div>
-
-        <p className="mt-10 max-w-xl text-base font-semibold text-ink">{comoTrabalhamos.closing}</p>
       </Container>
     </section>
   );
