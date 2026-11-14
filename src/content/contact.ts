@@ -1,9 +1,11 @@
-import { z } from "zod";
-
 /**
  * Contact form contract and copy.
  * Copy source: docs/content/WEBSITE_COPY.md section 11.3 to 11.5.
  * Fields are FIXED by PRD 28. Only these six are collected (PRD 44).
+ *
+ * This module is imported by the form, which runs in the browser, so it must
+ * stay free of Zod: the schema lives in contactSchema.ts, server only. Importing
+ * Zod here ships about 13 KB gzip to /contato for a parse the client never runs.
  */
 
 export const needOptions = [
@@ -15,7 +17,7 @@ export const needOptions = [
 ] as const;
 
 /**
- * Upper bounds, shared by the schema and the form controls. The server is what
+ * Upper bounds, shared by the schema (contactSchema.ts) and the form controls. The server is what
  * enforces them: without a cap, a single submission could carry megabytes into
  * the CRM (and a Notion rich_text block is limited to 2000 characters anyway).
  */
@@ -26,48 +28,6 @@ export const contactLimits = {
   telefone: 30,
   mensagem: 4000,
 } as const;
-
-/** One schema, shared by client and server. The server never trusts the client parse. */
-export const ContactSchema = z.object({
-  nome: z
-    .string()
-    .trim()
-    .min(1, "Informe seu nome.")
-    .max(contactLimits.nome, `Use até ${contactLimits.nome} caracteres no nome.`),
-  empresa: z
-    .string()
-    .trim()
-    .max(contactLimits.empresa, `Use até ${contactLimits.empresa} caracteres no nome da empresa.`)
-    .optional()
-    .default(""),
-  email: z
-    .string()
-    .trim()
-    .min(1, "Informe um e-mail para contato.")
-    .max(contactLimits.email, "Esse e-mail é longo demais.")
-    .email("Esse e-mail parece incorreto. Confira e tente novamente."),
-  telefone: z
-    .string()
-    .trim()
-    .max(contactLimits.telefone, "Esse número parece longo demais.")
-    .optional()
-    .default("")
-    .refine((v) => v === "" || v.replace(/\D/g, "").length >= 10, {
-      message: "Esse número parece incompleto.",
-    }),
-  necessidade: z.enum(needOptions).optional(),
-  mensagem: z
-    .string()
-    .trim()
-    .min(1, "Descreva brevemente o que precisa resolver.")
-    .min(20, "Escreva um pouco mais para entendermos o contexto.")
-    .max(
-      contactLimits.mensagem,
-      `Use até ${contactLimits.mensagem} caracteres. O restante a gente combina na conversa.`,
-    ),
-});
-
-export type ContactInput = z.infer<typeof ContactSchema>;
 
 export const contactCopy = {
   fields: {
