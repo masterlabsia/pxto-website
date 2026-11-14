@@ -6,7 +6,7 @@ import { Input, Textarea, Select } from "@/components/form/Input";
 import { FormStatus } from "@/components/form/FormStatus";
 import { Button } from "@/components/ui/Button";
 import { submitContact, type ContactState } from "@/lib/actions/contact";
-import { contactCopy, needOptions } from "@/content/contact";
+import { contactCopy, contactLimits, needOptions } from "@/content/contact";
 import { track } from "@/lib/analytics";
 
 /**
@@ -73,16 +73,16 @@ export function ContactForm() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Field id="nome" label={c.nome.label} error={errors.nome} required>
-          {(a) => <Input {...a} name="nome" autoComplete="name" placeholder={c.nome.placeholder} />}
+          {(a) => <Input {...a} name="nome" maxLength={contactLimits.nome} autoComplete="name" placeholder={c.nome.placeholder} />}
         </Field>
         <Field id="empresa" label={c.empresa.label} error={errors.empresa}>
-          {(a) => <Input {...a} name="empresa" autoComplete="organization" placeholder={c.empresa.placeholder} />}
+          {(a) => <Input {...a} name="empresa" maxLength={contactLimits.empresa} autoComplete="organization" placeholder={c.empresa.placeholder} />}
         </Field>
         <Field id="email" label={c.email.label} error={errors.email} required>
-          {(a) => <Input {...a} name="email" type="email" autoComplete="email" placeholder={c.email.placeholder} />}
+          {(a) => <Input {...a} name="email" maxLength={contactLimits.email} type="email" autoComplete="email" placeholder={c.email.placeholder} />}
         </Field>
         <Field id="telefone" label={c.telefone.label} error={errors.telefone}>
-          {(a) => <Input {...a} name="telefone" type="tel" autoComplete="tel" placeholder={c.telefone.placeholder} />}
+          {(a) => <Input {...a} name="telefone" maxLength={contactLimits.telefone} type="tel" autoComplete="tel" placeholder={c.telefone.placeholder} />}
         </Field>
       </div>
 
@@ -113,7 +113,7 @@ export function ContactForm() {
         error={errors.mensagem}
         required
       >
-        {(a) => <Textarea {...a} name="mensagem" placeholder={c.mensagem.placeholder} />}
+        {(a) => <Textarea {...a} name="mensagem" maxLength={contactLimits.mensagem} placeholder={c.mensagem.placeholder} />}
       </Field>
 
       {state.status === "error" && !state.fieldErrors ? (
