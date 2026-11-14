@@ -70,14 +70,8 @@ export const problema = {
         "O software resolve o caso geral. O seu caso é exatamente o que sobra.",
     },
   ],
-  /**
-   * Narrative 3.2 move 3. Versão curta, como no Stitch, decidida em 10/11/2026.
-   * A versão longa, em WEBSITE_COPY.md, acrescentava "É o que acontece quando a
-   * operação cresce mais rápido que as ferramentas que ela foi juntando pelo
-   * caminho." O reenquadramento continua aqui: a frase nega a culpa e anuncia
-   * a solução.
-   */
-  reframe: "Nada disso é consequência de uma decisão errada. E tem solução.",
+  // O reenquadramento (Narrative 3.2 move 3) saiu da Home em 13/11/2026, por
+  // decisao do responsavel. O texto fica preservado em WEBSITE_COPY.md.
 } as const;
 
 export const posicionamento = {
@@ -160,9 +154,8 @@ export const comoTrabalhamos = {
 
     },
   ],
-  /** Required by PRD 15: never claim every project passes through all five. */
-  closing:
-    "Nem todo projeto passa por todas as etapas. O que não muda é a ordem: entender antes de construir.",
+  // O fechamento "Nem todo projeto passa por todas as etapas" saiu em
+  // 13/11/2026, por decisao do responsavel. O texto fica em WEBSITE_COPY.md.
 } as const;
 
 export const projetos = {
