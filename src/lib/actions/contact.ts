@@ -1,6 +1,7 @@
 "use server";
 
-import { ContactSchema, contactCopy, type ContactInput } from "@/content/contact";
+import { contactCopy } from "@/content/contact";
+import { ContactSchema, type ContactInput } from "@/content/contactSchema";
 import { headers } from "next/headers";
 import { serverEnv } from "@/lib/env";
 import { isRateLimited } from "@/lib/rateLimit";

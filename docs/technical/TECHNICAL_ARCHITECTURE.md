@@ -528,7 +528,7 @@ server, and the client component holds only form state.
 Client form (leaf, 'use client')
   ↓ progressive enhancement: works without JS
 Server Action
-  ↓ Zod parse. Same schema the client uses for field hints
+  ↓ Zod parse, `src/content/contactSchema.ts`, server only
   ↓ anti-spam: honeypot + submission timing + optional Turnstile
   ↓ rate limit by IP
   ↓ deliver to the destination
@@ -536,8 +536,12 @@ Server Action
 Client renders idle | submitting | success | error
 ```
 
-**Validation:** one Zod schema shared by client and server. The server never
-trusts the client parse.
+**Validation:** one Zod schema, `src/content/contactSchema.ts`, parsed only by the
+Server Action. The client does not run it: it would ship about 13 KB gzip of Zod
+to `/contato` for a parse the server repeats anyway (measured 13/11/2026, `/contato`
+went from 123 KB to 110 KB first-load JS). The form gets its field hints from the
+limits in `src/content/contact.ts` (`maxLength`) and native input types. Keep Zod
+out of any module a client component imports.
 
 **Anti-spam**, `RECOMMENDED`. Layered, cheapest first:
 
@@ -640,7 +644,7 @@ morning.
 | Requirement | Implementation |
 | --- | --- |
 | No exposed secrets or API keys | Server-only env vars. Zod-validated at startup |
-| Backend input validation | Zod parse inside the Server Action. Client parse is a convenience only |
+| Backend input validation | Zod parse inside the Server Action. The client does not parse |
 | Protected endpoints | Rate limiting on the Server Action. No other endpoint exists |
 | Anti-spam | §13 |
 | Contact data handled properly | Forwarded, never stored. Only the six PRD fields |
